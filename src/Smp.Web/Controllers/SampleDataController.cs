@@ -1,14 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Smp.Web.Repositories;
 
 namespace Smp.Web.Controllers
 {
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {
+        public SampleDataController()
+        {
+        }
+
         private static string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
