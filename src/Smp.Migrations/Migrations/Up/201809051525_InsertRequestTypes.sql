@@ -1,0 +1,8 @@
+SET IDENTITY_INSERT [dbo].[RequestTypes] ON;
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'RequestTypes')
+BEGIN
+	INSERT INTO RequestTypes (Id, Type) VALUES (1, 'Friend');
+END
+
+SET IDENTITY_INSERT [dbo].[RequestTypes] OFF;
