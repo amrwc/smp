@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Smp.Web.Models.DBOs
+namespace Smp.Web.Models.DTOs
 {
     public class User
     {
