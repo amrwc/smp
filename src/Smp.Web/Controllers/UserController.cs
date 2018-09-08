@@ -1,25 +1,32 @@
-using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Smp.Web.Models.Requests;
 using Smp.Web.Repositories;
+using Smp.Web.Models;
+using Smp.Web.Validators;
 
 namespace Smp.Web.Controllers
 {
     public class UserController : Controller
     {
-        private IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IUserValidator _userValidator;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository, IUserValidator userValidator)
         {
             _userRepository = userRepository;
+            _userValidator = userValidator;
         }
 
-        public IActionResult CreateUser(string username, string password, string email)
+        [HttpPost]
+        public IActionResult CreateUser(CreateUserRequest user)
         {
-            if (string.IsNullOrEmpty(username)) return BadRequest();
-            if (string.IsNullOrEmpty(password)) return BadRequest();
-            if (string.IsNullOrEmpty(email)) return BadRequest();
+            var validationErrors = _userValidator.ValidateCreateUserRequest(user);
+            if (validationErrors.Any()) return BadRequest(validationErrors);
 
-            _userRepository.CreateUser(username, password, email);
+            var newUser = new User(user);
+
+            _userRepository.CreateUser(newUser);
 
             return Ok();
         }
