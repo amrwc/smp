@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
-namespace Smp.Web
+namespace Smp.Web.Factories
 {
     public interface IDbConnectionFactory
     {
