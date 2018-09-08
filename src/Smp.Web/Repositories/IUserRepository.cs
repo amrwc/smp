@@ -1,33 +1,28 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using Dapper;
+using Dapper.Contrib.Extensions;
 using Microsoft.Extensions.Configuration;
+using Smp.Web.Models.DTOs;
 
 namespace Smp.Web.Repositories
 {
     public interface IUserRepository
     {
-        void CreateUser(string username, string password, string email);
+        Task CreateUser(string username, string password, string email);
     }
 
-    public class UserRepository : IUserRepository, IDisposable
+    public class UserRepository : IUserRepository
     {
-        private readonly IDbConnection _dbConnection;
+        private IDbConnection _dbConnection;
 
-        public UserRepository(IConfiguration configuration)
+        public UserRepository(IDbConnectionFactory connectionFactory)
         {
-            _dbConnection = new SqlConnection(configuration.GetValue<string>("DatabaseConnectionString"));
-            _dbConnection.Open();
+            _dbConnection = connectionFactory.GetDbConnection();
         }
 
-        public void CreateUser(string username, string password, string email)
-        {
-        }
-
-        public void Dispose()
-        {
-            _dbConnection?.Dispose();
-        }
+        public async Task CreateUser(string username, string password, string email) => await _dbConnection.InsertAsync(new User(username, password, email));
     }
 }
