@@ -1,3 +1,5 @@
+using System.Data;
+using System.Data.SqlClient;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +24,8 @@ namespace Smp.Web
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
+            services.AddTransient<IUserRepository, UserRepository>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
