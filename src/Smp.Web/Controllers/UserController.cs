@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Smp.Web.Models.Requests;
 using Smp.Web.Repositories;
 using Smp.Web.Models;
+using Smp.Web.Services;
 using Smp.Web.Validators;
 
 namespace Smp.Web.Controllers
@@ -11,11 +12,13 @@ namespace Smp.Web.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly IUserValidator _userValidator;
+        private readonly ICryptographyService _cryptographyService;
 
-        public UserController(IUserRepository userRepository, IUserValidator userValidator)
+        public UserController(IUserRepository userRepository, IUserValidator userValidator, ICryptographyService cryptographyService)
         {
             _userRepository = userRepository;
             _userValidator = userValidator;
+            _cryptographyService = cryptographyService;
         }
 
         [HttpPost]
@@ -25,6 +28,8 @@ namespace Smp.Web.Controllers
             if (validationErrors.Any()) return BadRequest(validationErrors);
 
             var newUser = new User(user);
+
+            newUser.Password = _cryptographyService.HashAndSaltPassword(newUser.Password);
 
             _userRepository.CreateUser(newUser);
 
