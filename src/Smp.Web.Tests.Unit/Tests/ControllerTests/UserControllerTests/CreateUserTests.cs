@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AutoFixture;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -38,6 +39,8 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UserControllerTests
         [TestFixture]
         public class GivenAValidCreateUserRequest : UserControllerTestBase
         {
+            private CreateUserRequest _createUserRequest;
+
             private IActionResult _result;
 
             [OneTimeSetUp]
@@ -45,16 +48,24 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UserControllerTests
             {
                 Setup();
 
+                var fixture = new Fixture();
+                _createUserRequest = fixture.Create<CreateUserRequest>();
+
                 UserValidator.Setup(validator => validator.ValidateCreateUserRequest(It.IsAny<CreateUserRequest>()))
                     .Returns(new List<Error>());
 
-                _result = UserController.CreateUser(new CreateUserRequest { Username = "asdasd", Password = "asdasd", Email = "asdasd"});
+                _result = UserController.CreateUser(_createUserRequest);
             }
 
             [Test]
             public void ThenUserRepositoryCreateUserShouldHaveBeenCalled()
                 => UserRepository.Verify(repo => repo.CreateUser(It.Is<User>(user =>
-                    user.Username == "asdasd" && user.Password == "asdasd" && user.Email == "asdasd")));
+                    user.Username == _createUserRequest.Username && user.Password == _createUserRequest.Password &&
+                    user.Email == _createUserRequest.Email)));
+
+            [Test]
+            public void ThenCryptographyServiceHashAndSaltPasswordShouldHaveBeenCalled()
+                => CryptographyService.Verify(service => service.HashAndSaltPassword(_createUserRequest.Password), Times.Once);
 
             [Test]
             public void ThenResultShouldBeAnOkResult()
