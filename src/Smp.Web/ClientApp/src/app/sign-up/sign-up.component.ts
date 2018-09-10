@@ -7,9 +7,9 @@ import { CreateUserRequest } from '../models/create-user-request';
   templateUrl: './sign-up.component.html'
 })
 export class SignUpComponent {
-  private baseUrl: string;
-  private httpClient: HttpClient;
-  private createUserRequest: any = {};
+  private readonly baseUrl: string;
+  private readonly httpClient: HttpClient;
+  private createUserRequest = new CreateUserRequest();
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl;
@@ -17,7 +17,6 @@ export class SignUpComponent {
   }
 
   public signUp() {
-    debugger;
     this.httpClient
       .post(this.baseUrl + 'api/User/CreateUser', this.createUserRequest)
       .subscribe(result => {}, error => console.error(error));
