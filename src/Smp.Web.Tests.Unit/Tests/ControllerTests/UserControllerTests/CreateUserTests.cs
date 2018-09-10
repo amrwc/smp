@@ -51,6 +51,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UserControllerTests
                 var fixture = new Fixture();
                 _createUserRequest = fixture.Create<CreateUserRequest>();
 
+                CryptographyService.Setup(service => service.HashAndSaltPassword(It.IsAny<string>())).Returns("HashedAndSaltedPassword");
                 UserValidator.Setup(validator => validator.ValidateCreateUserRequest(It.IsAny<CreateUserRequest>()))
                     .Returns(new List<Error>());
 
@@ -60,7 +61,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UserControllerTests
             [Test]
             public void ThenUserRepositoryCreateUserShouldHaveBeenCalled()
                 => UserRepository.Verify(repo => repo.CreateUser(It.Is<User>(user =>
-                    user.Username == _createUserRequest.Username && user.Password == _createUserRequest.Password &&
+                    user.Username == _createUserRequest.Username && user.Password == "HashedAndSaltedPassword" &&
                     user.Email == _createUserRequest.Email)));
 
             [Test]
