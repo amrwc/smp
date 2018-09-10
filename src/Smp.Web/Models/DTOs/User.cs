@@ -4,8 +4,9 @@ namespace Smp.Web.Models.DTOs
 {
     public class User
     {
-        public User(string username, string password, string email)
+        public User(Guid id, string username, string password, string email)
         {
+            Id = id;
             Username = username;
             Password = password;
             Email = email;

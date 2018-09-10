@@ -8,6 +8,7 @@ using Smp.Web.Validators;
 
 namespace Smp.Web.Controllers
 {
+    [Route("api/[controller]")]
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
@@ -21,8 +22,8 @@ namespace Smp.Web.Controllers
             _cryptographyService = cryptographyService;
         }
 
-        [HttpPost]
-        public IActionResult CreateUser(CreateUserRequest user)
+        [HttpPost("[action]")]
+        public IActionResult CreateUser([FromBody]CreateUserRequest user)
         {
             var validationErrors = _userValidator.ValidateCreateUserRequest(user);
             if (validationErrors.Any()) return BadRequest(validationErrors);
