@@ -9,6 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     HomeComponent,
     CounterComponent,
     SignUpComponent,
+    SignInComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -26,6 +28,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'sign-up', component: SignUpComponent},
+      { path: 'sign-in', component: SignInComponent},
     ])
   ],
   providers: [],
