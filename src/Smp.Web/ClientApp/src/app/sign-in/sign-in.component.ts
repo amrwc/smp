@@ -3,11 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { CreateUserRequest } from '../models/create-user-request';
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  selector: 'app-sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.scss']
 })
-export class SignUpComponent {
+export class SignInComponent {
   private readonly baseUrl: string;
   private readonly httpClient: HttpClient;
   private createUserRequest = new CreateUserRequest();
@@ -17,9 +17,10 @@ export class SignUpComponent {
     this.httpClient = http;
   }
 
-  public signUp() {
+  // TODO: Sign in functionality.
+  public signIn() {
     this.httpClient
-      .post(this.baseUrl + 'api/User/CreateUser', this.createUserRequest)
+      .post(this.baseUrl + 'api/SignIn', this.createUserRequest)
       .subscribe(result => {}, error => console.error(error));
   }
 }
