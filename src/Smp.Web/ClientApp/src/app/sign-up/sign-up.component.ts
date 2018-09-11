@@ -4,7 +4,8 @@ import { CreateUserRequest } from '../models/create-user-request';
 
 @Component({
   selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html'
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent {
   private readonly baseUrl: string;
