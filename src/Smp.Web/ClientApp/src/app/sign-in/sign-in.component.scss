@@ -2,10 +2,70 @@
 
 /* TODO: Background picture. */
 
-.signin-form {
-  margin-top: 10rem;
-}
+.signin-body {
+  .signin-form {
+    margin-top: 5rem;
 
-input {
-  border-radius: 0;
+    h1 {
+      text-align: center;
+    }
+
+    label {
+      display: none;
+    }
+
+    input {
+      background-color: #f8ffff;
+      border: none;
+    }
+
+    button {
+      background-color: rgba(0, 255, 0, 0.2);
+      border: none;
+      border-radius: 0;
+      color: $primary;
+      display: block;
+      margin: 0 auto;
+
+      &:hover {
+        background-color: rgba(0, 255, 0, 0.3);
+      }
+    }
+
+    .not-member {
+      margin-top: 5rem;
+      text-align: center;
+    }
+  }
+
+  input {
+    border-radius: 0;
+  }
+
+  @media (min-width: $md) {
+    .signin-form {
+      h1 {
+        text-align: left;
+      }
+
+      label {
+        display: inline-block;
+      }
+    }
+
+    input {
+      &::-webkit-input-placeholder {
+        color: transparent;
+      }
+      &:-moz-placeholder {
+        color: transparent;
+      }
+      &::-moz-placeholder {
+        color: transparent;
+      }
+      &:-ms-input-placeholder {
+        color: transparent;
+      }
+    }
+  }
 }
