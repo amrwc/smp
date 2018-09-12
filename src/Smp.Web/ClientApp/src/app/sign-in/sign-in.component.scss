@@ -1,16 +1,19 @@
 @import '~sass/variables';
 
 .signin-body {
+  height: 100rem;
   margin: 0;
   padding: 0;
 
   div.order-last {
     // background: url(https://via.placeholder.com/200x200) center no-repeat;
     // background-size: cover;
+    margin: 0;
+    padding: 0;
   }
 
   .signin-form {
-    margin-top: 5rem;
+    margin: 5rem 1.5rem 0 1.5rem;
 
     h1 {
       text-align: center;
@@ -53,16 +56,10 @@
   }
 
   @media (min-width: $md) {
-    div.row {
-      height: 100rem;
-    }
-
-    div.order-last {
-      background-image: url(https://via.placeholder.com/600x400);
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: center;
-    }
+    background-image: url(https://via.placeholder.com/1200x800);
+    background-repeat: no-repeat;
+    background-size: auto;
+    // background-position-x: -50%;
 
     .signin-form {
       h1 {
