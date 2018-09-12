@@ -1,22 +1,32 @@
 @import '~sass/variables';
 
 .signin-body {
-  height: 100rem;
-  margin: 0;
-  padding: 0;
-
   div.order-last {
     // background: url(https://via.placeholder.com/200x200) center no-repeat;
     // background-size: cover;
-    margin: 0;
-    padding: 0;
+    // margin: 0;
+    // padding: 0;
   }
 
   .signin-form {
-    margin: 5rem 1.5rem 0 1.5rem;
+    padding: 5rem 3.7rem 0 3.7rem;
+
+    img {
+      display: block;
+      height: 10rem;
+      margin: 0 auto 5rem auto;
+      width: 10rem;
+    }
 
     h1 {
+      font-size: 2.2rem;
+      margin-top: 0;
+      margin-bottom: 2.9rem;
       text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 0;
     }
 
     label {
@@ -24,41 +34,83 @@
     }
 
     input {
-      border-radius: 4px;
+      border-color: $grey;
+      border-radius: 10px;
+      color: $primary;
+      height: 3.85rem;
+      margin-bottom: 1.2rem;
+      padding: 0 1rem;
+
+      &::-webkit-input-placeholder {
+        color: $grey;
+        font-size: 1.1rem;
+      }
+      &:-moz-placeholder {
+        color: $grey;
+        font-size: 1.1rem;
+      }
+      &::-moz-placeholder {
+        color: $grey;
+        font-size: 1.1rem;
+      }
+      &:-ms-input-placeholder {
+        color: $grey;
+        font-size: 1.1rem;
+      }
+    }
+
+    .forgotten-password a {
+      float: right;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+
+      &, &:hover, &:active, &:visited {
+        color: $primary;
+        text-decoration: none;
+      }
     }
 
     button {
-      background-color: rgba(36, 196, 36, 0.2);
-      border: none;
-      border-radius: 4px;
-      color: $primary;
+      background-color: rgba($blue, 0.9);
+      border: 1px solid $blue;
+      border-radius: 10px;
+      color: white;
       display: block;
-      margin: 0 auto;
-      padding: 1rem 1.5rem;
+      font-size: 1.1rem;
+      height: 3.8rem;
+      margin: 2.7rem auto 0.96rem auto;
+      width: 100%;
 
       &:hover {
-        background-color: rgba(36, 196, 36, 0.3);
+        background-color: $blue;
       }
     }
 
     .not-member {
       display: block;
-      margin-top: 5rem;
+      font-size: 1rem;
       text-align: center;
+
+      a, a:hover, a:active, a:visited {
+        color: $primary;
+        text-decoration: none;
+      }
     }
   }
 
   @media (min-width: $sm) {
     .signin-form {
-      width: 70%;
-      margin: 5rem auto 0 auto;
+      form {
+        width: 70%;
+        margin: 0 auto;
+      }
     }
   }
 
   @media (min-width: $md) {
-    background-image: url(https://via.placeholder.com/1200x800);
-    background-repeat: no-repeat;
-    background-size: auto;
+    // background-image: url(https://via.placeholder.com/1200x800);
+    // background-repeat: no-repeat;
+    // background-size: auto;
     // background-position-x: -50%;
 
     .signin-form {
@@ -67,11 +119,23 @@
         margin-bottom: 2rem;
       }
 
+      form {
+        width: unset;
+        margin: unset;
+
+        .form-group {
+          margin-bottom: 0.5rem;
+        }
+      }
+
       label {
         display: inline-block;
       }
 
       input {
+        width: 85%;
+        margin-top: 0;
+
         &::-webkit-input-placeholder {
           color: transparent;
         }
@@ -87,27 +151,37 @@
       }
 
       div.form-group:last-of-type {
-        margin-top: 3rem;
+        margin-top: 2rem;
 
         button {
-          display: inline-block;
+          width: 85%;
+          // display: inline-block;
           margin: initial;
         }
 
         .not-member {
-          display: initial;
-          margin-top: 0;
-          margin-left: 2rem;
-          text-align: left;
+          margin-top: 2rem;
+          width: 85%;
         }
       }
     }
   }
 
-  @media (mid-width: $lg) {
+  @media (min-width: $lg) {
     /* TODO: Background picture. */
 
     .signin-form {
+      input {
+        width: 70%;
+      }
+    }
+  }
+
+  @media (min-width: $xl) {
+    .signin-form {
+      input {
+        width: 50%;
+      }
     }
   }
 }

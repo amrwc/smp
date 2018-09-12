@@ -1,13 +1,12 @@
 @import '~sass/variables';
 
-main {
+* {
+  margin: 0;
   padding: 0;
-  overflow: hidden;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
 }
 
-@media (max-width: 767px) {
-  /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
-  /* .body-content {
-    padding-top: 50px;
-  } */
+h1, h2, h3, h4, h5, h6, p, span, a {
+  color: $primary;
 }
