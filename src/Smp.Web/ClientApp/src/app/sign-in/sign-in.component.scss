@@ -1,6 +1,14 @@
 @import '~sass/variables';
 
 .signin-body {
+  margin: 0;
+  padding: 0;
+
+  div.order-last {
+    // background: url(https://via.placeholder.com/200x200) center no-repeat;
+    // background-size: cover;
+  }
+
   .signin-form {
     margin-top: 5rem;
 
@@ -45,6 +53,17 @@
   }
 
   @media (min-width: $md) {
+    div.row {
+      height: 100rem;
+    }
+
+    div.order-last {
+      background-image: url(https://via.placeholder.com/600x400);
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+
     .signin-form {
       h1 {
         text-align: left;
@@ -92,7 +111,6 @@
     /* TODO: Background picture. */
 
     .signin-form {
-
     }
   }
 }

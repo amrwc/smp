@@ -1,6 +1,11 @@
 @import '~sass/variables';
 
 .signup-body {
+  div.order-last {
+    // background: url(https://via.placeholder.com/200x200) center no-repeat;
+    // background-size: cover;
+  }
+
   .signup-form {
     margin-top: 5rem;
 
@@ -45,6 +50,11 @@
   }
 
   @media (min-width: $md) {
+    div.order-last {
+      // background: url(https://via.placeholder.com/200x200) center no-repeat;
+      // background-size: cover;
+    }
+
     .signup-form {
       h1 {
         text-align: left;
