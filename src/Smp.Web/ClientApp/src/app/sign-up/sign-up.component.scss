@@ -1,7 +1,5 @@
 @import '~sass/variables';
 
-/* TODO: Background picture. */
-
 .signup-body {
   .signup-form {
     margin-top: 5rem;
@@ -25,6 +23,7 @@
       color: $primary;
       display: block;
       margin: 0 auto;
+      padding: 1rem 1.5rem;
 
       &:hover {
         background-color: rgba(36, 196, 36, 0.3);
@@ -32,8 +31,16 @@
     }
 
     .already-member {
+      display: block;
       margin-top: 5rem;
       text-align: center;
+    }
+  }
+
+  @media (min-width: $sm) {
+    .signup-form {
+      width: 70%;
+      margin: 5rem auto 0 auto;
     }
   }
 
@@ -41,26 +48,52 @@
     .signup-form {
       h1 {
         text-align: left;
+        margin-bottom: 2rem;
       }
 
       label {
         display: inline-block;
       }
-    }
 
-    input {
-      &::-webkit-input-placeholder {
-        color: transparent;
+      input {
+        &::-webkit-input-placeholder {
+          color: transparent;
+        }
+        &:-moz-placeholder {
+          color: transparent;
+        }
+        &::-moz-placeholder {
+          color: transparent;
+        }
+        &:-ms-input-placeholder {
+          color: transparent;
+        }
       }
-      &:-moz-placeholder {
-        color: transparent;
+
+      div.form-group:last-of-type {
+        margin-top: 3rem;
+
+        button {
+          display: inline-block;
+          margin: initial;
+        }
+
+        .already-member {
+          display: initial;
+          margin-top: 0;
+          margin-left: 2rem;
+          text-align: left;
+        }
       }
-      &::-moz-placeholder {
-        color: transparent;
-      }
-      &:-ms-input-placeholder {
-        color: transparent;
-      }
+    }
+  }
+
+  @media (mid-width: $lg) {
+    /* TODO: Background picture. */
+
+    .signup-form {
+      width: initial;
+      margin: initial;
     }
   }
 }

@@ -1,10 +1,6 @@
 @import './variables';
 @import './mixins';
 
-html {
-  font-size: 10px;
-}
-
 body {
   // Making up for the navbar height.
   padding-top: 5rem;
