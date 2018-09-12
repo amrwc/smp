@@ -5,7 +5,6 @@ nav {
   border: none;
   border-bottom: 0.1rem solid $primary;
   border-radius: 0;
-  // height: 10rem;
   margin: 0;
   min-height: 5rem;
   padding: 0;
@@ -13,6 +12,7 @@ nav {
 
   a.navbar-brand {
     color: $primary;
+    margin-right: auto;
 
     &:hover {
       color: #aaa;
@@ -21,8 +21,8 @@ nav {
 
   button.navbar-toggle {
     border: none;
+    margin: 0 0.8rem 0 0;
     padding: 0.6rem 0.7rem;
-    margin: 1.2rem 0.8rem 0 0;
 
     &:hover {
       background-color: #efefef;
@@ -34,6 +34,11 @@ nav {
     }
   }
 
+  div.navbar-collapse.collapsing {
+    // Hides unwanted links during transition.
+    display: none;
+  }
+
   div.navbar-collapse.collapse {
     padding: 0;
 
@@ -42,40 +47,40 @@ nav {
       padding: 0;
     }
 
-    &.in {
+    &.in.show {
       border-top: 0.1rem solid $primary;
-      margin-top: 5rem; // It's magic, don't touch.
       text-align: center;
 
       & > ul {
         float: none;
         margin: 0;
-      }
 
-      li {
-        border-bottom: 0.1rem solid $primary;
+        li {
+          border-bottom: 0.1rem solid $primary;
 
-        &:last-of-type {
-          border: none;
-        }
-
-        & a {
-          background-color: #ddd;
-          color: #555;
-
-          &:hover {
-            background-color: #aaa;
-            color: $primary;
+          &:last-of-type {
+            border: none;
           }
-        }
 
-        &.link-active a {
-          background-color: #4aabff;
-          color: #fff;
+          & a {
+            background-color: #ddd;
+            color: #555;
 
-          &:hover, &:focus {
-            background-color: #4189c7;
+            &:hover {
+              background-color: #aaa;
+              color: $primary;
+            }
+          }
+
+          &.link-active a {
+            background-color: #4aabff;
             color: #fff;
+
+            &:hover,
+            &:focus {
+              background-color: #4189c7;
+              color: #fff;
+            }
           }
         }
       }
@@ -83,18 +88,23 @@ nav {
   }
 
   @media (min-width: $md) {
-    li {
-      & a {
-        color: $primary;
-      }
+    div.navbar-collapse.collapse {
+      ul {
+        li {
+          & a {
+            color: $primary;
+          }
 
-      &.link-active a {
-        background-color: #4aabff;
-        color: #fff;
+          &.link-active a {
+            background-color: #4aabff;
+            color: #fff;
 
-        &:hover, &:focus {
-          background-color: #4189c7;
-          color: #fff;
+            &:hover,
+            &:focus {
+              background-color: #4189c7;
+              color: #fff;
+            }
+          }
         }
       }
     }
