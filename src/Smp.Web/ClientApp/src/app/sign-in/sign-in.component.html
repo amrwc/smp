@@ -2,7 +2,8 @@
   <div class="row">
     <div class="col-12 col-md-6 order-last"></div>
     <div class="signin-form col-12 col-md-6 order-md-last">
-      <h1>Sign in</h1>
+      <img src="assets/img/smp-icon-blue.svg" alt="SMP icon">
+      <h1>Sign in to your account</h1>
       <form name="form" (ngSubmit)="f.form.valid && signIn()" #f="ngForm" novalidate>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
           <label for="username">Username</label>
@@ -10,6 +11,9 @@
             #username="ngModel" required />
           <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
         </div>
+
+        <div class="forgotten-password"><a href="#">Forgotten password?</a></div>
+
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
           <label for="password">Password</label>
           <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="createUserRequest.password"
@@ -19,7 +23,9 @@
         <div class="form-group">
           <button [disabled]="loading" class="btn">Sign in</button>
           <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-          <span class="not-member">Need an account? <a [routerLink]="['/sign-up']">Sign up</a></span>
+          <div class="not-member">
+            <a [routerLink]="['/sign-up']">Don't have an account? Sign up here!</a>
+          </div>
         </div>
       </form>
     </div>
