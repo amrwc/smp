@@ -1,6 +1,9 @@
 <div class="signin-body container">
   <div class="row">
-    <div class="signin-form col-12 col-md-6 col-md-offset-3">
+    <div class="col-12 col-lg-6 order-last">
+      <img src="https://via.placeholder.com/400x400">
+    </div>
+    <div class="signin-form col-12 col-lg-6 order-lg-last">
       <h1 class="text-center">Sign in</h1>
       <form name="form" (ngSubmit)="f.form.valid && signIn()" #f="ngForm" novalidate>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
