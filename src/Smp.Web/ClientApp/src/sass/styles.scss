@@ -1,11 +1,3 @@
 @import '~bootstrap/dist/css/bootstrap.css';
 @import './variables';
 @import './mixins';
-
-body {
-  // Making up for the navbar height.
-  // padding-top: 5rem;
-
-  // TODO: Remove the explicit height.
-  height: 2000px;
-}
