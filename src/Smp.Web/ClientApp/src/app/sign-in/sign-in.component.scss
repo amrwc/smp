@@ -1,11 +1,8 @@
 @import '~sass/variables';
 
 .signin-body {
-  div.order-last {
-    // background: url(https://via.placeholder.com/200x200) center no-repeat;
-    // background-size: cover;
-    // margin: 0;
-    // padding: 0;
+  .side-panel {
+    display: none;
   }
 
   .signin-form {
@@ -35,7 +32,7 @@
 
     input {
       border-color: $grey;
-      border-radius: 10px;
+      border-radius: 6px;
       color: $primary;
       height: 3.85rem;
       margin-bottom: 1.2rem;
@@ -64,7 +61,10 @@
       font-size: 1rem;
       margin-bottom: 0.5rem;
 
-      &, &:hover, &:active, &:visited {
+      &,
+      &:hover,
+      &:active,
+      &:visited {
         color: $primary;
         text-decoration: none;
       }
@@ -73,7 +73,7 @@
     button {
       background-color: rgba($blue, 0.9);
       border: 1px solid $blue;
-      border-radius: 10px;
+      border-radius: 6px;
       color: white;
       display: block;
       font-size: 1.1rem;
@@ -91,7 +91,10 @@
       font-size: 1rem;
       text-align: center;
 
-      a, a:hover, a:active, a:visited {
+      a,
+      a:hover,
+      a:active,
+      a:visited {
         color: $primary;
         text-decoration: none;
       }
@@ -108,45 +111,93 @@
   }
 
   @media (min-width: $md) {
-    // background-image: url(https://via.placeholder.com/1200x800);
-    // background-repeat: no-repeat;
-    // background-size: auto;
-    // background-position-x: -50%;
+    margin: 0;
+    padding: 0;
+
+    .row {
+      height: 100vh;
+      margin: 0;
+    }
+
+    .side-panel {
+      background: url(assets/img/background-photo-group.png) center no-repeat;
+      background-size: cover;
+      display: block;
+
+      img {
+        height: 5rem;
+        position: absolute;
+        top: 2.5rem;
+        left: 2.5rem;
+        width: 5rem;
+      }
+
+      .welcome {
+        height: 70%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 1rem;
+
+        h1 {
+          color: white;
+          font-size: 2.8rem;
+          font-weight: 300;
+          margin-bottom: 0;
+
+          &:last-of-type {
+            margin-top: 0;
+            font-weight: 700;
+          }
+        }
+
+        h3 {
+          color: white;
+          font-size: 1.8rem;
+          font-weight: 300;
+          margin-top: 1.5rem;
+        }
+      }
+    }
 
     .signin-form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-top: 0;
+
+      img {
+        display: none;
+      }
+
       h1 {
-        text-align: left;
-        margin-bottom: 2rem;
+        margin-bottom: 3rem;
       }
 
       form {
-        width: unset;
-        margin: unset;
-
-        .form-group {
-          margin-bottom: 0.5rem;
-        }
-      }
-
-      label {
-        display: inline-block;
+        width: 60%;
       }
 
       input {
-        width: 85%;
         margin-top: 0;
+        height: 4rem;
 
         &::-webkit-input-placeholder {
-          color: transparent;
+          font-size: 1.5rem;
+          font-weight: 300;
         }
         &:-moz-placeholder {
-          color: transparent;
+          font-size: 1.5rem;
+          font-weight: 300;
         }
         &::-moz-placeholder {
-          color: transparent;
+          font-size: 1.5rem;
+          font-weight: 300;
         }
         &:-ms-input-placeholder {
-          color: transparent;
+          font-size: 1.5rem;
+          font-weight: 300;
         }
       }
 
@@ -154,33 +205,87 @@
         margin-top: 2rem;
 
         button {
-          width: 85%;
-          // display: inline-block;
-          margin: initial;
+          font-size: 1.5rem;
+          font-weight: 300;
+          height: 4rem;
+          margin-top: 3.05rem;
         }
 
         .not-member {
           margin-top: 2rem;
-          width: 85%;
         }
       }
     }
   }
 
   @media (min-width: $lg) {
-    /* TODO: Background picture. */
+    .side-panel {
+      img {
+        height: 7.5rem;
+        width: 7.5rem;
+      }
+
+      .welcome {
+        h1 {
+          font-size: 3.5rem;
+
+          &:last-of-type {
+            margin-top: 1rem;
+          }
+        }
+
+        h3 {
+          font-size: 2rem;
+        }
+      }
+    }
 
     .signin-form {
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 5rem;
+      }
+
+      .forgotten-password a {
+        font-size: 1.2rem;
+      }
+
       input {
-        width: 70%;
+        height: 6rem;
+      }
+
+      div.form-group:last-of-type {
+        margin-top: 3rem;
+
+        button {
+          font-size: 2rem;
+          height: 6rem;
+          margin-top: 3.3rem;
+        }
+
+        .not-member {
+          font-size: 1.4rem;
+        }
       }
     }
   }
 
   @media (min-width: $xl) {
+    .side-panel {
+      .welcome {
+        h1 {
+          font-size: 4rem;
+        }
+
+        h3 {
+          margin-top: 2rem;
+        }
+      }
+    }
+
     .signin-form {
-      input {
-        width: 50%;
+      h1 {
+        font-size: 3.5rem;
       }
     }
   }

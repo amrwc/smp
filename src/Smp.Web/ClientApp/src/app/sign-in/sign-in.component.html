@@ -1,12 +1,19 @@
 <div class="signin-body container-fluid">
   <div class="row">
-    <div class="col-12 col-md-6 order-last"></div>
-    <div class="signin-form col-12 col-md-6 order-md-last">
+    <div class="side-panel col-12 col-md-5 order-last">
+      <img src="assets/img/smp-icon.svg">
+
+      <div class="welcome">
+        <h1>Welcome to the</h1>
+        <h1>Social Media Portal!</h1>
+        <h3>Stay in touch with your friends</h3>
+      </div>
+    </div>
+    <div class="signin-form col-12 col-md-7 order-md-last">
       <img src="assets/img/smp-icon-blue.svg" alt="SMP icon">
       <h1>Sign in to your account</h1>
       <form name="form" (ngSubmit)="f.form.valid && signIn()" #f="ngForm" novalidate>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-          <label for="username">Username</label>
           <input type="text" class="form-control" placeholder="Username" name="username" [(ngModel)]="createUserRequest.username"
             #username="ngModel" required />
           <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
@@ -15,7 +22,6 @@
         <div class="forgotten-password"><a href="#">Forgotten password?</a></div>
 
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-          <label for="password">Password</label>
           <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="createUserRequest.password"
             #password="ngModel" required />
           <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
