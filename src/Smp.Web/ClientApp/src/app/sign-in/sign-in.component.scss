@@ -40,19 +40,19 @@
 
       &::-webkit-input-placeholder {
         color: $grey;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
       }
       &:-moz-placeholder {
         color: $grey;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
       }
       &::-moz-placeholder {
         color: $grey;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
       }
       &:-ms-input-placeholder {
         color: $grey;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
       }
     }
 
@@ -172,6 +172,7 @@
       }
 
       h1 {
+        font-weight: 400;
         margin-bottom: 3rem;
       }
 
@@ -184,19 +185,15 @@
         height: 4rem;
 
         &::-webkit-input-placeholder {
-          font-size: 1.5rem;
           font-weight: 300;
         }
         &:-moz-placeholder {
-          font-size: 1.5rem;
           font-weight: 300;
         }
         &::-moz-placeholder {
-          font-size: 1.5rem;
           font-weight: 300;
         }
         &:-ms-input-placeholder {
-          font-size: 1.5rem;
           font-weight: 300;
         }
       }
@@ -252,6 +249,19 @@
 
       input {
         height: 6rem;
+
+        &::-webkit-input-placeholder {
+          font-size: 1.4rem;
+        }
+        &:-moz-placeholder {
+          font-size: 1.4rem;
+        }
+        &::-moz-placeholder {
+          font-size: 1.4rem;
+        }
+        &:-ms-input-placeholder {
+          font-size: 1.4rem;
+        }
       }
 
       div.form-group:last-of-type {
