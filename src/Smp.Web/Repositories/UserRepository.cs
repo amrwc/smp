@@ -28,9 +28,11 @@ namespace Smp.Web.Repositories
                 new {newUser.Id, newUser.FullName, newUser.Password, newUser.Email});
         }
 
-        public async Task<User> GetUser(string Email)
+        public async Task<User> GetUser(string email)
         {
-            return new (Smp.Web.Models.User) new Smp.Web.Models.DTOs.User();
+            return (User) await _dbConnection.QueryFirstAsync<Models.DTOs.User>(
+                "SELECT TOP 1 [Id], [FullName], [Password], [Email] FROM [dbo].[Users] WHERE [Email] = @Email",
+                new {Email = email});
         }
     }
 }
