@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Smp.Web.Controllers;
 
 namespace Smp.Web.Tests.Unit.Tests.ControllerTests.AuthControllerTests
 {
@@ -10,7 +8,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.AuthControllerTests
 
         public void Setup()
         {
-
+            AuthController = new AuthController();
         }
     }
 }

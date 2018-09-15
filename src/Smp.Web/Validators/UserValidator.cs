@@ -18,7 +18,7 @@ namespace Smp.Web.Validators
         {
             var errors = new List<Error>();
 
-            if (!IsValidUsername(createUserRequest?.Username)) errors.Add(new Error("invalid_username", "Username must have at least 3 characters."));
+            if (!IsValidUsername(createUserRequest?.FullName)) errors.Add(new Error("invalid_username", "Username must have at least 3 characters."));
             if (!IsValidPassword(createUserRequest?.Password)) errors.Add(new Error("invalid_password", "Password must have at least 8 characters, at least 1 lowercase letter, at least 1 uppercase letter, a number, and a symbol."));
             if (!IsValidEmail(createUserRequest?.Email)) errors.Add(new Error("invalid_email", "Email must be a valid email address."));
 

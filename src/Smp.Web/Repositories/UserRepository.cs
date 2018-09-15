@@ -23,9 +23,8 @@ namespace Smp.Web.Repositories
         public async Task CreateUser(User newUser)
         {
             await _dbConnection.ExecuteAsync(
-                "INSERT INTO [dbo].[Users] ([Id], [Username], [Password], [Email]) VALUES (@Id, @Username, @Password, @Email)",
-                new {newUser.Id, newUser.Username, newUser.Password, newUser.Email});
+                "INSERT INTO [dbo].[Users] ([Id], [FullName], [Password], [Email]) VALUES (@Id, @FullName, @Password, @Email)",
+                new {newUser.Id, newUser.FullName, newUser.Password, newUser.Email});
         }
-
     }
 }
