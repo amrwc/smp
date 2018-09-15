@@ -9,6 +9,7 @@ namespace Smp.Web.Repositories
     public interface IUserRepository
     {
         Task CreateUser(User newUser);
+        Task<User> GetUser(string Email);
     }
 
     public class UserRepository : IUserRepository
@@ -25,6 +26,11 @@ namespace Smp.Web.Repositories
             await _dbConnection.ExecuteAsync(
                 "INSERT INTO [dbo].[Users] ([Id], [FullName], [Password], [Email]) VALUES (@Id, @FullName, @Password, @Email)",
                 new {newUser.Id, newUser.FullName, newUser.Password, newUser.Email});
+        }
+
+        public async Task<User> GetUser(string Email)
+        {
+            return new (Smp.Web.Models.User) new Smp.Web.Models.DTOs.User();
         }
     }
 }
