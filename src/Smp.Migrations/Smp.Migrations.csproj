@@ -14,6 +14,7 @@
     <None Remove="Migrations\Down\201809051414_CreateCommentsTable.sql" />
     <None Remove="Migrations\Down\201809051419_CreateFriendsTable.sql" />
     <None Remove="Migrations\Down\201809051525_InsertRequestTypes.sql" />
+    <None Remove="Migrations\Down\201809151600_RenameUsernameToFullName.sql" />
     <None Remove="Migrations\Up\201809050840_CreateUsersTable.sql" />
     <None Remove="Migrations\Up\201809051339_CreateMessagesTable.sql" />
     <None Remove="Migrations\Up\201809051345_CreatePostsTable.sql" />
@@ -22,6 +23,7 @@
     <None Remove="Migrations\Up\201809051414_CreateCommentsTable.sql" />
     <None Remove="Migrations\Up\201809051419_CreateFriendsTable.sql" />
     <None Remove="Migrations\Up\201809051525_InsertRequestTypes.sql" />
+    <None Remove="Migrations\Up\201809151600_RenameUsernameToFullName.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,12 +35,14 @@
     <EmbeddedResource Include="Migrations\Down\201809051414_CreateCommentsTable.sql" />
     <EmbeddedResource Include="Migrations\Down\201809051419_CreateFriendsTable.sql" />
     <EmbeddedResource Include="Migrations\Down\201809051525_InsertRequestTypes.sql" />
+    <EmbeddedResource Include="Migrations\Down\201809151600_RenameUsernameToFullName.sql" />
     <EmbeddedResource Include="Migrations\Up\201809051414_CreateCommentsTable.sql" />
     <EmbeddedResource Include="Migrations\Up\201809051404_CreateRequestsTable.sql" />
     <EmbeddedResource Include="Migrations\Up\201809051359_CreateRequestTypesTable.sql" />
     <EmbeddedResource Include="Migrations\Up\201809051345_CreatePostsTable.sql" />
     <EmbeddedResource Include="Migrations\Up\201809050840_CreateUsersTable.sql" />
     <EmbeddedResource Include="Migrations\Up\201809051339_CreateMessagesTable.sql" />
+    <EmbeddedResource Include="Migrations\Up\201809151600_RenameUsernameToFullName.sql" />
     <EmbeddedResource Include="Migrations\Up\201809051525_InsertRequestTypes.sql" />
     <EmbeddedResource Include="Migrations\Up\201809051419_CreateFriendsTable.sql" />
   </ItemGroup>
