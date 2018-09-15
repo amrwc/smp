@@ -18,11 +18,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Smp.Web\Smp.Web.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.Extensions.Identity.Core">
-      <HintPath>..\..\..\..\Users\faibz\.nuget\packages\microsoft.extensions.identity.core\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Identity.Core.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
