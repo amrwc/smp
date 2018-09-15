@@ -20,7 +20,7 @@ namespace Smp.Web.Models
         public string Password { get; set; }
         public string Email { get; set; }
 
-        public static explicit operator User(Smp.Web.Models.DTOs.User user)
+        public static explicit operator User(DTOs.User user)
         {
             return new User
             {
