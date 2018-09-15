@@ -49,7 +49,7 @@ namespace Smp.Web.Tests.Unit.Tests.ValidatorTests.UserValidatorTests
                 Setup();
 
                 var fixture = new Fixture();
-                _createUserRequest = fixture.Build<CreateUserRequest>().With(request => request.Email, "email@email.com").Without(request => request.Username).Create();
+                _createUserRequest = fixture.Build<CreateUserRequest>().With(request => request.Email, "email@email.com").Without(request => request.FullName).Create();
 
                 _errors = UserValidator.ValidateCreateUserRequest(_createUserRequest);
             }
@@ -75,7 +75,7 @@ namespace Smp.Web.Tests.Unit.Tests.ValidatorTests.UserValidatorTests
                 Setup();
 
                 var fixture = new Fixture();
-                _createUserRequest = fixture.Build<CreateUserRequest>().With(request => request.Email, "email@email.com").With(request => request.Username, "ye").Create();
+                _createUserRequest = fixture.Build<CreateUserRequest>().With(request => request.Email, "email@email.com").With(request => request.FullName, "ye").Create();
 
                 _errors = UserValidator.ValidateCreateUserRequest(_createUserRequest);
             }
