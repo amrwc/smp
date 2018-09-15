@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CreateUserRequest } from '../models/create-user-request';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,7 +9,7 @@ import { CreateUserRequest } from '../models/create-user-request';
 export class SignInComponent {
   private readonly baseUrl: string;
   private readonly httpClient: HttpClient;
-  private createUserRequest = new CreateUserRequest();
+  public loading: boolean;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl;
@@ -19,8 +18,9 @@ export class SignInComponent {
 
   // TODO: Sign in functionality.
   public signIn() {
-    this.httpClient
-      .post(this.baseUrl + 'api/SignIn', this.createUserRequest)
-      .subscribe(result => {}, error => console.error(error));
+    this.loading = true;
+//    this.httpClient
+//      .post(this.baseUrl + 'api/SignIn', this.createUserRequest)
+//      .subscribe(result => {}, error => console.error(error));
   }
 }
