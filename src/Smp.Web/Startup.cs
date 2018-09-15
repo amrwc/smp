@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Smp.Web.Factories;
 using Smp.Web.Repositories;
+using Smp.Web.Services;
+using Smp.Web.Validators;
 
 namespace Smp.Web
 {
@@ -22,7 +25,10 @@ namespace Smp.Web
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddScoped<IUserValidator, UserValidator>();
+            services.AddScoped<ICryptographyService, CryptographyService>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
