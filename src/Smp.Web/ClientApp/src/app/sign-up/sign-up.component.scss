@@ -56,20 +56,6 @@
       }
     }
 
-    .forgotten-password a {
-      float: right;
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-
-      &,
-      &:hover,
-      &:active,
-      &:visited {
-        color: $primary;
-        text-decoration: none;
-      }
-    }
-
     button {
       background-color: rgba($blue, 0.9);
       border: 1px solid $blue;
@@ -120,7 +106,7 @@
     }
 
     .side-panel {
-      background: url(assets/img/background-photo-group.png) center no-repeat;
+      background: url(../../assets/img/background-photo-group.png) center no-repeat;
       background-size: cover;
       display: block;
 
