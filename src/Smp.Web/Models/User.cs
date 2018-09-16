@@ -5,7 +5,7 @@ namespace Smp.Web.Models
 {
     public class User
     {
-        public User() {};
+        public User() {}
 
         public User(CreateUserRequest user)
         {
