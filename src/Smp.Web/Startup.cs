@@ -1,9 +1,12 @@
+using System;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Smp.Web.Factories;
 using Smp.Web.Repositories;
 using Smp.Web.Services;
@@ -29,7 +32,17 @@ namespace Smp.Web
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddScoped<IUserValidator, UserValidator>();
             services.AddScoped<ICryptographyService, CryptographyService>();
+            services.AddScoped<IAuthService, AuthService>();
 
+            services.AddAuthentication().AddJwtBearer(jwt => {
+                jwt.RequireHttpsMetadata = true;
+                jwt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                {
+                    ValidIssuer = Configuration["Tokens:Issuer"],
+                    ValidAudience = Configuration["Tokens:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(Configuration["Tokens:SigningKey"]))
+                };
+            });
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -53,6 +66,7 @@ namespace Smp.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
