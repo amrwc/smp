@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Moq;
 using NUnit.Framework;
 using Smp.Web.Models;
+using Smp.Web.Models.Results;
 using Smp.Web.Services;
 
 namespace Smp.Web.Tests.Unit.Tests.ServiceTests.AuthServiceTests
@@ -9,22 +12,65 @@ namespace Smp.Web.Tests.Unit.Tests.ServiceTests.AuthServiceTests
     public class VerifyUserTests
     {
         [TestFixture]
-        public class GivenAnEmailAndPassword : AuthServiceTestBase
+        public class GivenACorrectEmailAndPassword : AuthServiceTestBase
         {
             private string _email;
             private string _password;
-
-            private bool _isMatch;
+            private VerifyUserResult _verifyUserResult;
 
             [OneTimeSetUp]
-            public void WhenVerifyUserGetsCalled()
+            public async Task WhenVerifyUserGetsCalled()
             {
                 Setup();
 
-                UserRepository.Setup(repo => repo.GetUser(It.IsAny<string>()).Returns(new User { Email = _email, Password = _password }));
+                UserRepository.Setup(repo => repo.GetUser(It.IsAny<string>())).Returns(Task.FromResult(new User {Password = "XD" }));
 
-                _isMatch = AuthService.VerifyUser(_email, _password);
+                CryptographyService.Setup(service => service.CheckPassword(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
+                _verifyUserResult = await AuthService.VerifyUser(_email, _password);
             }
+
+            [Test]
+            public void ThenResultShouldBeAsExpected()
+                => Assert.IsTrue(_verifyUserResult.Success);
+
+            [Test]
+            public void ThenUserRepositoryGetUserShouldHaveBeenCalled()
+                => UserRepository.Verify(repository => repository.GetUser(_email), Times.Once);
+
+            [Test]
+            public void ThenCryptographyServiceCheckPasswordShouldHaveBeenCalled()
+                => CryptographyService.Verify(service => service.CheckPassword(_password, "XD"), Times.Once);
+        }
+
+        [TestFixture]
+        public class GivenAnIncorrectEmailAndPassword : AuthServiceTestBase
+        {
+            private string _email;
+            private string _password;
+            private VerifyUserResult _verifyUserResult;
+
+            [OneTimeSetUp]
+            public async Task WhenVerifyUserGetsCalled()
+            {
+                Setup();
+
+                UserRepository.Setup(repo => repo.GetUser(It.IsAny<string>())).Returns(Task.FromResult(new User {Password = "XD" }));
+
+                CryptographyService.Setup(service => service.CheckPassword(It.IsAny<string>(), It.IsAny<string>())).Returns(false);
+                _verifyUserResult = await AuthService.VerifyUser(_email, _password);
+            }
+
+            [Test]
+            public void ThenResultShouldBeAsExpected()
+                => Assert.IsFalse(_verifyUserResult.Success);
+
+            [Test]
+            public void ThenUserRepositoryGetUserShouldHaveBeenCalled()
+                => UserRepository.Verify(repository => repository.GetUser(_email), Times.Once);
+
+            [Test]
+            public void ThenCryptographyServiceCheckPasswordShouldHaveBeenCalled()
+                => CryptographyService.Verify(service => service.CheckPassword(_password, "XD"), Times.Once);
         }
     }
 }

@@ -1,7 +1,11 @@
-﻿using AutoFixture;
+﻿using System.Threading.Tasks;
+using AutoFixture;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 using NUnit.Framework;
+using Smp.Web.Models;
 using Smp.Web.Models.Requests;
+using Smp.Web.Models.Results;
 
 namespace Smp.Web.Tests.Unit.Tests.ControllerTests.AuthControllerTests
 {
@@ -11,24 +15,32 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.AuthControllerTests
         [TestFixture]
         public class GivenValidCredentials : AuthControllerTestBase
         {
-            private LoginRequest _loginRequest;
+            private SignInRequest _signInRequest;
+            private User _user;
 
             private IActionResult _result;
 
             [OneTimeSetUp]
-            public void WhenSignInGetsCalled()
+            public async Task WhenSignInGetsCalled()
             {
                 Setup();
 
                 var fixture = new Fixture();
-                _loginRequest = fixture.Create<LoginRequest>();
+                _signInRequest = fixture.Create<SignInRequest>();
+                _user = fixture.Create<User>();
 
-                _result = AuthController.SignIn(_loginRequest);
+                AuthService.Setup(service => service.VerifyUser(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(new VerifyUserResult(true, _user)));
+
+                _result = await AuthController.SignIn(_signInRequest);
             }
 
             [Test]
-            public void ThenResultShouldBeOkObjectResult() 
+            public void ThenResultShouldBeOkObjectResult()
                 => Assert.IsInstanceOf<OkObjectResult>(_result);
+
+            [Test]
+            public void ThenAuthServiceVerifyUserShouldHaveBeenCalled()
+                => AuthService.Verify(service => service.VerifyUser(_signInRequest.Email, _signInRequest.Password), Times.Once);
         }
 
 //        [TestFixture]
@@ -46,7 +58,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.AuthControllerTests
 //            }
 //
 //            [Test]
-//            public void ThenResultShouldBeOkObjectResult() 
+//            public void ThenResultShouldBeOkObjectResult()
 //                => Assert.IsInstanceOf<OkObjectResult>(_result);
 //        }
     }
