@@ -13,16 +13,16 @@
       <img src="assets/img/smp-icon-blue.svg" alt="SMP icon">
       <h1>Sign in to your account</h1>
       <form name="form" (ngSubmit)="f.form.valid && signIn()" #f="ngForm" novalidate>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-          <input type="text" class="form-control" placeholder="Username" name="username" [(ngModel)]="createUserRequest.username"
-            #username="ngModel" required />
-          <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+          <input type="text" class="form-control" placeholder="Email" name="email" [(ngModel)]="signInRequest.email"
+            #email="ngModel" required />
+          <div *ngIf="f.submitted && !email.valid" class="help-block">Email is required</div>
         </div>
 
-        <div class="forgotten-password"><a href="#">Forgotten password?</a></div>
+        <div class="forgotten-password"><a [routerLink]="['/sign-in']">Forgotten password?</a></div>
 
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-          <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="createUserRequest.password"
+          <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="signInRequest.password"
             #password="ngModel" required />
           <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
         </div>
