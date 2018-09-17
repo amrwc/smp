@@ -19,8 +19,6 @@ namespace Smp.Web.Controllers
         public async Task<IActionResult> SignIn([FromBody]SignInRequest signInRequest)
         {
             var verifyUserResult = await _authService.VerifyUser(signInRequest.Email, signInRequest.Password);
-            if (verifyUserResult.Success)
-                return Ok(new { token = _authService.CreateJwt(verifyUserResult.User) });
 
             return verifyUserResult.Success
                 ? (IActionResult) Ok(new { token = _authService.CreateJwt(verifyUserResult.User) })

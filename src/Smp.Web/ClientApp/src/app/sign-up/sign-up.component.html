@@ -13,10 +13,10 @@
       <img src="assets/img/smp-icon-blue.svg">
       <h1>Create your account</h1>
       <form name="form" (ngSubmit)="f.form.valid && signUp()" #f="ngForm" novalidate>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-          <input type="text" class="form-control" placeholder="Username" name="username" [(ngModel)]="createUserRequest.username"
-            #username="ngModel" required />
-          <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !fullName.valid }">
+          <input type="text" class="form-control" placeholder="Full name" name="fullName" [(ngModel)]="createUserRequest.fullName"
+            #fullName="ngModel" required />
+          <div *ngIf="f.submitted && !fullName.valid" class="help-block">Name is required</div>
         </div>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
           <input type="email" class="form-control" placeholder="Email" name="email" [(ngModel)]="createUserRequest.email"
