@@ -34,9 +34,15 @@ namespace Smp.Web
             services.AddScoped<ICryptographyService, CryptographyService>();
             services.AddScoped<IAuthService, AuthService>();
 
-            services.AddAuthentication().AddJwtBearer(jwt => {
+            services.AddAuthentication(/* jwt =>
+            {
+                jwt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                jwt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            } */)
+            .AddJwtBearer(jwt =>
+            {
                 jwt.RequireHttpsMetadata = true;
-                jwt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                jwt.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidIssuer = Configuration["Tokens:Issuer"],
                     ValidAudience = Configuration["Tokens:Issuer"],

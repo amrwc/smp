@@ -35,9 +35,9 @@ namespace Smp.Web.Services
         {
             var userFromDb = await _userRepository.GetUser(email);
 
-            var hello = _cryptographyService.CheckPassword(password, userFromDb.Password);
+            var isPasswordCorrect = _cryptographyService.CheckPassword(password, userFromDb.Password);
 
-            return new VerifyUserResult(hello, userFromDb);
+            return new VerifyUserResult(isPasswordCorrect, userFromDb);
         }
 
         public string CreateJwt(User user)
@@ -48,7 +48,7 @@ namespace Smp.Web.Services
                 new Claim(JwtRegisteredClaimNames.Jti, user.Id.ToString())
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:SigningKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(_configuration["Tokens:Issuer"], _configuration["Tokens:Issuer"],
