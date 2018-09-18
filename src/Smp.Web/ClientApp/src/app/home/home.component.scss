@@ -5,43 +5,9 @@
   margin: 0;
   padding: 0;
 
-  header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-
-    background-color: white;
-    border-bottom: 0.1px solid $grey;
-    min-height: 4rem;
-    padding: 0 1rem;
-
-    .header-content {
-      display: flex;
-      // justify-content: space-between;
-      justify-content: center;
-    }
-  }
-
   .home-content {
     flex: 1;
 
     padding: 4rem 0;
-  }
-
-  footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-
-    background-color: white;
-    border-top: 0.1px solid $grey;
-    min-height: 4rem;
-    width: 100vw;
-
-    nav {
-      display: flex;
-      justify-content: space-between;
-    }
   }
 }

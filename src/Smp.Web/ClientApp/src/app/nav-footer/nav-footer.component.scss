@@ -1,0 +1,17 @@
+@import '~sass/variables';
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  background-color: white;
+  border-top: 0.1px solid $grey;
+  min-height: 4rem;
+  width: 100vw;
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+  }
+}
