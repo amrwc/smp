@@ -51,7 +51,7 @@ export class SignInComponent implements OnInit {
       });
   }
 
-  // NOTE: Potentially redundant if used in ngOnInit.
+  // NOTE: Wire this up with a Sign out button in settings.
   // public signOut() {
   //   localStorage.removeItem('currentUser');
   // }
