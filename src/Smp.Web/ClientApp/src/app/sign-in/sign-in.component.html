@@ -1,16 +1,14 @@
-<div class="signin-body container-fluid">
+<div class="body container-fluid">
   <div class="row">
     <div class="side-panel col-12 col-md-5 order-last">
-      <img src="assets/img/smp-icon.svg">
-
       <div class="welcome">
         <h1>Welcome to the</h1>
         <h1>Social Media Portal!</h1>
         <h3>Stay in touch with your friends</h3>
       </div>
     </div>
-    <div class="signin-form col-12 col-md-7 order-md-last">
-      <img src="assets/img/smp-icon-blue.svg" alt="SMP icon">
+    <div class="form col-12 col-md-7 order-md-last">
+      <img src="assets/img/smp-logo.svg">
       <h1>Sign in to your account</h1>
       <form name="form" (ngSubmit)="f.form.valid && signIn()" #f="ngForm" novalidate>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
@@ -29,7 +27,7 @@
         <div class="form-group">
           <button [disabled]="loading" class="btn">Sign in</button>
           <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-          <div class="not-member">
+          <div class="question">
             <a [routerLink]="['/sign-up']">Don't have an account? Sign up here!</a>
           </div>
         </div>
