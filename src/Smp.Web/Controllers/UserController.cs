@@ -38,5 +38,3 @@ namespace Smp.Web.Controllers
         }
     }
 }
-
-//TODO: NULL CreateUserRequest xd
