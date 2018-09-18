@@ -11,6 +11,7 @@ import { CounterComponent } from './counter/counter.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AlreadySignedInGuard } from './guards/already-signed-in.guard';
 
 @NgModule({
   declarations: [
@@ -28,13 +29,14 @@ import { AuthGuard } from './guards/auth.guard';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard] },
       { path: 'counter', component: CounterComponent, canActivate: [AuthGuard] },
-      { path: 'sign-up', component: SignUpComponent},
-      { path: 'sign-in', component: SignInComponent},
+      { path: 'sign-up', component: SignUpComponent, canActivate: [AlreadySignedInGuard] },
+      { path: 'sign-in', component: SignInComponent, canActivate: [AlreadySignedInGuard] },
       { path: '**', redirectTo: '' }
     ])
   ],
   providers: [
-    AuthGuard
+    AuthGuard,
+    AlreadySignedInGuard
   ],
   bootstrap: [AppComponent]
 })
