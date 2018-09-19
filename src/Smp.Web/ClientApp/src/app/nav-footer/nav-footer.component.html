@@ -1,9 +1,9 @@
 <footer>
   <nav>
-    <span>Home</span>
-    <span>Search</span>
-    <span>Add post</span>
-    <span>Chat</span>
-    <span>Settings</span>
+    <a [routerLink]='["/"]' [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a [routerLink]='["/counter"]' [routerLinkActive]='["link-active"]'>Search</a>
+    <a [routerLink]='["/"]'>Add post</a>
+    <a [routerLink]='["/"]'>Chat</a>
+    <a [routerLink]='["/"]'>Settings</a>
   </nav>
 </footer>
