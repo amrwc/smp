@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Smp.Web.Models.Requests;
 using Smp.Web.Services;
@@ -20,12 +21,18 @@ namespace Smp.Web.Controllers
         {
             var verifyUserResult = await _authService.VerifyUser(signInRequest.Email, signInRequest.Password);
 
-            return verifyUserResult.Success
-                ? (IActionResult) Ok(new {
-                    verifyUserResult.User.FullName,
-                    verifyUserResult.User.Email,
-                    token = _authService.CreateJwt(verifyUserResult.User) })
-                : Unauthorized();
+            return verifyUserResult.Success ? (IActionResult)Ok(new
+            {
+                verifyUserResult.User.FullName,
+                verifyUserResult.User.Email,
+                token = _authService.CreateJwt(verifyUserResult.User)
+            }) : Unauthorized();
+        }
+
+        [HttpGet("[action]"), Authorize]
+        public IActionResult Test()
+        {
+            return Ok();
         }
     }
 }

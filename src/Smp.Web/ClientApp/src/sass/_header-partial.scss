@@ -1,0 +1,24 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-color: $blue;
+  height: 4rem;
+
+  .header-content {
+    color: white;
+
+    h4 {
+      text-align: center;
+    }
+
+    img {
+      height: 3.3rem;
+      width: 3.3rem;
+      position: absolute;
+      top: 0.35rem;
+      right: 1rem;
+    }
+  }
+}
