@@ -3,15 +3,41 @@
 footer {
   position: fixed;
   bottom: 0;
+  // top: 4rem; // If nav-top
   left: 0;
 
   background-color: white;
-  border-top: 0.1px solid $grey;
   min-height: 4rem;
   width: 100vw;
 
   nav {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 4rem;
+    margin: 0.2rem 0 0 0;
+    // margin: 0 0 0.2rem 0; // If nav-top
+    padding: 0;
+
+    a {
+      display: block;
+      height: 4rem;
+      width: 20%;
+      padding-top: 1rem;
+      text-align: center;
+
+      color: $primary;
+
+      &:link, &:visited {
+        text-decoration: none;
+      }
+
+      &:hover, &.link-active {
+        border-top: 2px solid $blue;
+        // border-bottom: 2px solid $blue; // If nav-top
+        padding-top: 0.8rem;
+        text-decoration: none;
+      }
+    }
   }
 }
