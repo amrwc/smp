@@ -1,13 +1,11 @@
 @import '~sass/variables';
 
 footer {
-  position: fixed;
-  bottom: 0;
-  // top: 4rem; // If nav-top
-  left: 0;
-
   background-color: white;
   min-height: 4rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100vw;
 
   nav {
@@ -16,27 +14,45 @@ footer {
     justify-content: space-evenly;
     height: 4rem;
     margin: 0.2rem 0 0 0;
-    // margin: 0 0 0.2rem 0; // If nav-top
     padding: 0;
 
     a {
+      color: $primary;
       display: block;
       height: 4rem;
       width: 20%;
       padding-top: 1rem;
       text-align: center;
 
-      color: $primary;
+      svg {
+        height: 2rem;
+        width: 2rem;
+
+        &:first-of-type {
+          width: 2.5rem;
+        }
+      }
 
       &:link, &:visited {
         text-decoration: none;
       }
 
-      &:hover, &.link-active {
+      &:hover {
+        text-decoration: none;
+
+        svg {
+          fill: $blue;
+        }
+      }
+
+      &.link-active {
         border-top: 2px solid $blue;
-        // border-bottom: 2px solid $blue; // If nav-top
         padding-top: 0.8rem;
         text-decoration: none;
+
+        svg {
+          fill: $blue;
+        }
       }
     }
   }
