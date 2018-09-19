@@ -1,4 +1,5 @@
 @import '~sass/variables';
+@import '~sass/header-partial';
 
 .home-body {
   height: 100vh;
@@ -7,6 +8,6 @@
 
   .home-content {
     flex: 1;
-    margin: 4rem 0.5rem 4.3rem 0.5rem;
+    padding: 4rem 0.5rem 4.3rem 0.5rem; // Padding is better for Safari.
   }
 }

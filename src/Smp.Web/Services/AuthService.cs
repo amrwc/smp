@@ -48,13 +48,13 @@ namespace Smp.Web.Services
                 new Claim(JwtRegisteredClaimNames.Jti, user.Id.ToString())
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:SigningKey"]));
+            var key = new SymmetricSecurityKey(Convert.FromBase64String(_configuration["Tokens:SigningKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: _configuration["Tokens:Issuer"],
-                audience: _configuration["Tokens:Issuer"],
-                claims: claims, expires: DateTime.Now.AddMinutes(30),
+                _configuration["Tokens:Issuer"],
+                _configuration["Tokens:Issuer"],
+                claims, expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

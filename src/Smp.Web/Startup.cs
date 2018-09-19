@@ -34,18 +34,19 @@ namespace Smp.Web
             services.AddScoped<ICryptographyService, CryptographyService>();
             services.AddScoped<IAuthService, AuthService>();
 
-            services.AddAuthentication(/* jwt =>
+            services.AddAuthentication(jwt =>
             {
                 jwt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 jwt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            } */)
-            .AddJwtBearer(jwt =>
+            }).AddJwtBearer(jwt =>
             {
-                jwt.RequireHttpsMetadata = true;
-                jwt.TokenValidationParameters = new TokenValidationParameters()
+                jwt.RequireHttpsMetadata = false;
+                jwt.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidIssuer = Configuration["Tokens:Issuer"],
                     ValidAudience = Configuration["Tokens:Issuer"],
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
                     IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(Configuration["Tokens:SigningKey"]))
                 };
             });
