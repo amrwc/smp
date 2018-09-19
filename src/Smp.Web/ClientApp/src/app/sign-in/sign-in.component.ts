@@ -26,13 +26,6 @@ export class SignInComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // NOTE: Sign out functionality
-    //       When user presses 'Sign out', the router will send them
-    //       to the Sign in page, which voids the session.
-    //       -- They wouldn't go to Sign in page if they wanted to stay
-    //       signed in.
-    //       __Uncomment 'implements OnInit__
-    // localStorage.removeItem('currentUser');
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
@@ -50,9 +43,4 @@ export class SignInComponent implements OnInit {
         setTimeout(() => this.loading = false, 1500);
       });
   }
-
-  // NOTE: Wire this up with a Sign out button in settings.
-  // public signOut() {
-  //   localStorage.removeItem('currentUser');
-  // }
 }
