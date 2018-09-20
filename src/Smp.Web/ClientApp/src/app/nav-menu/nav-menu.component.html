@@ -1,4 +1,4 @@
-<nav class='navbar fixed-top navbar-expand-md navbar-inverse'>
+<nav class='navbar navbar-fixed-top navbar-expand-md'>
   <a class='navbar-brand' [routerLink]='["/"]'>SMP</a>
   <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'
     [attr.aria-expanded]='isExpanded' (click)='toggle()'>
@@ -8,12 +8,11 @@
     <span class='icon-bar'></span>
   </button>
 
-  <!-- <div class="clearfix"></div> -->
-  <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
+  <div class='navbar-collapse collapse'>
     <ul class='nav navbar-nav'>
       <li [routerLinkActive]='["link-active"]'>
-        <a [routerLink]='["/counter"]' (click)='collapse()'>
-          <span></span> Counter
+        <a [routerLink]='["/sign-in"]' (click)='collapse()'>
+          <span></span> Sign in
         </a>
       </li>
       <li [routerLinkActive]='["link-active"]'>

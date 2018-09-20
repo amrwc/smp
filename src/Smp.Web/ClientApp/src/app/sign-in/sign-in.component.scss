@@ -1,0 +1,302 @@
+@import '~sass/variables';
+
+.signin-body {
+  .side-panel {
+    display: none;
+  }
+
+  .signin-form {
+    padding: 5rem 3.7rem 0 3.7rem;
+
+    img {
+      display: block;
+      height: 10rem;
+      margin: 0 auto 5rem auto;
+      width: 10rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-top: 0;
+      margin-bottom: 2.9rem;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: none;
+    }
+
+    input {
+      border-color: $grey;
+      border-radius: 6px;
+      color: $primary;
+      height: 3.85rem;
+      margin-bottom: 1.2rem;
+      padding: 0 1rem;
+
+      &::-webkit-input-placeholder {
+        color: $grey;
+        font-size: 1.2rem;
+      }
+      &:-moz-placeholder {
+        color: $grey;
+        font-size: 1.2rem;
+      }
+      &::-moz-placeholder {
+        color: $grey;
+        font-size: 1.2rem;
+      }
+      &:-ms-input-placeholder {
+        color: $grey;
+        font-size: 1.2rem;
+      }
+    }
+
+    .forgotten-password a {
+      float: right;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+
+      &,
+      &:hover,
+      &:active,
+      &:visited {
+        color: $primary;
+        text-decoration: none;
+      }
+    }
+
+    button {
+      background-color: rgba($blue, 0.9);
+      border: 1px solid $blue;
+      border-radius: 6px;
+      color: white;
+      display: block;
+      font-size: 1.1rem;
+      height: 3.8rem;
+      margin: 2.7rem auto 0.96rem auto;
+      width: 100%;
+
+      &:hover {
+        background-color: $blue;
+      }
+    }
+
+    .not-member {
+      display: block;
+      font-size: 1rem;
+      text-align: center;
+
+      a,
+      a:hover,
+      a:active,
+      a:visited {
+        color: $primary;
+        text-decoration: none;
+      }
+    }
+  }
+
+  @media (min-width: $sm) {
+    .signin-form {
+      form {
+        width: 70%;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  @media (min-width: $md) {
+    margin: 0;
+    padding: 0;
+
+    .row {
+      height: 100vh;
+      margin: 0;
+    }
+
+    .side-panel {
+      background: url(../../assets/img/background-photo-group.png) center no-repeat;
+      background-size: cover;
+      display: block;
+
+      img {
+        height: 5rem;
+        position: absolute;
+        top: 2.5rem;
+        left: 2.5rem;
+        width: 5rem;
+      }
+
+      .welcome {
+        height: 70%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 1rem;
+
+        h1 {
+          color: white;
+          font-size: 2.8rem;
+          font-weight: 300;
+          margin-bottom: 0;
+
+          &:last-of-type {
+            margin-top: 0;
+            font-weight: 700;
+          }
+        }
+
+        h3 {
+          color: white;
+          font-size: 1.8rem;
+          font-weight: 300;
+          margin-top: 1.5rem;
+        }
+      }
+    }
+
+    .signin-form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-top: 0;
+
+      img {
+        display: none;
+      }
+
+      h1 {
+        font-weight: 400;
+        margin-bottom: 3rem;
+      }
+
+      form {
+        width: 60%;
+      }
+
+      input {
+        margin-top: 0;
+        height: 4rem;
+
+        &::-webkit-input-placeholder {
+          font-weight: 300;
+        }
+        &:-moz-placeholder {
+          font-weight: 300;
+        }
+        &::-moz-placeholder {
+          font-weight: 300;
+        }
+        &:-ms-input-placeholder {
+          font-weight: 300;
+        }
+      }
+
+      div.form-group:last-of-type {
+        margin-top: 2rem;
+
+        button {
+          font-size: 1.5rem;
+          font-weight: 300;
+          height: 4rem;
+          margin-top: 3.05rem;
+        }
+
+        .not-member {
+          margin-top: 2rem;
+        }
+      }
+    }
+  }
+
+  @media (min-width: $lg) {
+    .side-panel {
+      img {
+        height: 7.5rem;
+        width: 7.5rem;
+      }
+
+      .welcome {
+        h1 {
+          font-size: 3.5rem;
+
+          &:last-of-type {
+            margin-top: 1rem;
+          }
+        }
+
+        h3 {
+          font-size: 2rem;
+        }
+      }
+    }
+
+    .signin-form {
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 5rem;
+      }
+
+      .forgotten-password a {
+        font-size: 1.2rem;
+      }
+
+      input {
+        height: 6rem;
+
+        &::-webkit-input-placeholder {
+          font-size: 1.4rem;
+        }
+        &:-moz-placeholder {
+          font-size: 1.4rem;
+        }
+        &::-moz-placeholder {
+          font-size: 1.4rem;
+        }
+        &:-ms-input-placeholder {
+          font-size: 1.4rem;
+        }
+      }
+
+      div.form-group:last-of-type {
+        margin-top: 3rem;
+
+        button {
+          font-size: 2rem;
+          height: 6rem;
+          margin-top: 3.3rem;
+        }
+
+        .not-member {
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
+
+  @media (min-width: $xl) {
+    .side-panel {
+      .welcome {
+        h1 {
+          font-size: 4rem;
+        }
+
+        h3 {
+          margin-top: 2rem;
+        }
+      }
+    }
+
+    .signin-form {
+      h1 {
+        font-size: 3.5rem;
+      }
+    }
+  }
+}
