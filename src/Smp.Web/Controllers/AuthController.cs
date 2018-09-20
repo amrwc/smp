@@ -21,18 +21,14 @@ namespace Smp.Web.Controllers
         {
             var verifyUserResult = await _authService.VerifyUser(signInRequest.Email, signInRequest.Password);
 
-            return verifyUserResult.Success ? (IActionResult)Ok(new
-            {
-                verifyUserResult.User.FullName,
-                verifyUserResult.User.Email,
-                token = _authService.CreateJwt(verifyUserResult.User)
-            }) : Unauthorized();
-        }
-
-        [HttpGet("[action]"), Authorize]
-        public IActionResult Test()
-        {
-            return Ok();
+            return verifyUserResult.Success
+                ? (IActionResult)Ok(new
+                {
+                    verifyUserResult.User.FullName,
+                    verifyUserResult.User.Email,
+                    token = _authService.CreateJwt(verifyUserResult.User)
+                })
+                : Unauthorized();
         }
     }
 }
