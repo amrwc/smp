@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AutoFixture;
 using FluentAssertions;
@@ -32,12 +30,12 @@ namespace Smp.Web.Tests.Unit.Tests.ValidatorTests.UserValidatorTests
             }
 
             [Test]
-            public void ThenNoErrorShouldHaveBeenReturned() 
+            public void ThenNoErrorShouldHaveBeenReturned()
                 => Assert.IsEmpty(_errors);
         }
 
         [TestFixture]
-        public class GivenAnEmptyUsername : UserValidatorTestBase
+        public class GivenAnEmptyFullName : UserValidatorTestBase
         {
             private CreateUserRequest _createUserRequest;
 
@@ -49,21 +47,21 @@ namespace Smp.Web.Tests.Unit.Tests.ValidatorTests.UserValidatorTests
                 Setup();
 
                 var fixture = new Fixture();
-                _createUserRequest = fixture.Build<CreateUserRequest>().With(request => request.Email, "email@email.com").Without(request => request.Username).Create();
+                _createUserRequest = fixture.Build<CreateUserRequest>().With(request => request.Email, "email@email.com").Without(request => request.FullName).Create();
 
                 _errors = UserValidator.ValidateCreateUserRequest(_createUserRequest);
             }
 
             [Test]
-            public void ThenThereShouldBeAnError() 
+            public void ThenThereShouldBeAnError()
                 => Assert.That(_errors.Count, Is.EqualTo(1));
 
             [Test]
             public void ThenTheErrorShouldBeAsExpected()
-                => _errors.First().Should().BeEquivalentTo(new Error("invalid_username", "Username must have at least 3 characters."));
+                => _errors.First().Should().BeEquivalentTo(new Error("invalid_full_name", "Full name must have at least 3 characters."));
         }
 
-        public class GivenTooShortUsername : UserValidatorTestBase
+        public class GivenTooShortFullName : UserValidatorTestBase
         {
             private CreateUserRequest _createUserRequest;
 
@@ -75,18 +73,18 @@ namespace Smp.Web.Tests.Unit.Tests.ValidatorTests.UserValidatorTests
                 Setup();
 
                 var fixture = new Fixture();
-                _createUserRequest = fixture.Build<CreateUserRequest>().With(request => request.Email, "email@email.com").With(request => request.Username, "ye").Create();
+                _createUserRequest = fixture.Build<CreateUserRequest>().With(request => request.Email, "email@email.com").With(request => request.FullName, "ye").Create();
 
                 _errors = UserValidator.ValidateCreateUserRequest(_createUserRequest);
             }
 
             [Test]
-            public void ThenThereShouldBeAnError() 
+            public void ThenThereShouldBeAnError()
                 => Assert.That(_errors.Count, Is.EqualTo(1));
 
             [Test]
             public void ThenTheErrorShouldBeAsExpected()
-                => _errors.First().Should().BeEquivalentTo(new Error("invalid_username", "Username must have at least 3 characters."));
+                => _errors.First().Should().BeEquivalentTo(new Error("invalid_full_name", "Full name must have at least 3 characters."));
         }
 
         [TestFixture]

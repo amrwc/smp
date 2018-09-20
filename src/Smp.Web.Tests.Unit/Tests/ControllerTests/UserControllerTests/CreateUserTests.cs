@@ -24,7 +24,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UserControllerTests
                 UserValidator.Setup(validator => validator.ValidateCreateUserRequest(It.IsAny<CreateUserRequest>()))
                     .Returns(new List<Error> { new Error("idc", "idc") });
 
-                _result = UserController.CreateUser(new CreateUserRequest { Username = "", Password = "bb", Email = "lx"});
+                _result = UserController.CreateUser(new CreateUserRequest { FullName = "", Password = "bb", Email = "lx"});
             }
 
             [Test]
@@ -61,7 +61,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UserControllerTests
             [Test]
             public void ThenUserRepositoryCreateUserShouldHaveBeenCalled()
                 => UserRepository.Verify(repo => repo.CreateUser(It.Is<User>(user =>
-                    user.Username == _createUserRequest.Username && user.Password == "HashedAndSaltedPassword" &&
+                    user.FullName == _createUserRequest.FullName && user.Password == "HashedAndSaltedPassword" &&
                     user.Email == _createUserRequest.Email)));
 
             [Test]

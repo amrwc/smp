@@ -1,5 +1,5 @@
 export class CreateUserRequest {
-  public username: string;
+  public fullName: string;
   public password: string;
   public email: string;
 }
