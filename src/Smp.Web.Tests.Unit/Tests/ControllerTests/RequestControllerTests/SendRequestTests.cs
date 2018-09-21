@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using Smp.Web.Models;
+using Smp.Web.Repositories;
 
 namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestControllerTests
 {
@@ -37,6 +38,12 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestControllerTests
             [Test]
             public void ThenRequestServiceValidateRequestShouldHaveBeenCalled()
                 => RequestService.Verify(service => service.ValidateRequest(It.IsAny<Request>()), Times.Once);
+
+            [Test]
+            public void ThenRequestRepositoryCreateRequestShouldHaveBeenCalled()
+                => RequestRepository.Verify(repo => repo.CreateRequest(It.Is<Request>(request =>
+                    request.SenderId == _requestRequest.SenderId && request.ReceiverId == _requestRequest.ReceiverId &&
+                    request.SentDate == _requestRequest.SentDate && request.RequestTypeId == _requestRequest.RequestTypeId)));
 
             [Test]
             public void ThenResultShouldBeAnOkResult()
