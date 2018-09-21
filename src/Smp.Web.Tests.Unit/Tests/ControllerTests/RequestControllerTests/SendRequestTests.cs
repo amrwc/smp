@@ -1,4 +1,6 @@
-﻿using AutoFixture;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoFixture;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -19,19 +21,26 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestControllerTests
             private IActionResult _result;
 
             [OneTimeSetUp]
-            public void WhenSendFriendRequestGetsCalled()
+            public async Task WhenSendFriendRequestGetsCalled()
             {
                 Setup();
 
                 var fixture = new Fixture();
+                _request = fixture.Create<Request>();
                 _requestRequest = fixture.Create<RequestRequest>();
 
-                _result = RequestController.SendRequest(_requestRequest);
+                RequestService.Setup(service => service.ValidateRequest(It.IsAny<Request>())).Returns(new List<Error>());
+
+                _result = await RequestController.SendRequest(_requestRequest);
             }
 
             [Test]
-            public void ThenRequestServiceValidateRequestShouldHaveBeenCalled() 
-                => RequestService.Verify(service => service.ValidateRequest(_request), Times.Once);
+            public void ThenRequestServiceValidateRequestShouldHaveBeenCalled()
+                => RequestService.Verify(service => service.ValidateRequest(It.IsAny<Request>()), Times.Once);
+
+            [Test]
+            public void ThenResultShouldBeAnOkResult()
+                => Assert.IsInstanceOf<OkResult>(_result);
         }
     }
 }
