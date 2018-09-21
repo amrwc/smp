@@ -11,11 +11,13 @@ namespace Smp.Web.Controllers
     public class RequestController : Controller
     {
         private readonly IRequestService _requestService;
-        private readonly IUserRepository _userRepository;
+        private readonly IRequestRepository _requestRepository;
 
-        public RequestController(IRequestService requestService)
+        public RequestController(IRequestService requestService, IRequestRepository requestRepository)
         {
             _requestService = requestService;
+            _requestRepository = requestRepository;
+
         }
 
         [HttpPost("[action]"), Authorize]
@@ -26,7 +28,7 @@ namespace Smp.Web.Controllers
 
             var newRequest = new Request(requestRequest);
 
-            // _requestRepository.CreateRequest(newRequest);
+            await _requestRepository.CreateRequest(newRequest);
 
             return Ok();
         }
