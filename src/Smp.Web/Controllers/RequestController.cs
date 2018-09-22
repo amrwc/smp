@@ -23,10 +23,10 @@ namespace Smp.Web.Controllers
         [HttpPost("[action]"), Authorize]
         public async Task<IActionResult> SendRequest([FromBody] RequestRequest requestRequest)
         {
-            var validationResult = _requestService.ValidateRequest(new Request(requestRequest));
-            if (validationResult.Any()) return BadRequest(validationResult);
-
             var newRequest = new Request(requestRequest);
+
+            var validationResult = await _requestService.ValidateRequest(newRequest);
+            if (validationResult.Any()) return BadRequest(validationResult);
 
             await _requestRepository.CreateRequest(newRequest);
 

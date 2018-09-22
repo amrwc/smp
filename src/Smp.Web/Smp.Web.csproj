@@ -34,12 +34,6 @@
     <EmbeddedResource Include="ClientApp\src\assets\img\background-photo-group.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv">
-      <HintPath>..\..\..\..\Users\faibz\.nuget\packages\microsoft.aspnetcore.server.kestrel.transport.libuv\2.0.2\lib\netstandard2.0\Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
