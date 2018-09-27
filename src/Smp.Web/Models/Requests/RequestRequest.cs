@@ -6,6 +6,6 @@ namespace Smp.Web.Models
     {
         public Guid SenderId { get; set; }
         public Guid ReceiverId { get; set; }
-        public RequestType RequestTypeId { get; set; }
+        public RequestType RequestType { get; set; }
     }
 }
