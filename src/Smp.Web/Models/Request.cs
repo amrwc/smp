@@ -1,4 +1,5 @@
 ﻿using System;
+using Smp.Web.Models.DTOs;
 using Smp.Web.Models.Requests;
 
 namespace Smp.Web.Models
@@ -12,12 +13,23 @@ namespace Smp.Web.Models
             SenderId = requestRequest.SenderId;
             ReceiverId = requestRequest.ReceiverId;
             SentDate = DateTime.UtcNow;
-            RequestTypeId = requestRequest.RequestTypeId;
+            RequestType = requestRequest.RequestType;
         }
 
         public Guid SenderId { get; set; }
         public Guid ReceiverId { get; set; }
         public DateTime SentDate { get; set; }
-        public RequestType RequestTypeId { get; set; }
+        public RequestType RequestType { get; set; }
+
+        public static explicit operator Request(DTOs.Request request)
+        {
+            return new Request
+            {
+                SenderId = request.SenderId,
+                ReceiverId = request.ReceiverId,
+                SentDate = request.SentDate,
+                RequestType = (RequestType) request.RequestTypeId
+            };
+        }
     }
 }

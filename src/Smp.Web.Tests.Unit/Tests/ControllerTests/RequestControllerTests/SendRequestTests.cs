@@ -27,7 +27,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestControllerTests
                 var fixture = new Fixture();
                 _requestRequest = fixture.Create<RequestRequest>();
 
-                RequestService.Setup(service => service.ValidateRequest(It.IsAny<Request>()))
+                RequestService.Setup(service => service.ValidateNewRequest(It.IsAny<Request>()))
                     .Returns(Task.FromResult(new List<Error>()));
 
                 _result = await RequestController.SendRequest(_requestRequest);
@@ -35,12 +35,12 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestControllerTests
 
             [Test]
             public void ThenRequestServiceValidateRequestShouldHaveBeenCalled()
-                => RequestService.Verify(service => service.ValidateRequest(It.IsAny<Request>()), Times.Once);
+                => RequestService.Verify(service => service.ValidateNewRequest(It.IsAny<Request>()), Times.Once);
 
             [Test]
             public void ThenRequestRepositoryCreateRequestShouldHaveBeenCalled()
                 => RequestRepository.Verify(repo => repo.CreateRequest(It.Is<Request>(request =>
-                    request.SenderId == _requestRequest.SenderId && request.ReceiverId == _requestRequest.ReceiverId && request.RequestTypeId == _requestRequest.RequestTypeId)));
+                    request.SenderId == _requestRequest.SenderId && request.ReceiverId == _requestRequest.ReceiverId && request.RequestType == _requestRequest.RequestType)));
 
             [Test]
             public void ThenResultShouldBeAnOkResult()
@@ -48,7 +48,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestControllerTests
         }
 
         [TestFixture]
-        public class GivenAFriendRequestToAFriend : RequestControllerTestBase
+        public class GivenARequestToFailValidation : RequestControllerTestBase
         {
             private RequestRequest _requestRequest;
             private IActionResult _result;
@@ -61,7 +61,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestControllerTests
                 var fixture = new Fixture();
                 _requestRequest = fixture.Create<RequestRequest>();
 
-                RequestService.Setup(service => service.ValidateRequest(It.IsAny<Request>()))
+                RequestService.Setup(service => service.ValidateNewRequest(It.IsAny<Request>()))
                     .Returns(Task.FromResult(new List<Error>{new Error(":^)", ":^)")}));
 
                 _result = await RequestController.SendRequest(_requestRequest);
@@ -69,7 +69,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestControllerTests
 
             [Test]
             public void ThenRequestServiceValidateRequestShouldHaveBeenCalled()
-                => RequestService.Verify(service => service.ValidateRequest(It.IsAny<Request>()), Times.Once);
+                => RequestService.Verify(service => service.ValidateNewRequest(It.IsAny<Request>()), Times.Once);
 
             [Test]
             public void ThenRequestRepositoryCreateRequestShouldNotHaveBeenCalled()
