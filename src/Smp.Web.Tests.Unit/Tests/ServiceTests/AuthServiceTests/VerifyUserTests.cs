@@ -14,8 +14,8 @@ namespace Smp.Web.Tests.Unit.Tests.ServiceTests.AuthServiceTests
         [TestFixture]
         public class GivenACorrectEmailAndPassword : AuthServiceTestBase
         {
-            private string _email;
-            private string _password;
+            private const string _email = "hey";
+            private const string _password = "hey";
             private VerifyUserResult _verifyUserResult;
 
             [OneTimeSetUp]
@@ -45,8 +45,8 @@ namespace Smp.Web.Tests.Unit.Tests.ServiceTests.AuthServiceTests
         [TestFixture]
         public class GivenAnIncorrectEmailAndPassword : AuthServiceTestBase
         {
-            private string _email;
-            private string _password;
+            private const string _email = "hey";
+            private const string _password = "hey";
             private VerifyUserResult _verifyUserResult;
 
             [OneTimeSetUp]
