@@ -1,0 +1,33 @@
+@import '~sass/variables';
+@import '~sass/header-partial';
+
+.settings-body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+
+  .settings-content {
+    padding: 4rem 0 4.3rem 0;
+
+    a {
+      background-color: white;
+      display: block;
+      padding: 1rem;
+
+      button {
+        background-color: white;
+        border: none;
+        color: $primary;
+        font-size: 1.7rem;
+      }
+
+      &:last-of-type {
+        border-top: 1px solid $grey;
+
+        button {
+          color: rgb(255, 85, 85);
+        }
+      }
+    }
+  }
+}

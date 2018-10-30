@@ -1,0 +1,59 @@
+@import '~sass/variables';
+
+footer {
+  background-color: white;
+  min-height: 4rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+
+  nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 4rem;
+    margin: 0.2rem 0 0 0;
+    padding: 0;
+
+    a {
+      color: $primary;
+      display: block;
+      height: 4rem;
+      width: 20%;
+      padding-top: 1rem;
+      text-align: center;
+
+      svg {
+        height: 2rem;
+        width: 2rem;
+
+        &:first-of-type {
+          width: 2.5rem;
+        }
+      }
+
+      &:link, &:visited {
+        text-decoration: none;
+      }
+
+      &:hover {
+        text-decoration: none;
+
+        svg {
+          fill: $blue;
+        }
+      }
+
+      &.link-active {
+        border-top: 2px solid $blue;
+        padding-top: 0.8rem;
+        text-decoration: none;
+
+        svg {
+          fill: $blue;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-color: $blue;
+  height: 4rem;
+
+  .header-content {
+    color: white;
+
+    h4 {
+      font-weight: 300;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    img {
+      height: 3rem;
+      width: 3rem;
+      position: absolute;
+      top: 0.5rem;
+      right: 1.2rem;
+    }
+  }
+}
