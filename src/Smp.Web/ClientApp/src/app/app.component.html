@@ -1,3 +1,4 @@
 <main class="container-fluid">
   <router-outlet></router-outlet>
+  <app-nav-footer *ngIf="!router.url.includes('sign-in') && !router.url.includes('sign-up')"></app-nav-footer>
 </main>
