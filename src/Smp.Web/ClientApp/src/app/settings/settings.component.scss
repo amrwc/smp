@@ -21,7 +21,7 @@
         font-size: 1.7rem;
       }
 
-      &.sign-out {
+      &:last-of-type {
         border-top: 1px solid $grey;
 
         button {
