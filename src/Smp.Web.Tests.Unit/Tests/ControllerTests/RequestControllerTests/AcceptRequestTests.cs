@@ -28,7 +28,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestControllerTests
                 Setup();
 
                 RequestService.Setup(service => service.ValidateAcceptRequest(It.IsAny<Request>())).Returns(Task.FromResult(new List<Error>()));
-                _result = await RequestController.AcceptRequest(_userId, _senderId, _requestType);
+                _result = await RequestController.AcceptRequest(_userId, _senderId, (int) _requestType);
             }
 
             [Test]
