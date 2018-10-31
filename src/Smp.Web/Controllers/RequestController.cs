@@ -41,13 +41,11 @@ namespace Smp.Web.Controllers
         [HttpGet("[action]/{userId:Guid}/{senderId:Guid}/{requestType:int}"), Authorize]
         public async Task<IActionResult> AcceptRequest(Guid userId, Guid senderId, int requestType)
         {
-            var reqType = (RequestType) requestType;
-
             var request = new Request
             {
                 SenderId = senderId,
                 ReceiverId = userId,
-                RequestType = reqType
+                RequestType = (RequestType) requestType
             };
 
             var validationResult = await _requestService.ValidateAcceptRequest(request);
