@@ -49,7 +49,7 @@
 
   <ItemGroup>
     <PackageReference Include="Simple.Migrations" Version="0.9.19" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
   </ItemGroup>
 
   <ItemGroup>
