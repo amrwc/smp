@@ -1,7 +1,6 @@
-﻿using System;
-using System.Data.SqlClient;
-using SimpleMigrations;
+﻿using SimpleMigrations;
 using SimpleMigrations.DatabaseProvider;
+using System.Data.SqlClient;
 
 namespace Smp.Migrations
 {
