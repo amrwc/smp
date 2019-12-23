@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CreateUserRequest } from '../models/create-user-request';
+import { Error } from '../models/error';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,6 +14,7 @@ export class SignUpComponent {
   private readonly httpClient: HttpClient;
   public createUserRequest = new CreateUserRequest();
   public loading: boolean = false;
+  public validationErrors: Array<Error> = [];
 
   constructor(
     http: HttpClient,
@@ -23,16 +25,19 @@ export class SignUpComponent {
     this.httpClient = http;
   }
 
-  public signUp() {
+  public signUp(): void {
+    this.validationErrors = [];
     this.loading = true;
+    this.createUserRequest.email = this.createUserRequest.email.toLowerCase();
+
     this.httpClient
       .post(this.baseUrl + 'api/User/CreateUser', this.createUserRequest)
       .subscribe(result => {
         this.loading = false;
-        this.router.navigate(['/']);
+        this.router.navigate(['/sign-in'], { queryParams: {signUpSuccessful: 'true' }});
       }, error => {
-        console.error(error);
-        setTimeout(() => this.loading = false, 1500);
+        this.validationErrors = error.error;
+        this.loading = false;
       });
   }
 }
