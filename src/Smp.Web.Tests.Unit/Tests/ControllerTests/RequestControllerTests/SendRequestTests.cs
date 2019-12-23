@@ -40,7 +40,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestControllerTests
             [Test]
             public void ThenRequestRepositoryCreateRequestShouldHaveBeenCalled()
                 => RequestRepository.Verify(repo => repo.CreateRequest(It.Is<Request>(request =>
-                    request.SenderId == _requestRequest.SenderId && request.ReceiverId == _requestRequest.ReceiverId && request.RequestType == _requestRequest.RequestType)));
+                    request.SenderId == _requestRequest.SenderId && request.ReceiverId == _requestRequest.ReceiverId && request.RequestTypeId == _requestRequest.RequestTypeId)));
 
             [Test]
             public void ThenResultShouldBeAnOkResult()
