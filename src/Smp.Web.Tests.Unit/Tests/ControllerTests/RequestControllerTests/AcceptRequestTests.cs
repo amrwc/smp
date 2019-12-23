@@ -19,7 +19,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestControllerTests
         {
             private Guid _userId = Guid.NewGuid();
             private Guid _senderId = Guid.NewGuid();
-            private RequestType _requestType = RequestType.Friend;
+            private byte _requestTypeId = 1;
             private IActionResult _result;
 
             [OneTimeSetUp]
@@ -28,7 +28,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestControllerTests
                 Setup();
 
                 RequestService.Setup(service => service.ValidateAcceptRequest(It.IsAny<Request>())).Returns(Task.FromResult(new List<Error>()));
-                _result = await RequestController.AcceptRequest(_userId, _senderId, (int) _requestType);
+                _result = await RequestController.AcceptRequest(_userId, _senderId, _requestTypeId);
             }
 
             [Test]

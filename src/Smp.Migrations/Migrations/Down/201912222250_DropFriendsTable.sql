@@ -6,6 +6,6 @@ BEGIN
 		AcceptedDate DATETIME NOT NULL,
 		CONSTRAINT PK_Friends PRIMARY KEY (UserOneId, UserTwoId),
 		CONSTRAINT FK_Friends_UserOneId_Users_Id FOREIGN KEY (UserOneId) REFERENCES Users(Id),
-		CONSTRAINT FK_Friends_UserTwoId_Users_Id FOREIGN KEY (UserTwoId) REFERENCES Users(Id),
+		CONSTRAINT FK_Friends_UserTwoId_Users_Id FOREIGN KEY (UserTwoId) REFERENCES Users(Id)
 	);
 END
