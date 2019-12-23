@@ -35,6 +35,8 @@ namespace Smp.Web.Services
         {
             var userFromDb = await _userRepository.GetUser(email);
 
+            if (userFromDb == null) return new VerifyUserResult(false, null);
+
             var isPasswordCorrect = _cryptographyService.CheckPassword(password, userFromDb.Password);
 
             return new VerifyUserResult(isPasswordCorrect, userFromDb);
