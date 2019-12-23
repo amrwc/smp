@@ -12,10 +12,13 @@ namespace Smp.Web.Repositories
     public interface IRequestRepository
     {
         Task CreateRequest(Request newRequest);
-        Task DeleteRequest(Guid userOneId, Guid userTwoId,  RequestType requestType);
+        Task DeleteRequest(Guid userOneId, Guid userTwoId, byte requestTypeId);
         Task<IList<Request>> GetRequestsByUserIds(Guid userOneId, Guid userTwoId);
         Task<IList<Request>> GetRequestsBySenderId(Guid SenderId);
         Task<Request> GetRequestByUserIdsAndType(Request request);
+        Task<IList<RequestType>> GetRequestTypes();
+        Task<RequestType> GetRequestTypeById(byte id);
+        Task<RequestType> GetRequestTypeByName(string name);
     }
 
     public class RequestRepository : IRequestRepository
@@ -27,28 +30,48 @@ namespace Smp.Web.Repositories
             _dbConnection = connectionFactory.GetDbConnection();
         }
 
+        public async Task<IList<RequestType>> GetRequestTypes()
+        {
+            return (await _dbConnection.QueryAsync<Models.DTOs.RequestType>(@"SELECT * FROM [dbo].[RequestTypes] SORT BY [Id] ASC"))
+                .Select(reqType => (RequestType)reqType).ToList();
+        }
+
+        public async Task<RequestType> GetRequestTypeById(byte id)
+        {
+            return (RequestType)await _dbConnection.QueryFirstAsync<Models.DTOs.RequestType>(
+                @"SELECT TOP 1 FROM [dbo].[RequestTypes] WHERE [Id] = @Id",
+                new { Id = id });
+        }
+
+        public async Task<RequestType> GetRequestTypeByName(string name)
+        {
+            return (RequestType)await _dbConnection.QueryFirstAsync<Models.DTOs.RequestType>(
+                @"SELECT TOP 1 FROM [dbo].[RequestTypes] WHERE [Type] = @RequestType",
+                new { RequestType = name });
+        }
+
         public async Task CreateRequest(Request newRequest)
         {
             await _dbConnection.ExecuteAsync(
                 "INSERT INTO [dbo].[Requests] ([SenderId], [ReceiverId], [SentDate], [RequestTypeId]) VALUES (@SenderId, @ReceiverId, @SentDate, @RequestTypeId)",
-                new {newRequest.SenderId, newRequest.ReceiverId, newRequest.SentDate, newRequest.RequestType});
+                new {newRequest.SenderId, newRequest.ReceiverId, newRequest.SentDate, newRequest.RequestTypeId});
         }
 
-        public async Task DeleteRequest(Guid userOneId, Guid userTwoId, RequestType requestType)
+        public async Task DeleteRequest(Guid userOneId, Guid userTwoId, byte requestTypeId)
         {
             await _dbConnection.ExecuteAsync(
-@"DELETE FROM [dbo].[Requests]
-WHERE ([SenderId] = @UserOneId AND [ReceiverId] = @UserTwoId AND [RequestTypeId] = @RequestTypeId)
-OR ([SenderId] = @UserTwoId AND [ReceiverId] = @UserOneId AND [RequestTypeId] = @RequestTypeId)",
-                new {UserOneId = userOneId, UserTwoId = userTwoId, RequestTypeId = requestType});
+                @"DELETE FROM [dbo].[Requests]
+                WHERE ([SenderId] = @UserOneId AND [ReceiverId] = @UserTwoId AND [RequestTypeId] = @RequestTypeId)
+                OR ([SenderId] = @UserTwoId AND [ReceiverId] = @UserOneId AND [RequestTypeId] = @RequestTypeId)",
+                new {UserOneId = userOneId, UserTwoId = userTwoId, RequestTypeId = requestTypeId});
         }
 
         public async Task<IList<Request>> GetRequestsByUserIds(Guid userOneId, Guid userTwoId)
         {
             return (await _dbConnection.QueryAsync<Models.DTOs.Request>(
-@"SELECT [SenderId], [ReceiverId] FROM [dbo].Requests
-WHERE ([SenderId] = @UserOneId AND [ReceiverId] = @UserTwoId)
-OR ([SenderId] = @UserTwoId AND [ReceiverId] = @UserOneId)",
+                @"SELECT [SenderId], [ReceiverId] FROM [dbo].Requests
+                WHERE ([SenderId] = @UserOneId AND [ReceiverId] = @UserTwoId)
+                OR ([SenderId] = @UserTwoId AND [ReceiverId] = @UserOneId)",
                 new {UserOneId = userOneId, UserTwoId = userTwoId}))
                     .Select(req => (Request) req).ToList();
         }
@@ -63,10 +86,10 @@ OR ([SenderId] = @UserTwoId AND [ReceiverId] = @UserOneId)",
         public async Task<Request> GetRequestByUserIdsAndType(Request request)
         {
             return (Request) await _dbConnection.QueryFirstAsync<Models.DTOs.Request>(
-@"SELECT TOP 1 [SenderId], [ReceiverId], [RequestTypeId] FROM [dbo].Requests
-WHERE ([SenderId] = @SenderId AND [ReceiverId] = @ReceiverId AND [RequestTypeId] = @RequestTypeId)
-OR ([SenderId] = @ReceiverId AND [ReceiverId] = @SenderId AND [RequestTypeId] = @RequestTypeId)",
-                new {SenderId = request.SenderId, ReceiverId = request.ReceiverId, RequestTypeId = (short) request.RequestType});
+                @"SELECT TOP 1 [SenderId], [ReceiverId], [RequestTypeId] FROM [dbo].Requests
+                WHERE ([SenderId] = @SenderId AND [ReceiverId] = @ReceiverId AND [RequestTypeId] = @RequestTypeId)
+                OR ([SenderId] = @ReceiverId AND [ReceiverId] = @SenderId AND [RequestTypeId] = @RequestTypeId)",
+                new {SenderId = request.SenderId, ReceiverId = request.ReceiverId, RequestTypeId = request.RequestTypeId});
         }
     }
 }
