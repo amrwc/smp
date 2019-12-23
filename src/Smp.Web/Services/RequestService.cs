@@ -74,7 +74,7 @@ namespace Smp.Web.Services
 
             switch (reqType.Type)
             {
-                case (RequestType.Friend):
+                case RequestType.Friend:
                     await _relationshipService.AddFriend(request.SenderId, request.ReceiverId);
                     await _requestRepository.DeleteRequest(request.SenderId, request.ReceiverId, request.RequestTypeId);
                     break;
