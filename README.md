@@ -15,3 +15,9 @@ $ dotnet run
 ```
 
 ##### 3. In the web browser, navigate to localhost:5001
+
+## Maintainers
+
+[amrwc](https://github.com/amrwc)
+
+[faibz](https://github.com/faibz)
