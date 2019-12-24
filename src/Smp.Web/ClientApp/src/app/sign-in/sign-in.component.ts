@@ -50,9 +50,9 @@ export class SignInComponent implements OnInit {
         this.router.navigate([this.returnUrl]);
       }, error => {
         this.signInUnsuccessful = true;
-        this.errorMessage = error.status == '401'
+        this.errorMessage = error.status === 401
           ? "Invalid sign in details. Please try again."
-          : "We're experience technical difficulties right now. Please try again later.";
+          : "We are experiencing technical difficulties right now. Please try again later.";
           this.loading = false;
       });
   }
