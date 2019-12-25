@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Threading.Tasks;
 using Dapper;
 using Smp.Web.Factories;
@@ -9,7 +10,8 @@ namespace Smp.Web.Repositories
     public interface IUserRepository
     {
         Task CreateUser(User newUser);
-        Task<User> GetUser(string Email);
+        Task<User> GetUser(string email);
+        Task<User> GetUser(Guid id);
     }
 
     public class UserRepository : IUserRepository
@@ -31,8 +33,16 @@ namespace Smp.Web.Repositories
         public async Task<User> GetUser(string email)
         {
             var dbUser = await _dbConnection.QueryFirstOrDefaultAsync<Models.DTOs.User>(
-                "SELECT TOP 1 [Id], [FullName], [Password], [Email] FROM [dbo].[Users] WHERE [Email] = @Email",
+                "SELECT TOP 1 [Id], [FullName], [Password], [Email], [ProfilePictureUrl] FROM [dbo].[Users] WHERE [Email] = @Email",
                 new { Email = email });
+            return dbUser == null ? null : (User) dbUser;
+        }
+
+        public async Task<User> GetUser(Guid id)
+        {
+            var dbUser = await _dbConnection.QueryFirstOrDefaultAsync<Models.DTOs.User>(
+                "SELECT TOP 1 [Id], [FullName], [Password], [Email], [ProfilePictureUrl] FROM [dbo].[Users] WHERE [Id] = @Id",
+                new { Id = id });
             return dbUser == null ? null : (User) dbUser;
         }
     }

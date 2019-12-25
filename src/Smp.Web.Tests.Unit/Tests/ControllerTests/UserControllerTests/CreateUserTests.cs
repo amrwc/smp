@@ -17,14 +17,14 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UserControllerTests
             private IActionResult _result;
 
             [OneTimeSetUp]
-            public void WhenCreateUserHasBeenCalled()
+            public async void WhenCreateUserHasBeenCalled()
             {
                 Setup();
 
                 UserValidator.Setup(validator => validator.ValidateCreateUserRequest(It.IsAny<CreateUserRequest>()))
                     .Returns(new List<Error> { new Error("idc", "idc") });
 
-                _result = UserController.CreateUser(new CreateUserRequest { FullName = "", Password = "bb", Email = "lx"});
+                _result = await UserController.CreateUser(new CreateUserRequest { FullName = "", Password = "bb", Email = "lx"});
             }
 
             [Test]
@@ -44,7 +44,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UserControllerTests
             private IActionResult _result;
 
             [OneTimeSetUp]
-            public void WhenCreateUserHasBeenCalled()
+            public async void WhenCreateUserHasBeenCalled()
             {
                 Setup();
 
@@ -55,7 +55,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UserControllerTests
                 UserValidator.Setup(validator => validator.ValidateCreateUserRequest(It.IsAny<CreateUserRequest>()))
                     .Returns(new List<Error>());
 
-                _result = UserController.CreateUser(_createUserRequest);
+                _result = await UserController.CreateUser(_createUserRequest);
             }
 
             [Test]
