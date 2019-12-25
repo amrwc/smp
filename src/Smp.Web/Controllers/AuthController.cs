@@ -24,6 +24,7 @@ namespace Smp.Web.Controllers
             return verifyUserResult.Success
                 ? (IActionResult)Ok(new
                 {
+                    verifyUserResult.User.Id,
                     verifyUserResult.User.FullName,
                     verifyUserResult.User.Email,
                     token = _authService.CreateJwt(verifyUserResult.User)
