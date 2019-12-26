@@ -7,19 +7,20 @@ using Smp.Web.Models;
 using Smp.Web.Services;
 using Smp.Web.Validators;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Smp.Web.Controllers
 {
     [Route("api/[controller]")]
-    public class UserController : Controller
+    public class UsersController : Controller
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUsersRepository _usersRepository;
         private readonly IUserValidator _userValidator;
         private readonly ICryptographyService _cryptographyService;
 
-        public UserController(IUserRepository userRepository, IUserValidator userValidator, ICryptographyService cryptographyService)
+        public UsersController(IUsersRepository usersRepository, IUserValidator userValidator, ICryptographyService cryptographyService)
         {
-            _userRepository = userRepository;
+            _usersRepository = usersRepository;
             _userValidator = userValidator;
             _cryptographyService = cryptographyService;
         }
@@ -34,15 +35,16 @@ namespace Smp.Web.Controllers
 
             newUser.Password = _cryptographyService.HashAndSaltPassword(newUser.Password);
 
-            await _userRepository.CreateUser(newUser);
+            await _usersRepository.CreateUser(newUser);
 
             return Ok();
         }
 
-        [HttpGet("[action]/{id:Guid}")]
-        public async Task<IActionResult> GetUser([FromRoute]Guid id)
+        [HttpGet("[action]/{id:Guid}"), Authorize]
+        public async Task<IActionResult> GetUser(Guid id)
         {
-            var user = await _userRepository.GetUser(id);
+            var user = await _usersRepository.GetUserById(id);
+            user.Password = string.Empty;
 
             return user == null ? (IActionResult) NotFound() : Ok(user);
         }

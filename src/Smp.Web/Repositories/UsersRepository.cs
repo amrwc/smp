@@ -7,18 +7,18 @@ using Smp.Web.Models;
 
 namespace Smp.Web.Repositories
 {
-    public interface IUserRepository
+    public interface IUsersRepository
     {
         Task CreateUser(User newUser);
-        Task<User> GetUser(string email);
-        Task<User> GetUser(Guid id);
+        Task<User> GetUserByEmail(string email);
+        Task<User> GetUserById(Guid id);
     }
 
-    public class UserRepository : IUserRepository
+    public class UsersRepository : IUsersRepository
     {
         private readonly IDbConnection _dbConnection;
 
-        public UserRepository(IDbConnectionFactory connectionFactory)
+        public UsersRepository(IDbConnectionFactory connectionFactory)
         {
             _dbConnection = connectionFactory.GetDbConnection();
         }
@@ -26,22 +26,22 @@ namespace Smp.Web.Repositories
         public async Task CreateUser(User newUser)
         {
             await _dbConnection.ExecuteAsync(
-                "INSERT INTO [dbo].[Users] ([Id], [FullName], [Password], [Email]) VALUES (@Id, @FullName, @Password, @Email)",
-                new {newUser.Id, newUser.FullName, newUser.Password, newUser.Email});
+                "INSERT INTO [dbo].[Users] ([Id], [FullName], [Password], [Email], [CreatedAt]) VALUES (@Id, @FullName, @Password, @Email, @CreatedAt)",
+                new {newUser.Id, newUser.FullName, newUser.Password, newUser.Email, newUser.CreatedAt});
         }
 
-        public async Task<User> GetUser(string email)
+        public async Task<User> GetUserByEmail(string email)
         {
             var dbUser = await _dbConnection.QueryFirstOrDefaultAsync<Models.DTOs.User>(
-                "SELECT TOP 1 [Id], [FullName], [Password], [Email], [ProfilePictureUrl] FROM [dbo].[Users] WHERE [Email] = @Email",
+                "SELECT TOP 1 * FROM [dbo].[Users] WHERE [Email] = @Email",
                 new { Email = email });
             return dbUser == null ? null : (User) dbUser;
         }
 
-        public async Task<User> GetUser(Guid id)
+        public async Task<User> GetUserById(Guid id)
         {
             var dbUser = await _dbConnection.QueryFirstOrDefaultAsync<Models.DTOs.User>(
-                "SELECT TOP 1 [Id], [FullName], [Password], [Email], [ProfilePictureUrl] FROM [dbo].[Users] WHERE [Id] = @Id",
+                "SELECT TOP 1 * FROM [dbo].[Users] WHERE [Id] = @Id",
                 new { Id = id });
             return dbUser == null ? null : (User) dbUser;
         }

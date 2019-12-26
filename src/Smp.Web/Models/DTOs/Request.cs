@@ -6,7 +6,7 @@ namespace Smp.Web.Models.DTOs
     {
         public Guid SenderId { get; set; }
         public Guid ReceiverId { get; set; }
-        public DateTime SentDate { get; set; }
+        public DateTime CreatedAt { get; set; }
         public byte RequestTypeId { get; set; }
     }
 }

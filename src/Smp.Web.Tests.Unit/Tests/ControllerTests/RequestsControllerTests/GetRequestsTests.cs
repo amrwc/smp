@@ -9,13 +9,13 @@ using Moq;
 using NUnit.Framework;
 using Smp.Web.Models;
 
-namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestControllerTests
+namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
 {
     [TestFixture]
     public class GetRequestsTests
     {
         [TestFixture]
-        public class GivenAUserWithRequests : RequestControllerTestBase
+        public class GivenAUserWithRequests : RequestsControllerTestBase
         {
             private Guid _userId = Guid.NewGuid();
             private IList<Request> _expectedRequests;
@@ -30,14 +30,14 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestControllerTests
                 var fixture = new Fixture();
                 _expectedRequests = fixture.CreateMany<Request>().ToList();
 
-                RequestRepository.Setup(repo => repo.GetRequestsBySenderId(It.IsAny<Guid>())).ReturnsAsync(_expectedRequests);
+                RequestsRepository.Setup(repo => repo.GetRequestsBySenderId(It.IsAny<Guid>())).ReturnsAsync(_expectedRequests);
 
-                _result = await RequestController.GetRequests(_userId);
+                _result = await RequestsController.GetRequests(_userId);
             }
 
             [Test]
             public void ThenRequestRepositoryGetRequestsBySenderIdShouldHaveBeenCalled()
-                => RequestRepository.Verify(repo => repo.GetRequestsBySenderId(_userId), Times.Once);
+                => RequestsRepository.Verify(repo => repo.GetRequestsBySenderId(_userId), Times.Once);
 
             [Test]
             public void ThenOkResultShouldHaveBeenRetuned()

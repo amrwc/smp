@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class SignInComponent implements OnInit {
   private readonly baseUrl: string;
   private readonly httpClient: HttpClient;
-  public signInRequest = new SignInRequest();
+  public signInRequest: SignInRequest = new SignInRequest();
   public loading: boolean = false;
   public returnUrl: string;
   public signUpSuccessful: boolean = false;

@@ -23,7 +23,7 @@ namespace Smp.Web.Tests.Unit.Tests.ServiceTests.AuthServiceTests
             {
                 Setup();
 
-                UserRepository.Setup(repo => repo.GetUser(It.IsAny<string>())).Returns(Task.FromResult(new User {Password = "XD" }));
+                UserRepository.Setup(repo => repo.GetUserByEmail(It.IsAny<string>())).Returns(Task.FromResult(new User {Password = "XD" }));
 
                 CryptographyService.Setup(service => service.CheckPassword(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
                 _verifyUserResult = await AuthService.VerifyUser(_email, _password);
@@ -35,7 +35,7 @@ namespace Smp.Web.Tests.Unit.Tests.ServiceTests.AuthServiceTests
 
             [Test]
             public void ThenUserRepositoryGetUserShouldHaveBeenCalled()
-                => UserRepository.Verify(repository => repository.GetUser(_email), Times.Once);
+                => UserRepository.Verify(repository => repository.GetUserByEmail(_email), Times.Once);
 
             [Test]
             public void ThenCryptographyServiceCheckPasswordShouldHaveBeenCalled()
@@ -54,7 +54,7 @@ namespace Smp.Web.Tests.Unit.Tests.ServiceTests.AuthServiceTests
             {
                 Setup();
 
-                UserRepository.Setup(repo => repo.GetUser(It.IsAny<string>())).Returns(Task.FromResult(new User {Password = "XD" }));
+                UserRepository.Setup(repo => repo.GetUserByEmail(It.IsAny<string>())).Returns(Task.FromResult(new User {Password = "XD" }));
 
                 CryptographyService.Setup(service => service.CheckPassword(It.IsAny<string>(), It.IsAny<string>())).Returns(false);
                 _verifyUserResult = await AuthService.VerifyUser(_email, _password);
@@ -66,7 +66,7 @@ namespace Smp.Web.Tests.Unit.Tests.ServiceTests.AuthServiceTests
 
             [Test]
             public void ThenUserRepositoryGetUserShouldHaveBeenCalled()
-                => UserRepository.Verify(repository => repository.GetUser(_email), Times.Once);
+                => UserRepository.Verify(repository => repository.GetUserByEmail(_email), Times.Once);
 
             [Test]
             public void ThenCryptographyServiceCheckPasswordShouldHaveBeenCalled()

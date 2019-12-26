@@ -8,11 +8,12 @@
             "name": ".NET Core Launch (web)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "build-api",
             "program": "${workspaceFolder}\\src\\Smp.Web\\bin\\Debug\\netcoreapp3.1\\Smp.Web.dll",
             "args": [],
             "cwd": "${workspaceFolder}\\src\\Smp.Web",
             "stopAtEntry": false,
+            "requireExactSource": false,
             "serverReadyAction": {
                 "action": "openExternally",
                 "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"

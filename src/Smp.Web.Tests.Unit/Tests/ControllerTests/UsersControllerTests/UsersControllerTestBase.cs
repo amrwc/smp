@@ -4,23 +4,23 @@ using Smp.Web.Repositories;
 using Smp.Web.Services;
 using Smp.Web.Validators;
 
-namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UserControllerTests
+namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UsersControllerTests
 {
     public class UserControllerTestBase
     {
-        protected Mock<IUserRepository> UserRepository;
+        protected Mock<IUsersRepository> UsersRepository;
         protected Mock<IUserValidator> UserValidator;
         protected Mock<ICryptographyService> CryptographyService;
 
-        protected UserController UserController;
+        protected UsersController UsersController;
 
         public void Setup()
         {
-            UserRepository = new Mock<IUserRepository>();
+            UsersRepository = new Mock<IUsersRepository>();
             UserValidator = new Mock<IUserValidator>();
             CryptographyService = new Mock<ICryptographyService>();
 
-            UserController = new UserController(UserRepository.Object, UserValidator.Object, CryptographyService.Object);
+            UsersController = new UsersController(UsersRepository.Object, UserValidator.Object, CryptographyService.Object);
         }
     }
 }

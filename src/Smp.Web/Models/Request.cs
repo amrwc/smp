@@ -12,13 +12,13 @@ namespace Smp.Web.Models
         {
             SenderId = requestRequest.SenderId;
             ReceiverId = requestRequest.ReceiverId;
-            SentDate = DateTime.UtcNow;
+            CreatedAt = DateTime.UtcNow;
             RequestTypeId = requestRequest.RequestTypeId;
         }
 
         public Guid SenderId { get; set; }
         public Guid ReceiverId { get; set; }
-        public DateTime SentDate { get; set; }
+        public DateTime CreatedAt { get; set; }
         public byte RequestTypeId { get; set; }
 
         public static explicit operator Request(DTOs.Request request)
@@ -27,7 +27,7 @@ namespace Smp.Web.Models
             {
                 SenderId = request.SenderId,
                 ReceiverId = request.ReceiverId,
-                SentDate = request.SentDate,
+                CreatedAt = request.CreatedAt,
                 RequestTypeId = request.RequestTypeId
             };
         }

@@ -6,7 +6,7 @@ using NUnit.Framework;
 using Smp.Web.Models;
 using Smp.Web.Models.Requests;
 
-namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UserControllerTests
+namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UsersControllerTests
 {
     [TestFixture]
     public class CreateUserTests
@@ -24,12 +24,12 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UserControllerTests
                 UserValidator.Setup(validator => validator.ValidateCreateUserRequest(It.IsAny<CreateUserRequest>()))
                     .Returns(new List<Error> { new Error("idc", "idc") });
 
-                _result = await UserController.CreateUser(new CreateUserRequest { FullName = "", Password = "bb", Email = "lx"});
+                _result = await UsersController.CreateUser(new CreateUserRequest { FullName = "", Password = "bb", Email = "lx"});
             }
 
             [Test]
             public void ThenUserRepositoryCreateUserShouldNotHaveBeenCalled()
-                => UserRepository.Verify(repo => repo.CreateUser(It.IsAny<User>()), Times.Never);
+                => UsersRepository.Verify(repo => repo.CreateUser(It.IsAny<User>()), Times.Never);
 
             [Test]
             public void ThenABadRequestShouldHaveBeenReturned()
@@ -55,12 +55,12 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UserControllerTests
                 UserValidator.Setup(validator => validator.ValidateCreateUserRequest(It.IsAny<CreateUserRequest>()))
                     .Returns(new List<Error>());
 
-                _result = await UserController.CreateUser(_createUserRequest);
+                _result = await UsersController.CreateUser(_createUserRequest);
             }
 
             [Test]
             public void ThenUserRepositoryCreateUserShouldHaveBeenCalled()
-                => UserRepository.Verify(repo => repo.CreateUser(It.Is<User>(user =>
+                => UsersRepository.Verify(repo => repo.CreateUser(It.Is<User>(user =>
                     user.FullName == _createUserRequest.FullName && user.Password == "HashedAndSaltedPassword" &&
                     user.Email == _createUserRequest.Email)));
 

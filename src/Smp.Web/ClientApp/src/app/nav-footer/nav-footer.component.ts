@@ -13,7 +13,9 @@ export class NavFooterComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    let currentUser = localStorage.getItem('currentUser');
+
+    if (currentUser) this.currentUser = JSON.parse(currentUser);
   }
 
 }

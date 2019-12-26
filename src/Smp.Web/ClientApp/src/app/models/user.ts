@@ -1,6 +1,6 @@
-export class User {
-  public id: string;
-  public fullName: string;
-  public email: string;
-  public profilePictureUrl: string;
+export interface User {
+  id: string;
+  fullName: string;
+  email: string;
+  profilePictureUrl: string;
 }

@@ -8,5 +8,18 @@
   
     .profile-content {
       padding: 4rem 0 4.3rem 0;
+
+      .profile-picture {
+        width: 250px;
+        height: 250px;
+        overflow: hidden;
+        border: ridge;
+        border-width: thick;
+        margin: auto;
+
+        img {
+          transform: translate3d(-150px, -200px, 0px);
+        }
+      }
     }
   }
