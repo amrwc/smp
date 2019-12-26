@@ -21,10 +21,10 @@ namespace Smp.Web.Services
     public class AuthService : IAuthService
     {
         private readonly IConfiguration _configuration;
-        private readonly IUserRepository _userRepository;
+        private readonly IUsersRepository _userRepository;
         private readonly ICryptographyService _cryptographyService;
 
-        public AuthService(IConfiguration configuration, IUserRepository userRepository, ICryptographyService cryptographyService)
+        public AuthService(IConfiguration configuration, IUsersRepository userRepository, ICryptographyService cryptographyService)
         {
             _configuration = configuration;
             _userRepository = userRepository;
@@ -33,7 +33,7 @@ namespace Smp.Web.Services
 
         public async Task<VerifyUserResult> VerifyUser(string email, string password)
         {
-            var userFromDb = await _userRepository.GetUser(email);
+            var userFromDb = await _userRepository.GetUserByEmail(email);
 
             if (userFromDb == null) return new VerifyUserResult(false, null);
 
@@ -56,7 +56,7 @@ namespace Smp.Web.Services
             var token = new JwtSecurityToken(
                 _configuration["Tokens:Issuer"],
                 _configuration["Tokens:Issuer"],
-                claims, expires: DateTime.Now.AddMinutes(30),
+                claims, expires: DateTime.Now.AddYears(10),
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

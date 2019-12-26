@@ -5,10 +5,73 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "build-api",
             "type": "shell",
             "command": "dotnet build src/Smp.Web/",
             "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build-migrations",
+            "type": "shell",
+            "command": "dotnet build src/Smp.Migrations/",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build-tests",
+            "type": "shell",
+            "command": "dotnet build src/Smp.Web.Tests.Unit/",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "run-migrations",
+            "type": "shell",
+            "options": {
+                "cwd": "src/Smp.Migrations/bin/Debug/netcoreapp3.1"
+            },
+            "command": ".\\Smp.Migrations.exe",
+            "dependsOn": "build-migrations",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "run-tests-unit",
+            "type": "shell",
+            "command": "dotnet test src/Smp.Web.Tests.Unit/",
+            "group": "test",
             "presentation": {
                 "echo": true,
                 "reveal": "always",

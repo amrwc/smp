@@ -9,31 +9,31 @@ using System.Threading.Tasks;
 
 namespace Smp.Web.Controllers
 {
-    public class RequestController : Controller
+    public class RequestsController : Controller
     {
-        private readonly IRequestService _requestService;
-        private readonly IRequestRepository _requestRepository;
+        private readonly IRequestsService _requestsService;
+        private readonly IRequestsRepository _requestsRepository;
 
-        public RequestController(IRequestService requestService, IRequestRepository requestRepository)
+        public RequestsController(IRequestsService requestsService, IRequestsRepository requestsRepository)
         {
-            _requestService = requestService;
-            _requestRepository = requestRepository;
+            _requestsService = requestsService;
+            _requestsRepository = requestsRepository;
 
         }
 
         [HttpGet("[action]/{userId:Guid}"), Authorize]
         public async Task<IActionResult> GetRequests(Guid userId)
-            => Ok(await _requestRepository.GetRequestsBySenderId(userId));
+            => Ok(await _requestsRepository.GetRequestsBySenderId(userId));
 
         [HttpPost("[action]"), Authorize]
         public async Task<IActionResult> SendRequest([FromBody] RequestRequest requestRequest)
         {
             var newRequest = new Request(requestRequest);
 
-            var validationResult = await _requestService.ValidateNewRequest(newRequest);
+            var validationResult = await _requestsService.ValidateNewRequest(newRequest);
             if (validationResult.Any()) return BadRequest(validationResult);
 
-            await _requestRepository.CreateRequest(newRequest);
+            await _requestsRepository.CreateRequest(newRequest);
 
             return Ok();
         }
@@ -48,10 +48,10 @@ namespace Smp.Web.Controllers
                 RequestTypeId = requestTypeId
             };
 
-            var validationResult = await _requestService.ValidateAcceptRequest(request);
+            var validationResult = await _requestsService.ValidateAcceptRequest(request);
             if (validationResult.Any()) return BadRequest(validationResult);
 
-            await _requestService.AcceptRequest(request);
+            await _requestsService.AcceptRequest(request);
 
             return Ok();
         }
