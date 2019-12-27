@@ -1,31 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Smp.Web.Models;
 using Smp.Web.Models.Requests;
+using Smp.Web.Repositories;
 
 namespace Smp.Web.Validators
 {
     public interface IUserValidator
     {
-        IList<Error> ValidateCreateUserRequest(CreateUserRequest createUserRequest);
+        Task<IList<Error>> ValidateCreateUserRequest(CreateUserRequest createUserRequest);
     }
 
     public class UserValidator : IUserValidator
     {
-        public IList<Error> ValidateCreateUserRequest(CreateUserRequest createUserRequest)
+        private IUsersRepository _usersRepository;
+
+        public UserValidator(IUsersRepository usersRepository)
+        {
+            _usersRepository = usersRepository;
+        }
+
+        public async Task<IList<Error>> ValidateCreateUserRequest(CreateUserRequest createUserRequest)
         {
             var errors = new List<Error>();
 
-            if (!IsValidFullName(createUserRequest?.FullName)) errors.Add(new Error("invalid_full_name", "Full name must have at least 3 characters."));
-            if (!IsValidPassword(createUserRequest?.Password)) errors.Add(new Error("invalid_password", "Password must have at least 8 characters, at least 1 lowercase letter, at least 1 uppercase letter, a number, and a symbol."));
-            if (!IsValidEmail(createUserRequest?.Email)) errors.Add(new Error("invalid_email", "Email must be a valid email address."));
+            if (!IsValidFullName(createUserRequest.FullName)) errors.Add(new Error("invalid_full_name", "Full name must have at least 3 characters."));
+            if (!IsValidPassword(createUserRequest.Password)) errors.Add(new Error("invalid_password", "Password must have at least 8 characters, at least 1 lowercase letter, at least 1 uppercase letter, a number, and a symbol."));
+            if (!IsValidEmail(createUserRequest.Email)) errors.Add(new Error("invalid_email", "Email must be a valid email address."));
+            if (!await IsTakenEmail(createUserRequest.Email)) errors.Add(new Error("invalid_email", "Email address is already in use. Please try another one."));
 
             return errors;
         }
 
-        private bool IsValidEmail(string email)
+        private static bool IsValidEmail(string email)
         {
             if (string.IsNullOrEmpty(email)) return false;
 
@@ -44,10 +53,15 @@ namespace Smp.Web.Validators
             return false;
         }
 
-        private bool IsValidFullName(string fullName)
+        private async Task<bool> IsTakenEmail(string email)
+        {
+            return await _usersRepository.GetUserByEmail(email) == null;
+        }
+
+        private static bool IsValidFullName(string fullName)
             => !string.IsNullOrEmpty(fullName) && fullName.Length >= 3;
 
-        private bool IsValidPassword(string password)
+        private static bool IsValidPassword(string password)
         {
             if (string.IsNullOrEmpty(password)) return false;
 

@@ -1,11 +1,8 @@
 using System;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Smp.Web.Models.Requests;
-using Smp.Web.Repositories;
 using Smp.Web.Models;
 using Smp.Web.Services;
-using Smp.Web.Validators;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
@@ -14,7 +11,7 @@ namespace Smp.Web.Controllers
     [Route("api/[controller]")]
     public class PostsController : Controller
     {
-        private IPostsService _postsService;
+        private readonly IPostsService _postsService;
 
         public PostsController(IPostsService postsService)
         {
