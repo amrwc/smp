@@ -12,7 +12,7 @@ namespace Smp.Web.Models
             Id = Guid.NewGuid();
             ReceiverId = post.ReceiverId;
             SenderId = post.SenderId;
-            Content = post.TextContent;
+            Content = post.Content;
             CreatedAt = DateTime.UtcNow;
         }
 

@@ -38,8 +38,8 @@ namespace Smp.Web.Repositories
 
         public async Task<IList<Post>> GetPostsByReceiverId(Guid receiverId, int count)
         {
-            var dbPosts = await _dbConnection.QueryAsync<Models.DTOs.Post>("SELECT TOP @Count * FROM [dbo].[Posts] WHERE [ReceiverId] = @ReceiverId ORDER BY [CreatedAt] DESC",
-                new { Count = count, ReceiverId = receiverId });
+            var dbPosts = (await _dbConnection.QueryAsync<Models.DTOs.Post>("SELECT TOP (@Count) * FROM [dbo].[Posts] WHERE [ReceiverId] = @ReceiverId ORDER BY [CreatedAt] DESC",
+                new { Count = count, ReceiverId = receiverId })).ToList();
 
             return dbPosts.Select(dbPost => (Post)dbPost).ToList();
         }

@@ -1,9 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { User } from '../models/user';
 import { UsersService } from '../services/users.service';
-import { GlobalHelper } from '../helpers/global';
-import { CreatePostComponent } from '../create-post/create-post.component';
+import { FeedComponent } from '../feed/feed.component';
 
 @Component({
   selector: 'app-profile',
@@ -11,20 +10,20 @@ import { CreatePostComponent } from '../create-post/create-post.component';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  @ViewChild(FeedComponent, { static: false }) feedComponent: FeedComponent;
 
   private userId: string;
   private user: User;
 
   constructor(
-    private userService: UsersService,
+    private usersService: UsersService,
     private route: ActivatedRoute
   ) {  }
 
   ngOnInit() {
-    debugger;
     this.userId = this.route.snapshot.paramMap.get('id');
 
-    this.userService.getUser(this.userId)
+    this.usersService.getUser(this.userId)
       .subscribe(
         result => {
           this.user = result;
@@ -36,6 +35,6 @@ export class ProfileComponent implements OnInit {
   }
 
   public updatePosts(): void {
-    alert("UPDATE POSTS");
+    this.feedComponent.getPosts();
   }
 }
