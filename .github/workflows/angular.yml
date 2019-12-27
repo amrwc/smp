@@ -1,0 +1,17 @@
+name: Angular - Build WebApp
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run npm install and ng build
+      run: |
+        cd src/Smp.Web/ClientApp
+        sudo npm install --exact-versions
+        sudo npm install -g @angular/cli
+        sudo ng build
