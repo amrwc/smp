@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoFixture;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -17,12 +18,12 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UsersControllerTests
             private IActionResult _result;
 
             [OneTimeSetUp]
-            public async void WhenCreateUserHasBeenCalled()
+            public async Task WhenCreateUserHasBeenCalled()
             {
                 Setup();
 
                 UserValidator.Setup(validator => validator.ValidateCreateUserRequest(It.IsAny<CreateUserRequest>()))
-                    .Returns(new List<Error> { new Error("idc", "idc") });
+                    .ReturnsAsync(new List<Error> { new Error("idc", "idc") });
 
                 _result = await UsersController.CreateUser(new CreateUserRequest { FullName = "", Password = "bb", Email = "lx"});
             }
@@ -44,7 +45,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UsersControllerTests
             private IActionResult _result;
 
             [OneTimeSetUp]
-            public async void WhenCreateUserHasBeenCalled()
+            public async Task WhenCreateUserHasBeenCalled()
             {
                 Setup();
 
@@ -53,7 +54,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UsersControllerTests
 
                 CryptographyService.Setup(service => service.HashAndSaltPassword(It.IsAny<string>())).Returns("HashedAndSaltedPassword");
                 UserValidator.Setup(validator => validator.ValidateCreateUserRequest(It.IsAny<CreateUserRequest>()))
-                    .Returns(new List<Error>());
+                    .ReturnsAsync(new List<Error>());
 
                 _result = await UsersController.CreateUser(_createUserRequest);
             }

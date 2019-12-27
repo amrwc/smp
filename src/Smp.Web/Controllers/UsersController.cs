@@ -28,7 +28,7 @@ namespace Smp.Web.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateUser([FromBody]CreateUserRequest user)
         {
-            var validationErrors = _userValidator.ValidateCreateUserRequest(user);
+            var validationErrors = await _userValidator.ValidateCreateUserRequest(user);
             if (validationErrors.Any()) return BadRequest(validationErrors);
 
             var newUser = new User(user);
@@ -44,9 +44,15 @@ namespace Smp.Web.Controllers
         public async Task<IActionResult> GetUser(Guid id)
         {
             var user = await _usersRepository.GetUserById(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
             user.Password = string.Empty;
 
-            return user == null ? (IActionResult) NotFound() : Ok(user);
+            return Ok(user);
         }
     }
 }
