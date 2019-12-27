@@ -14,6 +14,9 @@ import { NavFooterComponent } from './nav-footer/nav-footer.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SearchComponent } from './search/search.component';
 import { MessagesComponent } from './messages/messages.component';
+import { ProfileComponent } from './profile/profile.component';
+import { CreatePostComponent } from './create-post/create-post.component';
+import { FeedComponent } from './feed/feed.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { MessagesComponent } from './messages/messages.component';
     NavFooterComponent,
     SettingsComponent,
     SearchComponent,
-    MessagesComponent
+    MessagesComponent,
+    ProfileComponent,
+    CreatePostComponent,
+    FeedComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -60,6 +66,11 @@ import { MessagesComponent } from './messages/messages.component';
       {
         path: 'settings',
         component: SettingsComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'user/:id',
+        component: ProfileComponent,
         canActivate: [AuthGuard]
       },
       { path: '**', redirectTo: '' }

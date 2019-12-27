@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": ".NET Core Launch (web)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-api",
+            "program": "${workspaceFolder}\\src\\Smp.Web\\bin\\Debug\\netcoreapp3.1\\Smp.Web.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}\\src\\Smp.Web",
+            "stopAtEntry": false,
+            "requireExactSource": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/src/Smp.Web/Views"
+            },
+            "launchBrowser": {
+                "enabled": true
+            }
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Chrome",
+            "url": "http://localhost:5000",
+            "webRoot": "${workspaceFolder}\\src\\Smp.Web\\wwwroot"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Full stack",
+            "configurations": [ ".NET Core Launch (web)", "Chrome" ]
+        }
+    ]
+}

@@ -28,15 +28,19 @@ namespace Smp.Web
         {
             services.AddMvc();
 
-            services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
-            services.AddScoped<IRelationshipRepository, RelationshipRepository>();
-            services.AddScoped<IRequestRepository, RequestRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-
-            services.AddScoped<IRelationshipService, RelationshipService>();
-            services.AddScoped<IRequestService, RequestService>();
             services.AddScoped<ICryptographyService, CryptographyService>();
             services.AddScoped<IAuthService, AuthService>();
+
+            services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
+            services.AddScoped<IRelationshipsRepository, RelationshipsRepository>();
+            services.AddScoped<IRequestsRepository, RequestsRepository>();
+            services.AddScoped<IPostsRepository, PostsRepository>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
+
+            services.AddScoped<IRelationshipsService, RelationshipsService>();
+            services.AddScoped<IRequestsService, RequestsService>();
+            services.AddScoped<IPostsService, PostsService>();
+
 
             services.AddScoped<IUserValidator, UserValidator>();
 
@@ -76,12 +80,13 @@ namespace Smp.Web
                 app.UseHsts();
             }
 
-            app.UseRouting(); // maybe
+            app.UseRouting();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             //app.UseMvc();
             app.UseEndpoints(endpoints =>

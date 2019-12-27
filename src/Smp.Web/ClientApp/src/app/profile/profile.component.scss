@@ -1,0 +1,25 @@
+@import '~sass/variables';
+@import '~sass/header-partial';
+
+.profile-body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+  
+    .profile-content {
+      padding: 4rem 0 4.3rem 0;
+
+      .profile-picture {
+        width: 250px;
+        height: 250px;
+        overflow: hidden;
+        border: ridge;
+        border-width: thick;
+        margin: auto;
+
+        img {
+          transform: translate3d(-150px, -200px, 0px);
+        }
+      }
+    }
+  }
