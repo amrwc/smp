@@ -11,6 +11,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Run npm install and ng build
       run: |
+        cd src/Smp.Web/ClientApp
         npm install --exact-versions
         npm install -g @angular/cli
         ng build
