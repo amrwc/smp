@@ -2,7 +2,7 @@
     <div class="post-content" style="border: groove;">
         <form name="post-form" (ngSubmit)="postform.form.valid && createPost()" #postform="ngForm" novalidate>
             <div class="form-group">
-                <textarea class="form-control" name="postText" [(ngModel)]="createPostRequest.textContent" #postText="ngModel" required placeholder="Write your post..." oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+                <textarea class="form-control" name="postText" [(ngModel)]="createPostRequest.content" #postText="ngModel" required placeholder="Write your post..." oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
                 <div *ngIf="postform.submitted && !postText.valid" class="help-block">Content is required</div>
             </div>
 

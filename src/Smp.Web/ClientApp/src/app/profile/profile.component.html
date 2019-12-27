@@ -18,6 +18,7 @@
             <h2 style="text-align: center;">{{ user.fullName }}</h2>
 
             <app-create-post [postToId]="userId" (postCreated)="updatePosts($event)"></app-create-post>
+            <app-feed [receiverId]="userId"></app-feed>
         </div>
 
         <div id="col-right" class="col-xs-3" style="border:groove">

@@ -16,6 +16,7 @@ import { SearchComponent } from './search/search.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CreatePostComponent } from './create-post/create-post.component';
+import { FeedComponent } from './feed/feed.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CreatePostComponent } from './create-post/create-post.component';
     SearchComponent,
     MessagesComponent,
     ProfileComponent,
-    CreatePostComponent
+    CreatePostComponent,
+    FeedComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
