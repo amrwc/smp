@@ -1,0 +1,12 @@
+.post-body {
+    margin: 0;
+    padding: 0;
+  
+    .post-content {
+      textarea {
+          position: relative;
+          width: 100%;
+          resize: vertical;
+      }
+    }
+  }

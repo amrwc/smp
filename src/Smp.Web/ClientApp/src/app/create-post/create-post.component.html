@@ -1,0 +1,22 @@
+<div class="post-body container-fluid" style="border: groove;">
+    <div class="post-content" style="border: groove;">
+        <form name="post-form" (ngSubmit)="postform.form.valid && createPost()" #postform="ngForm" novalidate>
+            <div class="form-group">
+                <textarea class="form-control" name="postText" [(ngModel)]="createPostRequest.content" #postText="ngModel" required placeholder="Write your post..." oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+                <div *ngIf="postform.submitted && !postText.valid" class="help-block">Content is required</div>
+            </div>
+
+            <div class="form-group" style="border: groove;">
+                <button [disabled]="loading" class="btn btn-primary">Post</button>
+            </div>
+
+            <!--TODO: Fix button position without it falling out of div?-->
+
+            <div *ngIf="postUnsuccessful" class="alert alert-danger">
+                <p><strong>{{ errorMessage }}</strong></p>
+            </div>
+
+            <img *ngIf="loading" src="../../assets/img/spinner.svg" />
+        </form>
+    </div>
+</div>

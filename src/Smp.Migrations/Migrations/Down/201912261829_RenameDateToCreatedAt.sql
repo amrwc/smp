@@ -1,0 +1,1 @@
+EXEC sp_rename 'dbo.Messages.CreatedAt', 'Date', 'COLUMN';

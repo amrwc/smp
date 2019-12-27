@@ -1,4 +1,5 @@
-export class CurrentUser {
-  public fullName: string;
-  public email: string;
+export interface CurrentUser {
+  id: string;
+  fullName: string;
+  email: string;
 }
