@@ -1,0 +1,16 @@
+name: Angular - Build WebApp
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run npm install and ng build
+      run: |
+        npm install --exact-versions
+        npm install -g @angular/cli
+        ng build
