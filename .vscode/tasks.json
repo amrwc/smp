@@ -71,6 +71,11 @@
             "label": "run-tests-unit",
             "type": "shell",
             "command": "dotnet test src/Smp.Web.Tests.Unit/",
+            "dependsOrder": "sequence",
+            "dependsOn": [ 
+                "build-api",
+                "build-tests"
+            ],
             "group": "test",
             "presentation": {
                 "echo": true,
