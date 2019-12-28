@@ -34,7 +34,6 @@ namespace Smp.Web.Services
         public async Task<VerifyUserResult> VerifyUser(string email, string password)
         {
             var userFromDb = await _userRepository.GetUserByEmail(email);
-
             if (userFromDb == null) return new VerifyUserResult(false, null);
 
             var isPasswordCorrect = _cryptographyService.CheckPassword(password, userFromDb.Password);

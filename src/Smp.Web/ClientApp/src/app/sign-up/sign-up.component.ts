@@ -21,6 +21,12 @@ export class SignUpComponent {
 
   public signUp(): void {
     this.validationErrors = [];
+
+    if (this.createUserRequest.password !== this.createUserRequest.confirmPassword) {
+      this.validationErrors.push(new Error("invalid_password", "Passwords must match."));
+      return;
+    }
+
     this.loading = true;
     this.createUserRequest.email = this.createUserRequest.email.toLowerCase();
 
