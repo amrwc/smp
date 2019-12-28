@@ -28,6 +28,7 @@ namespace Smp.Web.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateUser([FromBody]CreateUserRequest user)
         {
+            user.Email = user.Email.ToLower();
             var validationErrors = await _userValidator.ValidateCreateUserRequest(user);
             if (validationErrors.Any()) return BadRequest(validationErrors);
 

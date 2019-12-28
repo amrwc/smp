@@ -19,10 +19,11 @@ namespace Smp.Web.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> SignIn([FromBody]SignInRequest signInRequest)
         {
+            signInRequest.Email = signInRequest.Email.ToLower();
             var verifyUserResult = await _authService.VerifyUser(signInRequest.Email, signInRequest.Password);
 
             return verifyUserResult.Success
-                ? (IActionResult)Ok(new
+                ? (IActionResult) Ok(new
                 {
                     verifyUserResult.User.Id,
                     verifyUserResult.User.FullName,

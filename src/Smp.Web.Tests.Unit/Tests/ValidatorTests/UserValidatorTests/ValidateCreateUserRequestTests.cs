@@ -26,7 +26,11 @@ namespace Smp.Web.Tests.Unit.Tests.ValidatorTests.UserValidatorTests
                 Setup();
 
                 var fixture = new Fixture();
-                _createUserRequest = fixture.Build<CreateUserRequest>().With(request => request.Email, "email@email.com").Create();
+                _createUserRequest = fixture.Build<CreateUserRequest>()
+                    .With(request => request.Email, ValidEmail)
+                    .With(request => request.Password, ValidPassword)
+                    .With(request => request.ConfirmPassword, ValidPassword)
+                    .Create();
 
                 _errors = await UserValidator.ValidateCreateUserRequest(_createUserRequest);
             }
@@ -49,7 +53,11 @@ namespace Smp.Web.Tests.Unit.Tests.ValidatorTests.UserValidatorTests
                 Setup();
 
                 var fixture = new Fixture();
-                _createUserRequest = fixture.Build<CreateUserRequest>().With(request => request.Email, "email@email.com").Without(request => request.FullName).Create();
+                _createUserRequest = fixture.Build<CreateUserRequest>()
+                    .With(request => request.Email, ValidEmail)
+                    .With(request => request.Password, ValidPassword)
+                    .With(request => request.ConfirmPassword, ValidPassword)
+                    .Without(request => request.FullName).Create();
 
                 _errors = await UserValidator.ValidateCreateUserRequest(_createUserRequest);
             }
@@ -75,7 +83,12 @@ namespace Smp.Web.Tests.Unit.Tests.ValidatorTests.UserValidatorTests
                 Setup();
 
                 var fixture = new Fixture();
-                _createUserRequest = fixture.Build<CreateUserRequest>().With(request => request.Email, "email@email.com").With(request => request.FullName, "ye").Create();
+                _createUserRequest = fixture.Build<CreateUserRequest>()
+                    .With(request => request.Email, ValidEmail)
+                    .With(request => request.Password, ValidPassword)
+                    .With(request => request.ConfirmPassword, ValidPassword)
+                    .With(request => request.FullName, "ye")
+                    .Create();
 
                 _errors = await UserValidator.ValidateCreateUserRequest(_createUserRequest);
             }
@@ -102,7 +115,11 @@ namespace Smp.Web.Tests.Unit.Tests.ValidatorTests.UserValidatorTests
                 Setup();
 
                 var fixture = new Fixture();
-                _createUserRequest = fixture.Build<CreateUserRequest>().With(request => request.Email, "email@email.com").Without(request => request.Password).Create();
+                _createUserRequest = fixture.Build<CreateUserRequest>()
+                    .With(request => request.Email, ValidEmail)
+                    .Without(request => request.Password)
+                    .Without(request => request.ConfirmPassword)
+                    .Create();
 
                 _errors = await UserValidator.ValidateCreateUserRequest(_createUserRequest);
             }
@@ -129,7 +146,11 @@ namespace Smp.Web.Tests.Unit.Tests.ValidatorTests.UserValidatorTests
                 Setup();
 
                 var fixture = new Fixture();
-                _createUserRequest = fixture.Build<CreateUserRequest>().With(request => request.Email, "email@email.com").With(request => request.Password, "123").Create();
+                _createUserRequest = fixture.Build<CreateUserRequest>()
+                    .With(request => request.Email, ValidEmail)
+                    .With(request => request.Password, "123")
+                    .With(request => request.ConfirmPassword, "123")
+                    .Create();
 
                 _errors = await UserValidator.ValidateCreateUserRequest(_createUserRequest);
             }
@@ -156,7 +177,11 @@ namespace Smp.Web.Tests.Unit.Tests.ValidatorTests.UserValidatorTests
                 Setup();
 
                 var fixture = new Fixture();
-                _createUserRequest = fixture.Build<CreateUserRequest>().With(request => request.Email, "email@email.com").With(request => request.Password, "bobbobbobBob").Create();
+                _createUserRequest = fixture.Build<CreateUserRequest>()
+                    .With(request => request.Email, ValidEmail)
+                    .With(request => request.Password, "bobbobbobBob")
+                    .With(request => request.ConfirmPassword, "bobbobbobBob")
+                    .Create();
 
                 _errors = await UserValidator.ValidateCreateUserRequest(_createUserRequest);
             }
@@ -183,7 +208,11 @@ namespace Smp.Web.Tests.Unit.Tests.ValidatorTests.UserValidatorTests
                 Setup();
 
                 var fixture = new Fixture();
-                _createUserRequest = fixture.Build<CreateUserRequest>().Without(request => request.Email).Create();
+                _createUserRequest = fixture.Build<CreateUserRequest>()
+                    .Without(request => request.Email)
+                    .With(request => request.Password, ValidPassword)
+                    .With(request => request.ConfirmPassword, ValidPassword)
+                    .Create();
 
                 _errors = await UserValidator.ValidateCreateUserRequest(_createUserRequest);
             }
@@ -210,7 +239,11 @@ namespace Smp.Web.Tests.Unit.Tests.ValidatorTests.UserValidatorTests
                 Setup();
 
                 var fixture = new Fixture();
-                _createUserRequest = fixture.Build<CreateUserRequest>().With(request => request.Email, "notanemail").Create();
+                _createUserRequest = fixture.Build<CreateUserRequest>()
+                        .With(request => request.Email, "notanemail")
+                        .With(request => request.Password, ValidPassword)
+                        .With(request => request.ConfirmPassword, ValidPassword)
+                    .Create();
 
                 _errors = await UserValidator.ValidateCreateUserRequest(_createUserRequest);
             }
@@ -237,7 +270,11 @@ namespace Smp.Web.Tests.Unit.Tests.ValidatorTests.UserValidatorTests
                 Setup();
 
                 var fixture = new Fixture();
-                _createUserRequest = fixture.Build<CreateUserRequest>().With(request => request.Email, "thisisanemail@email.com").Create();
+                _createUserRequest = fixture.Build<CreateUserRequest>()
+                    .With(request => request.Email, ValidEmail)
+                    .With(request => request.Password, ValidPassword)
+                    .With(request => request.ConfirmPassword, ValidPassword)
+                    .Create();
 
                 UsersRepository.Setup(repository => repository.GetUserByEmail(It.IsAny<string>())).ReturnsAsync(new User());
 
@@ -251,6 +288,35 @@ namespace Smp.Web.Tests.Unit.Tests.ValidatorTests.UserValidatorTests
             [Test]
             public void ThenTheErrorShouldBeAsExpected()
                 => _errors.First().Should().BeEquivalentTo(new Error("invalid_email", "Email address is already in use. Please try another one."));
+        }
+
+        public class GivenDifferentPasswords : UserValidatorTestBase
+        {
+            private CreateUserRequest _createUserRequest;
+            private IList<Error> _errors;
+
+            [OneTimeSetUp]
+            public async Task WhenValidateCreateUserRequestIsCalled()
+            {
+                Setup();
+
+                var fixture = new Fixture();
+                _createUserRequest = fixture.Build<CreateUserRequest>()
+                    .With(request => request.Email, ValidEmail)
+                    .With(request => request.Password, ValidPassword)
+                    .With(request => request.ConfirmPassword, "SomethingElse")
+                    .Create();
+
+                _errors = await UserValidator.ValidateCreateUserRequest(_createUserRequest);
+            }
+
+            [Test]
+            public void ThenThereShouldBeAnError()
+                => Assert.That(_errors.Count, Is.EqualTo(1));
+
+            [Test]
+            public void ThenTheErrorShouldBeAsExpected()
+                => _errors.First().Should().BeEquivalentTo(new Error("invalid_password", "Passwords must match."));
         }
     }
 }
