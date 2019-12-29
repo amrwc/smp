@@ -12,6 +12,7 @@ namespace Smp.Web.Repositories
         Task CreateUser(User newUser);
         Task<User> GetUserByEmail(string email);
         Task<User> GetUserById(Guid id);
+        Task UpdatePasswordById(Guid id, string newPassword);
     }
 
     public class UsersRepository : IUsersRepository
@@ -44,6 +45,14 @@ namespace Smp.Web.Repositories
                 "SELECT TOP 1 * FROM [dbo].[Users] WHERE [Id] = @Id",
                 new { Id = id });
             return dbUser == null ? null : (User) dbUser;
+        }
+
+        public async Task UpdatePasswordById(Guid id, string newPassword)
+        {
+            await _dbConnection.ExecuteAsync(
+                "UPDATE [dbo].[Users] SET [Password] = @NewPassword WHERE [Id] = @Id",
+                new { Id = id, NewPassword = newPassword }
+            );
         }
     }
 }

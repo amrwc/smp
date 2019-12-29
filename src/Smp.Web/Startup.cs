@@ -1,4 +1,5 @@
 using System;
+using System.Net.Mail;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +12,7 @@ using Smp.Web.Factories;
 using Smp.Web.Repositories;
 using Smp.Web.Services;
 using Smp.Web.Validators;
+using Smp.Web.Wrappers;
 
 namespace Smp.Web
 {
@@ -30,7 +32,8 @@ namespace Smp.Web
 
             services.AddScoped<ICryptographyService, CryptographyService>();
             services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IMailService, MailService>();
+            services.AddSingleton<IMailService, MailService>();
+            services.AddSingleton<ISmtpClient>(smtp => new SmtpClientWrapper(Configuration["Mail:Host"], ushort.Parse(Configuration["Mail:Port"])));
 
             services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
             services.AddScoped<IRelationshipsRepository, RelationshipsRepository>();
@@ -38,12 +41,13 @@ namespace Smp.Web
             services.AddScoped<IPostsRepository, PostsRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
 
+            services.AddScoped<IUserValidator, UserValidator>();
+            services.AddScoped<IActionValidator, ActionValidator>();
+
             services.AddScoped<IRelationshipsService, RelationshipsService>();
             services.AddScoped<IRequestsService, RequestsService>();
             services.AddScoped<IPostsService, PostsService>();
             services.AddScoped<IAccountsService, AccountsService>();
-
-            services.AddScoped<IUserValidator, UserValidator>();
 
             services.AddAuthentication(jwt =>
             {
