@@ -25,7 +25,7 @@ namespace Smp.Web.Controllers
             _cryptographyService = cryptographyService;
         }
 
-        [HttpGet("[action]/{email:string}")]
+        [HttpGet("[action]/{email}")]
         public async Task<IActionResult> ForgottenPassword(string email)
         {
             var user = await _usersRepository.GetUserByEmail(email);
@@ -43,7 +43,7 @@ namespace Smp.Web.Controllers
             if (resetPasswordRequest.NewPassword != resetPasswordRequest.ConfirmNewPassword) validationErrors.Add(new Error("invalid_password", "Passwords must match."));
             if (validationErrors.Any()) return BadRequest(validationErrors);
 
-            await _accountsService.CompletePasswordReset(resetPasswordRequest.UserId, _cryptographyService.HashAndSaltPassword(resetPasswordRequest.NewPassword));
+            await _accountsService.CompletePasswordReset(resetPasswordRequest.UserId, _cryptographyService.HashAndSaltPassword(resetPasswordRequest.NewPassword), resetPasswordRequest.ActionId);
 
             return Ok();
         }

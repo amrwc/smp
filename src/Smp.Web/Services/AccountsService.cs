@@ -9,7 +9,7 @@ namespace Smp.Web.Services
     public interface IAccountsService
     {
         Task InitiatePasswordReset(Guid userId, string email);
-        Task CompletePasswordReset(Guid userId, string newPassword);
+        Task CompletePasswordReset(Guid userId, string newPassword, Guid actionId);
     }
 
     public class AccountsService : IAccountsService
@@ -33,7 +33,10 @@ namespace Smp.Web.Services
             //BLAH BLAH. CLICK LINK TO GO TO WEB APP WHICH WILL HIT THE NEXT API ENDPOINT WITH action.Id
         }
 
-        public async Task CompletePasswordReset(Guid userId, string newPassword)
-            => await _usersRepository.UpdatePasswordById(userId, newPassword);
+        public async Task CompletePasswordReset(Guid userId, string newPassword, Guid actionId)
+            {
+                await _usersRepository.UpdatePasswordById(userId, newPassword);
+                await _actionsRepository.CompleteActionById(actionId);
+            }
     }
 }

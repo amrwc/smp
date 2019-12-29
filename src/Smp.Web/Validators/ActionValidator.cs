@@ -27,16 +27,21 @@ namespace Smp.Web.Validators
             var action = await _actionsRepository.GetActionById(actionId);
             var errors = new List<Error>();
 
-            if (!IsActionAlive(action.ExpiresAt)) errors.Add(new Error("invalid_expiry", "Action must not have expired."));
+            if (action == null) errors.Add(new Error("invalid_action", "Action must exist."));
             if (!IsActionCorrectType(action.ActionType, actionType)) errors.Add(new Error("invalid_action", "Action must be of correct type."));
+            if (!IsActionIncomplete(action.Completed)) errors.Add(new Error("invalid_action", "Action must not have been completed already."));
+            if (!IsActionAlive(action.ExpiresAt)) errors.Add(new Error("invalid_expiry", "Action must not have expired."));
 
             return errors;
         }
 
         private static bool IsActionAlive(DateTime expiresAt)
-            => expiresAt < DateTime.UtcNow;
+            => DateTime.UtcNow < expiresAt;
 
         private static bool IsActionCorrectType(ActionType actionTypeOne, ActionType actionTypeTwo)
             => actionTypeOne == actionTypeTwo;
+
+        private static bool IsActionIncomplete(bool complete)
+            => !complete;
     }
 }
