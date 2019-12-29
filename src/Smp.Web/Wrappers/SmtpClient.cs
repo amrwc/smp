@@ -14,7 +14,7 @@ namespace Smp.Web.Wrappers
 
         public SmtpClientWrapper(string host, ushort port)
         {
-            new SmtpClient(host, port);
+            _smtpClient = new SmtpClient(host, port);
         }
 
         public async Task SendMailAsync(MailMessage email)
