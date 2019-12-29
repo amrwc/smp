@@ -30,6 +30,7 @@ namespace Smp.Web
 
             services.AddScoped<ICryptographyService, CryptographyService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IMailService, MailService>();
 
             services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
             services.AddScoped<IRelationshipsRepository, RelationshipsRepository>();
@@ -40,7 +41,7 @@ namespace Smp.Web
             services.AddScoped<IRelationshipsService, RelationshipsService>();
             services.AddScoped<IRequestsService, RequestsService>();
             services.AddScoped<IPostsService, PostsService>();
-
+            services.AddScoped<IAccountsService, AccountsService>();
 
             services.AddScoped<IUserValidator, UserValidator>();
 
