@@ -13,6 +13,8 @@ export class ForgotPasswordComponent implements OnInit {
   public loading: boolean;
 
   public startPasswordResetUnsuccessful: boolean = false;
+  public startPasswordResetSuccessful: boolean = false;
+
   public validationError: Error;
   public response: string;
 
@@ -32,7 +34,6 @@ export class ForgotPasswordComponent implements OnInit {
         this.response = "An email has been sent to you. Click it to reset your password!";
       },
       error => {
-        debugger;
         this.loading = false;
         this.startPasswordResetUnsuccessful = true;
         this.validationError = error.error;
