@@ -24,7 +24,7 @@ namespace Smp.Web.Controllers
             var user = await _usersRepository.GetUserByEmail(email);
             if (user == null) return NotFound(new Error("invalid_email", "Email must be linked to an existing user account."));
 
-            await _accountsService.InitiateResetPassword(user.Id, user.Email);
+            await _accountsService.InitiatePasswordReset(user.Id, user.Email);
 
             return Ok();
         }
