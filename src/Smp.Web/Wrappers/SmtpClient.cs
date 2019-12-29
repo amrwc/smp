@@ -18,8 +18,6 @@ namespace Smp.Web.Wrappers
         }
 
         public async Task SendMailAsync(MailMessage email)
-        {
-            await _smtpClient.SendMailAsync(email);
-        }
+            => await _smtpClient.SendMailAsync(email);
     }
 }

@@ -10,6 +10,7 @@ namespace Smp.Web.Repositories
     {
         Task CreateAction(Models.Action action);
         Task<Models.Action> GetActionById(Guid actionId);
+        Task CompleteActionById(Guid actionId);
     }
 
     public class ActionsRepository : IActionsRepository
@@ -30,12 +31,20 @@ namespace Smp.Web.Repositories
 
         public async Task<Models.Action> GetActionById(Guid actionId)
         {
-            var action = await _dbConnection.QuerySingleOrDefaultAsync(
+            var action = await _dbConnection.QuerySingleOrDefaultAsync<Models.DTOs.Action>(
                 "SELECT TOP 1 * FROM [Actions] WHERE [Id] = @Id",
                 new { Id = actionId }
             );
 
             return action == null ? null : (Models.Action) action;
+        }
+
+        public async Task CompleteActionById(Guid actionId)
+        {
+            await _dbConnection.ExecuteAsync(
+                "UPDATE [Actions] SET [Completed] = 1 WHERE [Id] = @Id",
+                new { Id = actionId }
+            );
         }
     }
 }

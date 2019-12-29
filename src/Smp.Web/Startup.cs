@@ -40,6 +40,7 @@ namespace Smp.Web
             services.AddScoped<IRequestsRepository, RequestsRepository>();
             services.AddScoped<IPostsRepository, PostsRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IActionsRepository, ActionsRepository>();
 
             services.AddScoped<IUserValidator, UserValidator>();
             services.AddScoped<IActionValidator, ActionValidator>();
