@@ -17,6 +17,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { FeedComponent } from './feed/feed.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FeedComponent } from './feed/feed.component';
     MessagesComponent,
     ProfileComponent,
     CreatePostComponent,
-    FeedComponent
+    FeedComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -72,6 +74,11 @@ import { FeedComponent } from './feed/feed.component';
         path: 'user/:id',
         component: ProfileComponent,
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'forgot-password',
+        component: ForgotPasswordComponent,
+        canActivate: [AlreadySignedInGuard]
       },
       { path: '**', redirectTo: '' }
     ])
