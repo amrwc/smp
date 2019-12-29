@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Data;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Smp.Web.Factories;
-using Smp.Web.Models;
 
 namespace Smp.Web.Repositories
 {
     public interface IActionsRepository
     {
         Task CreateAction(Models.Action action);
+        Task<Models.Action> GetActionById(Guid actionId);
     }
 
     public class ActionsRepository : IActionsRepository
@@ -28,6 +26,16 @@ namespace Smp.Web.Repositories
             await _dbConnection.ExecuteAsync(
                 "INSERT INTO [Actions] ([Id], [UserId], [ActionTypeId], [Completed], [CreatedAt], [ExpiresAt]) VALUES (@Id, @UserId, @ActionTypeId, @Completed, @CreatedAt, @ExpiresAt)",
                 new { Id = action.Id, UserId = action.UserId, ActionTypeId = (byte) action.ActionType, Completed = action.Completed, CreatedAt = action.CreatedAt, ExpiresAt = action.ExpiresAt });
+        }
+
+        public async Task<Models.Action> GetActionById(Guid actionId)
+        {
+            var action = await _dbConnection.QuerySingleOrDefaultAsync(
+                "SELECT TOP 1 * FROM [Actions] WHERE [Id] = @Id",
+                new { Id = actionId }
+            );
+
+            return action == null ? null : (Models.Action) action;
         }
     }
 }
