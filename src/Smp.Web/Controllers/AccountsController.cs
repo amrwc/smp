@@ -13,13 +13,15 @@ namespace Smp.Web.Controllers
     public class AccountsController : Controller
     {
         private readonly IUsersRepository _usersRepository;
+        private readonly IActionsRepository _actionsRepository;
         private readonly IAccountsService _accountsService;
         private readonly IActionValidator _actionValidator;
         private readonly ICryptographyService _cryptographyService;
 
-        public AccountsController(IUsersRepository usersRepository, IAccountsService accountsService, IActionValidator actionValidator, ICryptographyService cryptographyService)
+        public AccountsController(IUsersRepository usersRepository, IActionsRepository actionsRepository, IAccountsService accountsService, IActionValidator actionValidator, ICryptographyService cryptographyService)
         {
             _usersRepository = usersRepository;
+            _actionsRepository = actionsRepository;
             _accountsService = accountsService;
             _actionValidator = actionValidator;
             _cryptographyService = cryptographyService;
@@ -39,11 +41,12 @@ namespace Smp.Web.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> ResetPassword([FromBody]ResetPasswordRequest resetPasswordRequest)
         {
-            var validationErrors = await _actionValidator.ValidateAction(resetPasswordRequest.ActionId, ActionType.ResetPassword);
+            var action = await _actionsRepository.GetActionById(resetPasswordRequest.ActionId);
+            var validationErrors = _actionValidator.ValidateAction(action, ActionType.ResetPassword);
             if (resetPasswordRequest.NewPassword != resetPasswordRequest.ConfirmNewPassword) validationErrors.Add(new Error("invalid_password", "Passwords must match."));
             if (validationErrors.Any()) return BadRequest(validationErrors);
 
-            await _accountsService.CompletePasswordReset(resetPasswordRequest.UserId, _cryptographyService.HashAndSaltPassword(resetPasswordRequest.NewPassword), resetPasswordRequest.ActionId);
+            await _accountsService.CompletePasswordReset(action.UserId, _cryptographyService.HashAndSaltPassword(resetPasswordRequest.NewPassword), action.Id);
 
             return Ok();
         }

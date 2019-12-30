@@ -18,6 +18,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { FeedComponent } from './feed/feed.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     ProfileComponent,
     CreatePostComponent,
     FeedComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -78,6 +80,11 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
       {
         path: 'forgot-password',
         component: ForgotPasswordComponent,
+        canActivate: [AlreadySignedInGuard]
+      },
+      {
+        path: 'reset-password/:id',
+        component: ResetPasswordComponent,
         canActivate: [AlreadySignedInGuard]
       },
       { path: '**', redirectTo: '' }
