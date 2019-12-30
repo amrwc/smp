@@ -10,21 +10,13 @@ namespace Smp.Web.Validators
 {
     public interface IActionValidator
     {
-        Task<IList<Error>> ValidateAction(Guid actionId, ActionType actionType);
+        IList<Error> ValidateAction(Models.Action action, ActionType actionType);
     }
 
     public class ActionValidator : IActionValidator
     {
-        private readonly IActionsRepository _actionsRepository;
-
-        public ActionValidator(IActionsRepository actionsRepository)
+        public IList<Error> ValidateAction(Models.Action action, ActionType actionType)
         {
-            _actionsRepository = actionsRepository;
-        }
-
-        public async Task<IList<Error>> ValidateAction(Guid actionId, ActionType actionType)
-        {
-            var action = await _actionsRepository.GetActionById(actionId);
             var errors = new List<Error>();
 
             if (action == null) errors.Add(new Error("invalid_action", "Action must exist."));
