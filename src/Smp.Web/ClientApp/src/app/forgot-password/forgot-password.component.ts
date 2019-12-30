@@ -26,11 +26,13 @@ export class ForgotPasswordComponent implements OnInit {
   public startPasswordReset(): void {
     this.validationError = null;
     this.startPasswordResetUnsuccessful = false;
+    this.startPasswordResetSuccessful = false;
     this.accountEmail = this.accountEmail.toLowerCase();
 
     this.accountsService.forgottenPassword(this.accountEmail).subscribe(
       () => {
         this.loading = false;
+        this.startPasswordResetSuccessful = true;
         this.response = "An email has been sent to you. Click it to reset your password!";
       },
       error => {
@@ -40,5 +42,4 @@ export class ForgotPasswordComponent implements OnInit {
       }
     )
   }
-
 }
