@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: npm install
+    - name: npm install and ng build
       run: |
         cd src/Smp.Web/ClientApp
         sudo npm install --exact-versions
