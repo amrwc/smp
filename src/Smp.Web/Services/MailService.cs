@@ -18,7 +18,7 @@ namespace Smp.Web.Services
         <p>{{Content}}.</p>";
         // Use templater e.g. Razor, scriban, StringTemplate, SmartFormat, etc.
 
-        private ISmtpClient _smtpClient;
+        private readonly ISmtpClient _smtpClient;
 
         public MailService(ISmtpClient smtpClient)
         {
