@@ -13,7 +13,5 @@ jobs:
       run: |
         cd src/Smp.Web/ClientApp
         sudo npm install --exact-versions
-    - name: npm install Angular CLI
-      run: sudo npm install -g @angular/cli
-    - name: ng build
-      run: sudo ng build
+        sudo npm install -g @angular/cli
+        sudo ng build
