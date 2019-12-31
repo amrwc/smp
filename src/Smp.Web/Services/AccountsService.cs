@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Smp.Web.Models;
 using Smp.Web.Repositories;
@@ -29,7 +28,7 @@ namespace Smp.Web.Services
         {
             var action = new Models.Action(userId, ActionType.ResetPassword);
             await _actionsRepository.CreateAction(action);
-            await _mailService.SendEmail(email, "Password reset", $"<h1>RESET PASSWORD</h1><p>CLICK THIS TO RESET PASSWORD<a>http://localhost:5001/resetpassword/{action.Id}</a>.");
+            await _mailService.SendEmail(email, "SMP - Password Reset", $"<h1>RESET PASSWORD</h1><p>CLICK THIS TO RESET PASSWORD<a>http://localhost:5001/resetpassword/{action.Id}</a>.");
             //BLAH BLAH. CLICK LINK TO GO TO WEB APP WHICH WILL HIT THE NEXT API ENDPOINT WITH action.Id
         }
 
