@@ -16,20 +16,22 @@
         </div>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
           <input type="text" class="form-control" placeholder="Email" name="email" [(ngModel)]="signInRequest.email"
-            #email="ngModel" required />
+            #email="ngModel" required tabindex="1" />
           <div *ngIf="f.submitted && !email.valid" class="help-block">Email is required</div>
         </div>
 
-        <div class="forgotten-password"><a [routerLink]="['/sign-in']">Forgotten password?</a></div>
+        <div class="forgotten-password"><a [routerLink]="['/forgot-password']">Forgotten password?</a></div>
 
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
           <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="signInRequest.password"
-            #password="ngModel" required />
+            #password="ngModel" required tabindex="2" />
           <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
         </div>
+
         <div *ngIf="signInUnsuccessful" class="alert alert-danger">
           <p><strong>{{ errorMessage }}</strong></p>
         </div>
+
         <div class="form-group">
           <button [disabled]="loading" class="btn">Sign in</button>
           <div class="question">

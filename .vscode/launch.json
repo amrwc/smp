@@ -23,9 +23,6 @@
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/src/Smp.Web/Views"
-            },
-            "launchBrowser": {
-                "enabled": true
             }
         },
         {
