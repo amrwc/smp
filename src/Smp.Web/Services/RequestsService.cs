@@ -33,7 +33,7 @@ namespace Smp.Web.Services
             var errors = new List<Error>();
 
             if (request.SenderId == request.ReceiverId)
-                errors.Add(new Error("invalid_request", "A user cannot add themself as a friend."));
+                errors.Add(new Error("invalid_request", "A user cannot add themselves as a friend."));
             if (await _relationshipsService.AreAlreadyFriends(request.SenderId, request.ReceiverId)) errors.Add(new Error("invalid_request", "You are already connected."));
             if (await IsRequestAlreadySent(request)) errors.Add(new Error("invalid_request", "The friend request was already sent."));
 

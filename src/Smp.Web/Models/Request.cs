@@ -1,5 +1,4 @@
 ﻿using System;
-using Smp.Web.Models.DTOs;
 using Smp.Web.Models.Requests;
 
 namespace Smp.Web.Models

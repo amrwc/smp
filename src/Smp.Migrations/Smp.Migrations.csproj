@@ -26,6 +26,9 @@
     <None Remove="Migrations\Down\201912261801_RenameAcceptedDateToCreatedAt.sql" />
     <None Remove="Migrations\Down\201912261816_AddCreatedAtColumnToUsersTable.sql" />
     <None Remove="Migrations\Down\201912261829_RenameDateToCreatedAt.sql" />
+    <None Remove="Migrations\Down\201912290027_CreateActionTypesTable.sql" />
+    <None Remove="Migrations\Down\201912290038_InsertActionTypes.sql" />
+    <None Remove="Migrations\Down\201912290104_CreateActionsTable.sql" />
     <None Remove="Migrations\Up\201809050840_CreateUsersTable.sql" />
     <None Remove="Migrations\Up\201809051339_CreateMessagesTable.sql" />
     <None Remove="Migrations\Up\201809051345_CreatePostsTable.sql" />
@@ -47,6 +50,9 @@
     <None Remove="Migrations\Up\201912261809_RenameSentDateToCreatedAt.sql" />
     <None Remove="Migrations\Up\201912261816_AddCreatedAtColumnToUsersTable.sql" />
     <None Remove="Migrations\Up\201912261829_RenameDateToCreatedAt.sql" />
+    <None Remove="Migrations\Up\201912290027_CreateActionTypesTable.sql" />
+    <None Remove="Migrations\Up\201912290038_InsertActionTypes.sql" />
+    <None Remove="Migrations\Up\201912290104_CreateActionsTable.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -69,6 +75,9 @@
     <EmbeddedResource Include="Migrations\Down\201912261801_RenameAcceptedDateToCreatedAt.sql" />
     <EmbeddedResource Include="Migrations\Down\201912261816_AddCreatedAtColumnToUsersTable.sql" />
     <EmbeddedResource Include="Migrations\Down\201912261829_RenameDateToCreatedAt.sql" />
+    <EmbeddedResource Include="Migrations\Down\201912290027_CreateActionTypesTable.sql" />
+    <EmbeddedResource Include="Migrations\Down\201912290038_InsertActionTypes.sql" />
+    <EmbeddedResource Include="Migrations\Down\201912290104_CreateActionsTable.sql" />
     <EmbeddedResource Include="Migrations\Up\201809051414_CreateCommentsTable.sql" />
     <EmbeddedResource Include="Migrations\Up\201809051404_CreateRequestsTable.sql" />
     <EmbeddedResource Include="Migrations\Up\201809051359_CreateRequestTypesTable.sql" />
@@ -83,6 +92,9 @@
     <EmbeddedResource Include="Migrations\Up\201809051525_InsertRequestTypes.sql" />
     <EmbeddedResource Include="Migrations\Up\201809051419_CreateFriendsTable.sql" />
     <EmbeddedResource Include="Migrations\Up\201912261626_DropPostsTable.sql" />
+    <EmbeddedResource Include="Migrations\Up\201912290104_CreateActionsTable.sql" />
+    <EmbeddedResource Include="Migrations\Up\201912290038_InsertActionTypes.sql" />
+    <EmbeddedResource Include="Migrations\Up\201912290027_CreateActionTypesTable.sql" />
     <EmbeddedResource Include="Migrations\Up\201912261829_RenameDateToCreatedAt.sql" />
     <EmbeddedResource Include="Migrations\Up\201912261800_RenameDateToCreatedAt.sql" />
     <EmbeddedResource Include="Migrations\Up\201912261635_CreatePostsTable.sql" />

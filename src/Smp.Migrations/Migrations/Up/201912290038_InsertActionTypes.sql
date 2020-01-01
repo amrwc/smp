@@ -1,0 +1,8 @@
+SET IDENTITY_INSERT [dbo].[ActionTypes] ON;
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'ActionTypes')
+BEGIN
+	INSERT INTO ActionTypes (Id, Type) VALUES (1, 'ResetPassword');
+END
+
+SET IDENTITY_INSERT [dbo].[ActionTypes] OFF;
