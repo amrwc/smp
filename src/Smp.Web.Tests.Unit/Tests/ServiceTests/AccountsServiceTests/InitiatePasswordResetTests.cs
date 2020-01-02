@@ -17,7 +17,6 @@ namespace Smp.Web.Tests.Unit.Tests.ServiceTests.AccountsServiceTests
             private readonly Guid _userId = Guid.NewGuid();
 
             private User _user;
-
             private Action _expectedAction;
             private Action _usedAction;
 
