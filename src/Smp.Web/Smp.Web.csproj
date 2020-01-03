@@ -20,6 +20,7 @@
     <PackageReference Include="FluentAssertions" Version="5.9.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.0" />
+    <PackageReference Include="Scriban" Version="2.1.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.0" />
   </ItemGroup>
 
@@ -31,10 +32,22 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\assets\img\background-photo-group.png" />
+    <None Remove="Resources\Email\bg_bottom.jpg" />
+    <None Remove="Resources\Email\bg_top.jpg" />
+    <None Remove="Resources\Email\instagram2x.png" />
+    <None Remove="Resources\Email\linkedin2x.png" />
+    <None Remove="Resources\Email\smp-logo.png" />
+    <None Remove="Resources\Email\twitter2x.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="ClientApp\src\assets\img\background-photo-group.png" />
+    <EmbeddedResource Include="Resources\Email\bg_bottom.jpg" />
+    <EmbeddedResource Include="Resources\Email\bg_top.jpg" />
+    <EmbeddedResource Include="Resources\Email\instagram2x.png" />
+    <EmbeddedResource Include="Resources\Email\linkedin2x.png" />
+    <EmbeddedResource Include="Resources\Email\smp-logo.png" />
+    <EmbeddedResource Include="Resources\Email\twitter2x.png" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
