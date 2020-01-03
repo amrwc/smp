@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Smp.Web.Models;
-using Smp.Web.Models.Results;
 using Smp.Web.Repositories;
 
 namespace Smp.Web.Services
@@ -33,9 +30,9 @@ namespace Smp.Web.Services
             var errors = new List<Error>();
 
             if (request.SenderId == request.ReceiverId)
-                errors.Add(new Error("invalid_request", "A user cannot add themselves as a friend."));
-            if (await _relationshipsService.AreAlreadyFriends(request.SenderId, request.ReceiverId)) errors.Add(new Error("invalid_request", "You are already connected."));
-            if (await IsRequestAlreadySent(request)) errors.Add(new Error("invalid_request", "The friend request was already sent."));
+                errors.Add(new Error("invalid_request", "A user cannot send themselves a request."));
+            if (request.RequestType == RequestType.Friend && await _relationshipsService.AreAlreadyFriends(request.SenderId, request.ReceiverId)) errors.Add(new Error("invalid_request", "You are already connected."));
+            if (await IsRequestAlreadySent(request)) errors.Add(new Error("invalid_request", "The request has already been sent."));
 
             return errors;
         }
