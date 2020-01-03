@@ -17,12 +17,14 @@ namespace Smp.Web.Controllers
         private readonly IUsersRepository _usersRepository;
         private readonly IUserValidator _userValidator;
         private readonly ICryptographyService _cryptographyService;
+        private readonly IAuthService _authService;
 
-        public UsersController(IUsersRepository usersRepository, IUserValidator userValidator, ICryptographyService cryptographyService)
+        public UsersController(IUsersRepository usersRepository, IUserValidator userValidator, ICryptographyService cryptographyService, IAuthService authService)
         {
             _usersRepository = usersRepository;
             _userValidator = userValidator;
             _cryptographyService = cryptographyService;
+            _authService = authService;
         }
 
         [HttpPost("[action]")]

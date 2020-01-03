@@ -11,7 +11,7 @@ namespace Smp.Web.Repositories
 {
     public interface IRelationshipsRepository
     {
-        Task<Relationship> GetRelationshipByIdsAndType(Guid userOneId, Guid userTwoId, byte relationshipTypeId);
+        Task<Relationship> GetRelationshipByIdsAndType(Guid userOneId, Guid userTwoId, RelationshipType relationshipType);
         Task AddRelationship(Relationship relationship);
         Task<IList<RelationshipType>> GetRelationshipTypes();
         Task<RelationshipType> GetRelationshipTypeById(byte id);
@@ -31,37 +31,37 @@ namespace Smp.Web.Repositories
         {
             return (await _dbConnection.QueryAsync<Models.DTOs.RelationshipType>(
                 @"SELECT * FROM [dbo].[RelationshipTypes] SORT BY [Id] ASC"))
-                .Select(relType => (RelationshipType) relType).ToList();
+                .Select(relType => (RelationshipType)relType.Id).ToList();
         }
 
         public async Task<RelationshipType> GetRelationshipTypeById(byte id)
         {
-            return (RelationshipType)await _dbConnection.QueryFirstAsync<Models.DTOs.RelationshipType>(
+            return (RelationshipType)(await _dbConnection.QueryFirstAsync<Models.DTOs.RelationshipType>(
                 @"SELECT TOP 1 * FROM [dbo].[RelationshipTypes] WHERE [Id] = @Id",
-                new { Id = id });
+                new { Id = id })).Id;
         }
 
         public async Task<RelationshipType> GetRelationshipTypeByName(string name)
         {
-            return (RelationshipType)await _dbConnection.QueryFirstAsync<Models.DTOs.RelationshipType>(
+            return (RelationshipType)(await _dbConnection.QueryFirstAsync<Models.DTOs.RelationshipType>(
                 @"SELECT TOP 1 * FROM [dbo].[RelationshipTypes] WHERE [Type] = @RelationshipType",
-                new { RelationshipType = name });
+                new { RelationshipType = name })).Id;
         }
 
-        public async Task<Relationship> GetRelationshipByIdsAndType(Guid userOneId, Guid userTwoId, byte relationshipTypeId)
+        public async Task<Relationship> GetRelationshipByIdsAndType(Guid userOneId, Guid userTwoId, RelationshipType relationshipType)
         {
             return (Relationship) await _dbConnection.QueryFirstAsync<Models.DTOs.Relationship>(
                 @"SELECT TOP 1 * FROM [dbo].[Relationships]
                 WHERE (([UserOneId] = @UserOneId AND [UserTwoId] = @UserTwoId)
                 OR ([UserOneId] = @UserTwoId AND [UserTwoId] = @UserOneId)) AND [RelationshipTypeId] = @RelationshipTypeId",
-                new {UserOneId = userOneId, UserTwoId = userTwoId, RelationshipTypeId = relationshipTypeId});
+                new {UserOneId = userOneId, UserTwoId = userTwoId, RelationshipTypeId = (byte)relationshipType});
         }
 
         public async Task AddRelationship(Relationship relationship)
         {
             await _dbConnection.ExecuteAsync(
                 "INSERT INTO [dbo].[Relationships] ([UserOneId], [UserTwoId], [RelationshipTypeId], [CreatedAt]) VALUES (@UserOneId, @UserTwoId, @RelationshipTypeId, @CreatedAt)",
-                new {UserOneId = relationship.UserOneId, UserTwoId = relationship.UserTwoId, RelationshipTypeId = relationship.RelationshipTypeId, CreatedAt = relationship.CreatedAt});
+                new {UserOneId = relationship.UserOneId, UserTwoId = relationship.UserTwoId, RelationshipTypeId = (byte)relationship.RelationshipType, CreatedAt = relationship.CreatedAt});
         }
     }
 }

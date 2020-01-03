@@ -12,15 +12,21 @@ namespace Smp.Web.Controllers
     public class PostsController : Controller
     {
         private readonly IPostsService _postsService;
+        private readonly IAuthService _authService;
 
-        public PostsController(IPostsService postsService)
+        public PostsController(IPostsService postsService, IAuthService authService)
         {
             _postsService = postsService;
+            _authService = authService;
         }
 
         [HttpPost("[action]"), Authorize]
         public async Task<IActionResult> CreatePost([FromBody] CreatePostRequest createPostRequest)
         {
+            var tkn = Request.Headers["Authorization"];
+            if (!(_authService.AuthorizeSelf(tkn, createPostRequest.SenderId) && await _authService.AuthorizeFriend(tkn, createPostRequest.ReceiverId)))
+                return Unauthorized();
+
             await _postsService.CreatePost(new Post(createPostRequest));
 
             return Ok();

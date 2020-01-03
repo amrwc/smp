@@ -9,6 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System;
+using System.Linq;
 
 namespace Smp.Web.Services
 {
@@ -16,6 +17,8 @@ namespace Smp.Web.Services
     {
         Task<VerifyUserResult> VerifyUser(string email, string password);
         string CreateJwt(User user);
+        bool AuthorizeSelf(string authToken, Guid userId);
+        Task<bool> AuthorizeFriend(string authToken, Guid userId);
     }
 
     public class AuthService : IAuthService
@@ -23,12 +26,14 @@ namespace Smp.Web.Services
         private readonly IConfiguration _configuration;
         private readonly IUsersRepository _userRepository;
         private readonly ICryptographyService _cryptographyService;
+        private readonly IRelationshipsService _relationshipsService;
 
-        public AuthService(IConfiguration configuration, IUsersRepository userRepository, ICryptographyService cryptographyService)
+        public AuthService(IConfiguration configuration, IUsersRepository userRepository, ICryptographyService cryptographyService, IRelationshipsService relationshipsService)
         {
             _configuration = configuration;
             _userRepository = userRepository;
             _cryptographyService = cryptographyService;
+            _relationshipsService = relationshipsService;
         }
 
         public async Task<VerifyUserResult> VerifyUser(string email, string password)
@@ -60,5 +65,18 @@ namespace Smp.Web.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        public bool AuthorizeSelf(string authToken, Guid userId) 
+            => new JwtSecurityTokenHandler().ReadJwtToken(StripBearer(authToken)).Id == userId.ToString();
+
+        public async Task<bool> AuthorizeFriend(string authToken, Guid userId)
+        {
+            var senderId = Guid.Parse(new JwtSecurityTokenHandler().ReadJwtToken(StripBearer(authToken)).Id);
+
+            return await _relationshipsService.AreAlreadyFriends(senderId, userId);
+        }
+
+        private static string StripBearer(string authToken)
+            => authToken.Substring(7);
     }
 }
