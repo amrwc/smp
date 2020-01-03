@@ -33,7 +33,7 @@ namespace Smp.Web.Services
         {
             var action = new Models.Action(userId, ActionType.ResetPassword);
             await _actionsRepository.CreateAction(action);
-            await _mailService.SendEmail(email, "SMP - Password Reset", $"<h1>RESET PASSWORD</h1><p>CLICK THIS TO RESET PASSWORD <a>{_webAppUrl}reset-password/{action.Id}</a>.</p>");
+            await _mailService.SendResetPasswordEmail(email, (await _usersRepository.GetUserById(userId)).FullName, $"{_webAppUrl}reset-password/{action.Id}");
         }
 
         public async Task CompletePasswordReset(Guid userId, string newPassword, Guid actionId)
