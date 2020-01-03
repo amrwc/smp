@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using AutoFixture;
-using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -27,6 +24,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
             {
                 Setup();
 
+                AuthService.Setup(service => service.AuthorizeSelf(It.IsAny<string>(), It.IsAny<Guid>())).Returns(true);
                 RequestsService.Setup(service => service.ValidateAcceptRequest(It.IsAny<Request>())).Returns(Task.FromResult(new List<Error>()));
                 _result = await RequestsController.AcceptRequest(_userId, _senderId, _requestTypeId);
             }

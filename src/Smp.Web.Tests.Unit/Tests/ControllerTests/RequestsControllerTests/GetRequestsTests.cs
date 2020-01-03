@@ -30,6 +30,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
                 var fixture = new Fixture();
                 _expectedRequests = fixture.CreateMany<Request>().ToList();
 
+                AuthService.Setup(service => service.AuthorizeSelf(It.IsAny<string>(), It.IsAny<Guid>())).Returns(true);
                 RequestsRepository.Setup(repo => repo.GetRequestsByReceiverId(It.IsAny<Guid>())).ReturnsAsync(_expectedRequests);
 
                 _result = await RequestsController.GetIncomingRequests(_userId);

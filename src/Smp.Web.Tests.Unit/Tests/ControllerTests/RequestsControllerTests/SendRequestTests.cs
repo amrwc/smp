@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoFixture;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
                 var fixture = new Fixture();
                 _requestRequest = fixture.Create<RequestRequest>();
 
+                AuthService.Setup(service => service.AuthorizeSelf(It.IsAny<string>(), It.IsAny<Guid>())).Returns(true);
                 RequestsService.Setup(service => service.ValidateNewRequest(It.IsAny<Request>()))
                     .Returns(Task.FromResult(new List<Error>()));
 
@@ -62,6 +64,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
                 var fixture = new Fixture();
                 _requestRequest = fixture.Create<RequestRequest>();
 
+                AuthService.Setup(service => service.AuthorizeSelf(It.IsAny<string>(), It.IsAny<Guid>())).Returns(true);
                 RequestsService.Setup(service => service.ValidateNewRequest(It.IsAny<Request>()))
                     .Returns(Task.FromResult(new List<Error>{new Error(":^)", ":^)")}));
 
