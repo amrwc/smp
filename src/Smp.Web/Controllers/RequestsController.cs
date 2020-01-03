@@ -10,6 +10,7 @@ using Smp.Web.Models.Requests;
 
 namespace Smp.Web.Controllers
 {
+    [Route("api/[controller]")]
     public class RequestsController : Controller
     {
         private readonly IRequestsService _requestsService;
@@ -23,8 +24,12 @@ namespace Smp.Web.Controllers
         }
 
         [HttpGet("[action]/{userId:Guid}"), Authorize]
-        public async Task<IActionResult> GetRequests(Guid userId)
+        public async Task<IActionResult> GetOutgoingRequests(Guid userId)
             => Ok(await _requestsRepository.GetRequestsBySenderId(userId));
+
+        [HttpGet("[action]/{userId:Guid}"), Authorize]
+        public async Task<IActionResult> GetIncomingRequests(Guid userId)
+            => Ok(await _requestsRepository.GetRequestsByReceiverId(userId));
 
         [HttpPost("[action]"), Authorize]
         public async Task<IActionResult> SendRequest([FromBody] RequestRequest requestRequest)
@@ -46,7 +51,7 @@ namespace Smp.Web.Controllers
             {
                 SenderId = senderId,
                 ReceiverId = userId,
-                RequestTypeId = requestTypeId
+                RequestType = (RequestType)requestTypeId
             };
 
             var validationResult = await _requestsService.ValidateAcceptRequest(request);

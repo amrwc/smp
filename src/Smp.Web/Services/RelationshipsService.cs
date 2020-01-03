@@ -22,16 +22,16 @@ namespace Smp.Web.Services
 
         public async Task AddFriend(Guid userOneId, Guid userTwoId)
         {
-            var relationship = new Relationship(userOneId, userTwoId, (await _relationshipsRepository.GetRelationshipTypeByName(RelationshipType.Friend)).Id);
+            var relationship = new Relationship(userOneId, userTwoId, RelationshipType.Friend);
 
             await _relationshipsRepository.AddRelationship(relationship);
         }
 
         public async Task<bool> AreAlreadyFriends(Guid senderId, Guid receiverId)
         {
-            var friend = await _relationshipsRepository.GetRelationshipByIdsAndType(senderId, receiverId, (await _relationshipsRepository.GetRelationshipTypeByName(RelationshipType.Friend)).Id);
+            var friend = await _relationshipsRepository.GetRelationshipByIdsAndType(senderId, receiverId, RelationshipType.Friend);
 
-            return friend != null ? true : false;
+            return friend != null;
         }
     }
 }
