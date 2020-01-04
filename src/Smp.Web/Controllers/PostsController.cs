@@ -24,8 +24,10 @@ namespace Smp.Web.Controllers
         public async Task<IActionResult> CreatePost([FromBody] CreatePostRequest createPostRequest)
         {
             var tkn = Request.Headers["Authorization"];
-            if (!(_authService.AuthorizeSelf(tkn, createPostRequest.SenderId) && await _authService.AuthorizeFriend(tkn, createPostRequest.ReceiverId)))
-                return Unauthorized();
+            var authorized = _authService.AuthorizeSelf(tkn, createPostRequest.SenderId) &&
+                             (_authService.AuthorizeSelf(tkn, createPostRequest.ReceiverId) ||
+                              await _authService.AuthorizeFriend(tkn, createPostRequest.ReceiverId));
+            if (!authorized) return Unauthorized();
 
             await _postsService.CreatePost(new Post(createPostRequest));
 

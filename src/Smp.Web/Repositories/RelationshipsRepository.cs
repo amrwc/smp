@@ -50,11 +50,13 @@ namespace Smp.Web.Repositories
 
         public async Task<Relationship> GetRelationshipByIdsAndType(Guid userOneId, Guid userTwoId, RelationshipType relationshipType)
         {
-            return (Relationship) await _dbConnection.QueryFirstAsync<Models.DTOs.Relationship>(
+            var relationship = await _dbConnection.QueryFirstOrDefaultAsync<Models.DTOs.Relationship>(
                 @"SELECT TOP 1 * FROM [dbo].[Relationships]
                 WHERE (([UserOneId] = @UserOneId AND [UserTwoId] = @UserTwoId)
                 OR ([UserOneId] = @UserTwoId AND [UserTwoId] = @UserOneId)) AND [RelationshipTypeId] = @RelationshipTypeId",
                 new {UserOneId = userOneId, UserTwoId = userTwoId, RelationshipTypeId = (byte)relationshipType});
+
+            return relationship == null ? null : (Relationship) relationship;
         }
 
         public async Task AddRelationship(Relationship relationship)
