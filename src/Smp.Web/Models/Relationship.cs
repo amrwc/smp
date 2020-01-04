@@ -6,17 +6,17 @@ namespace Smp.Web.Models
     {
         public Relationship() { }
 
-        public Relationship(Guid userOneId, Guid userTwoId, byte relationshipTypeId)
+        public Relationship(Guid userOneId, Guid userTwoId, RelationshipType relationshipType)
         {
             UserOneId = userOneId;
             UserTwoId = userTwoId;
-            RelationshipTypeId = relationshipTypeId;
+            RelationshipType = relationshipType;
             CreatedAt = DateTime.UtcNow;
         }
 
         public Guid UserOneId { get; set; }
         public Guid UserTwoId { get; set; }
-        public byte RelationshipTypeId { get; set; }
+        public RelationshipType RelationshipType { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public static explicit operator Relationship(DTOs.Relationship relationship)
@@ -25,7 +25,7 @@ namespace Smp.Web.Models
             {
                 UserOneId = relationship.UserOneId,
                 UserTwoId = relationship.UserTwoId,
-                RelationshipTypeId = relationship.RelationshipTypeId,
+                RelationshipType = (RelationshipType)relationship.RelationshipTypeId,
                 CreatedAt = relationship.CreatedAt
             };
         }

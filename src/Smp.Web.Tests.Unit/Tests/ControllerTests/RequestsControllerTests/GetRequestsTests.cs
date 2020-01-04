@@ -17,30 +17,31 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
         [TestFixture]
         public class GivenAUserWithRequests : RequestsControllerTestBase
         {
-            private Guid _userId = Guid.NewGuid();
+            private readonly Guid _userId = Guid.NewGuid();
             private IList<Request> _expectedRequests;
 
             private IActionResult _result;
 
             [OneTimeSetUp]
-            public async Task WhenGetRequestsGetCalled()
+            public async Task WhenGetIncomingRequestsGetCalled()
             {
                 Setup();
 
                 var fixture = new Fixture();
                 _expectedRequests = fixture.CreateMany<Request>().ToList();
 
-                RequestsRepository.Setup(repo => repo.GetRequestsBySenderId(It.IsAny<Guid>())).ReturnsAsync(_expectedRequests);
+                AuthService.Setup(service => service.AuthorizeSelf(It.IsAny<string>(), It.IsAny<Guid>())).Returns(true);
+                RequestsRepository.Setup(repo => repo.GetRequestsByReceiverId(It.IsAny<Guid>())).ReturnsAsync(_expectedRequests);
 
-                _result = await RequestsController.GetRequests(_userId);
+                _result = await RequestsController.GetIncomingRequests(_userId);
             }
 
             [Test]
             public void ThenRequestRepositoryGetRequestsBySenderIdShouldHaveBeenCalled()
-                => RequestsRepository.Verify(repo => repo.GetRequestsBySenderId(_userId), Times.Once);
+                => RequestsRepository.Verify(repo => repo.GetRequestsByReceiverId(_userId), Times.Once);
 
             [Test]
-            public void ThenOkResultShouldHaveBeenRetuned()
+            public void ThenOkResultShouldHaveBeenReturned()
                 => Assert.IsInstanceOf<OkObjectResult>(_result);
 
             [Test]
@@ -52,7 +53,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
                 => ActualResults.Should().BeEquivalentTo(_expectedRequests);
 
             private IList<Request> ActualResults
-                => (List<Request>)(((OkObjectResult)_result).Value);
+                => (List<Request>)((OkObjectResult)_result).Value;
         }
     }
 }

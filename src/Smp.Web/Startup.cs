@@ -1,5 +1,4 @@
 using System;
-using System.Net.Mail;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,7 +27,24 @@ namespace Smp.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddAuthentication(jwt =>
+            {
+                jwt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                jwt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(jwt =>
+            {
+                jwt.RequireHttpsMetadata = false;
+                jwt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = Configuration["Tokens:Issuer"],
+                    ValidAudience = Configuration["Tokens:Issuer"],
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(Configuration["Tokens:SigningKey"]))
+                };
+            });
+
+            services.AddAuthorization();
 
             services.AddScoped<ICryptographyService, CryptographyService>();
             services.AddScoped<IAuthService, AuthService>();
@@ -50,22 +66,8 @@ namespace Smp.Web
             services.AddScoped<IPostsService, PostsService>();
             services.AddScoped<IAccountsService, AccountsService>();
 
-            services.AddAuthentication(jwt =>
-            {
-                jwt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                jwt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(jwt =>
-            {
-                jwt.RequireHttpsMetadata = false;
-                jwt.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidIssuer = Configuration["Tokens:Issuer"],
-                    ValidAudience = Configuration["Tokens:Issuer"],
-                    ValidateAudience = false,
-                    ValidateIssuer = false,
-                    IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(Configuration["Tokens:SigningKey"]))
-                };
-            });
+            services.AddMvc();
+            
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

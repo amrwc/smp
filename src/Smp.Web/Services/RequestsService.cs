@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Smp.Web.Models;
-using Smp.Web.Models.Results;
 using Smp.Web.Repositories;
 
 namespace Smp.Web.Services
@@ -33,9 +30,9 @@ namespace Smp.Web.Services
             var errors = new List<Error>();
 
             if (request.SenderId == request.ReceiverId)
-                errors.Add(new Error("invalid_request", "A user cannot add themselves as a friend."));
-            if (await _relationshipsService.AreAlreadyFriends(request.SenderId, request.ReceiverId)) errors.Add(new Error("invalid_request", "You are already connected."));
-            if (await IsRequestAlreadySent(request)) errors.Add(new Error("invalid_request", "The friend request was already sent."));
+                errors.Add(new Error("invalid_request", "A user cannot send themselves a request."));
+            if (request.RequestType == RequestType.Friend && await _relationshipsService.AreAlreadyFriends(request.SenderId, request.ReceiverId)) errors.Add(new Error("invalid_request", "You are already connected."));
+            if (await IsRequestAlreadySent(request)) errors.Add(new Error("invalid_request", "The request has already been sent."));
 
             return errors;
         }
@@ -44,7 +41,7 @@ namespace Smp.Web.Services
         {
             var requests = await _requestsRepository.GetRequestsByUserIds(request.SenderId, request.ReceiverId);
 
-            return requests.Any(req => req.RequestTypeId == request.RequestTypeId) ? true : false;
+            return requests.Any(req => req.RequestType == request.RequestType);
         }
 
         public async Task<List<Error>> ValidateAcceptRequest(Request request)
@@ -52,14 +49,14 @@ namespace Smp.Web.Services
             var errors = new List<Error>();
 
             var req = await _requestsRepository.GetRequestByUserIdsAndType(request);
-            var reqType = await _requestsRepository.GetRequestTypeById(request.RequestTypeId);
-
             if (req == null) errors.Add(new Error("invalid_request", "There is no request to accept."));
 
-            switch (reqType.Type)
+            switch (request.RequestType)
             {
-                case (RequestType.Friend):
+                case RequestType.Friend:
                     if (await _relationshipsService.AreAlreadyFriends(request.SenderId, request.ReceiverId)) errors.Add(new Error("invalid_request", "You are already connected."));
+                    break;
+                case RequestType.None:
                     break;
                 default:
                     break;
@@ -70,13 +67,11 @@ namespace Smp.Web.Services
 
         public async Task AcceptRequest(Request request)
         {
-            var reqType = await _requestsRepository.GetRequestTypeById(request.RequestTypeId);
-
-            switch (reqType.Type)
+            switch (request.RequestType)
             {
                 case RequestType.Friend:
                     await _relationshipsService.AddFriend(request.SenderId, request.ReceiverId);
-                    await _requestsRepository.DeleteRequest(request.SenderId, request.ReceiverId, request.RequestTypeId);
+                    await _requestsRepository.DeleteRequest(request.SenderId, request.ReceiverId, request.RequestType);
                     break;
                 default:
                     break;
