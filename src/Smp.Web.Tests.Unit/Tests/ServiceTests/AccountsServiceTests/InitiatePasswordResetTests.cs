@@ -49,8 +49,8 @@ namespace Smp.Web.Tests.Unit.Tests.ServiceTests.AccountsServiceTests
                         .Excluding(action => action.Id)
                         .Excluding(action => action.CreatedAt)
                         .Excluding(action => action.ExpiresAt));
-                _usedAction.CreatedAt.Should().BeCloseTo(_expectedAction.CreatedAt, 200);
-                _usedAction.ExpiresAt.Should().BeCloseTo(_expectedAction.ExpiresAt, 200);
+                _usedAction.CreatedAt.Should().BeCloseTo(_expectedAction.CreatedAt, 500);
+                _usedAction.ExpiresAt.Should().BeCloseTo(_expectedAction.ExpiresAt, 500);
             }
 
             [Test]

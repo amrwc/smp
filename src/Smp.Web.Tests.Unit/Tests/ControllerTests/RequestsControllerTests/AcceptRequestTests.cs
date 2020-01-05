@@ -14,9 +14,9 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
         [TestFixture]
         public class GivenAValidRequest : RequestsControllerTestBase
         {
-            private Guid _userId = Guid.NewGuid();
-            private Guid _senderId = Guid.NewGuid();
-            private byte _requestTypeId = 1;
+            private readonly Guid _userId = Guid.NewGuid();
+            private readonly Guid _senderId = Guid.NewGuid();
+            private const byte RequestTypeId = 1;
             private IActionResult _result;
 
             [OneTimeSetUp]
@@ -25,8 +25,8 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
                 Setup();
 
                 AuthService.Setup(service => service.AuthorizeSelf(It.IsAny<string>(), It.IsAny<Guid>())).Returns(true);
-                RequestsService.Setup(service => service.ValidateAcceptRequest(It.IsAny<Request>())).Returns(Task.FromResult(new List<Error>()));
-                _result = await RequestsController.AcceptRequest(_userId, _senderId, _requestTypeId);
+                RequestValidator.Setup(validator => validator.ValidateAcceptRequest(It.IsAny<Request>())).ReturnsAsync(new List<Error>());
+                _result = await RequestsController.AcceptRequest(_userId, _senderId, RequestTypeId);
             }
 
             [Test]
