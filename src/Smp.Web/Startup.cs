@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +16,7 @@ using Smp.Web.Wrappers;
 
 namespace Smp.Web
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -59,6 +61,7 @@ namespace Smp.Web
             services.AddScoped<IActionsRepository, ActionsRepository>();
 
             services.AddScoped<IUserValidator, UserValidator>();
+            services.AddScoped<IRequestValidator, RequestValidator>();
             services.AddScoped<IActionValidator, ActionValidator>();
 
             services.AddScoped<IRelationshipsService, RelationshipsService>();

@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 
 namespace Smp.Web.Factories
@@ -10,6 +11,7 @@ namespace Smp.Web.Factories
         IDbConnection GetDbConnection();
     }
 
+    [ExcludeFromCodeCoverage]
     public class DbConnectionFactory : IDbConnectionFactory, IDisposable
     {
         private readonly IDbConnection _dbConnection;

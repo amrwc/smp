@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
@@ -8,9 +9,10 @@ namespace Smp.Web.Wrappers
         Task SendMailAsync(MailMessage email);
     }
 
+    [ExcludeFromCodeCoverage]
     public class SmtpClientWrapper : ISmtpClient
     {
-        private SmtpClient _smtpClient;
+        private readonly SmtpClient _smtpClient;
 
         public SmtpClientWrapper(string host, ushort port)
         {

@@ -1,7 +1,9 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Smp.Web.Models.DTOs
 {
+    [ExcludeFromCodeCoverage]
     public class Relationship
     {
         public Guid UserOneId { get; set; }

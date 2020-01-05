@@ -12,7 +12,7 @@ using Smp.Web.Models;
 namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
 {
     [TestFixture]
-    public class GetRequestsTests
+    public class GetIncomingRequestsTests
     {
         [TestFixture]
         public class GivenAUserWithRequests : RequestsControllerTestBase
