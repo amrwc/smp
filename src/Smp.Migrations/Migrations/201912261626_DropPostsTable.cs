@@ -1,9 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using SimpleMigrations;
 
 namespace Smp.Migrations.Migrations
 {
-    [Migration(201912261626, "Drop Posts Table")]
+    [Migration(201912261626, "Drop Posts Table"), ExcludeFromCodeCoverage]
     public class DropPostsTable : Migration
     {
         protected override void Up()

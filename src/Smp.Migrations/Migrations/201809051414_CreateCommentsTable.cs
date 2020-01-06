@@ -1,9 +1,10 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using SimpleMigrations;
 
 namespace Smp.Migrations.Migrations
 {
-    [Migration(201809051414, "Create Comments table")]
+    [Migration(201809051414, "Create Comments table"), ExcludeFromCodeCoverage]
     public class CreateCommentsTable : Migration
     {
         protected override void Up()

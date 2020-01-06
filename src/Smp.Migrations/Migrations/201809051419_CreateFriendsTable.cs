@@ -1,9 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using SimpleMigrations;
 
 namespace Smp.Migrations.Migrations
 {
-    [Migration(201809051419, "Create Friends table")]
+    [Migration(201809051419, "Create Friends table"), ExcludeFromCodeCoverage]
     public class CreateFriendsTable : Migration
     {
         protected override void Up()
