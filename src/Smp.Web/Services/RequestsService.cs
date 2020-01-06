@@ -23,12 +23,8 @@ namespace Smp.Web.Services
         }
         
         public async Task<bool> IsRequestAlreadySent(Request request)
-        {
-            var requests = await _requestsRepository.GetRequestsByUserIds(request.SenderId, request.ReceiverId);
+            => await _requestsRepository.GetRequestByUserIdsAndType(request) != null;
 
-            return requests.Any(req => req.RequestType == request.RequestType);
-        }
-        
         public async Task AcceptRequest(Request request)
         {
             switch (request.RequestType)
@@ -36,8 +32,6 @@ namespace Smp.Web.Services
                 case RequestType.Friend:
                     await _relationshipsService.AddFriend(request.SenderId, request.ReceiverId);
                     await _requestsRepository.DeleteRequest(request.SenderId, request.ReceiverId, request.RequestType);
-                    break;
-                default:
                     break;
             }
         }

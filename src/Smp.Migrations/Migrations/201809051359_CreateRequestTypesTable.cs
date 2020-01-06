@@ -1,9 +1,10 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using SimpleMigrations;
 
 namespace Smp.Migrations.Migrations
 {
-    [Migration(201809051359, "Create RequestTypes table")]
+    [Migration(201809051359, "Create RequestTypes table"), ExcludeFromCodeCoverage]
     public class CreateRequestTypesTable : Migration
     {
         protected override void Up()

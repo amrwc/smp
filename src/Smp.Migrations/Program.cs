@@ -1,9 +1,11 @@
 ﻿using SimpleMigrations;
 using SimpleMigrations.DatabaseProvider;
 using System.Data.SqlClient;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Smp.Migrations
 {
+    [ExcludeFromCodeCoverage]
     public class Program
     {
         static void Main(string[] args)
