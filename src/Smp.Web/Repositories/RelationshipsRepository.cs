@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
@@ -18,6 +19,7 @@ namespace Smp.Web.Repositories
         Task<RelationshipType> GetRelationshipTypeByName(string name);
     }
 
+    [ExcludeFromCodeCoverage]
     public class RelationshipsRepository : IRelationshipsRepository
     {
         private readonly IDbConnection _dbConnection;

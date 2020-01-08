@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Dapper;
 using Smp.Web.Factories;
@@ -15,6 +16,7 @@ namespace Smp.Web.Repositories
         Task UpdatePasswordById(Guid id, string newPassword);
     }
 
+    [ExcludeFromCodeCoverage]
     public class UsersRepository : IUsersRepository
     {
         private readonly IDbConnection _dbConnection;
