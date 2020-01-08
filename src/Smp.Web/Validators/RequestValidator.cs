@@ -49,10 +49,6 @@ namespace Smp.Web.Validators
                 case RequestType.Friend:
                     if (await _relationshipsService.AreAlreadyFriends(request.SenderId, request.ReceiverId)) errors.Add(new Error("invalid_request", "You are already connected."));
                     break;
-                case RequestType.None:
-                    break;
-                default:
-                    break;
             }
 
             return errors;
