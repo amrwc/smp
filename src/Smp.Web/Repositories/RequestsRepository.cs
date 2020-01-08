@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
@@ -22,6 +23,7 @@ namespace Smp.Web.Repositories
         Task<RequestType> GetRequestTypeByName(string name);
     }
 
+    [ExcludeFromCodeCoverage]
     public class RequestsRepository : IRequestsRepository
     {
         private readonly IDbConnection _dbConnection;

@@ -1,9 +1,10 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using SimpleMigrations;
 
 namespace Smp.Migrations.Migrations
 {
-    [Migration(201809050840, "Create Users table")]
+    [Migration(201809050840, "Create Users table"), ExcludeFromCodeCoverage]
     public class CreateUsersTable : Migration
     {
         protected override void Up()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Dapper;
 using Smp.Web.Factories;
@@ -13,6 +14,7 @@ namespace Smp.Web.Repositories
         Task CompleteActionById(Guid actionId);
     }
 
+    [ExcludeFromCodeCoverage]
     public class ActionsRepository : IActionsRepository
     {
         private readonly IDbConnection _dbConnection;

@@ -1,9 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using SimpleMigrations;
 
 namespace Smp.Migrations.Migrations
 {
-    [Migration(201912261829, "Rename Date To CreatedAt in Messages table")]
+    [Migration(201912261829, "Rename Date To CreatedAt in Messages table"), ExcludeFromCodeCoverage]
     public class RenameDateToCreatedAtInMessagesTable : Migration
     {
         protected override void Up()

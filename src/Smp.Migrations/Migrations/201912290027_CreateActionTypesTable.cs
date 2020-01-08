@@ -1,9 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using SimpleMigrations;
 
 namespace Smp.Migrations.Migrations
 {
-    [Migration(201912290027, "Create ActionTypes Table")]
+    [Migration(201912290027, "Create ActionTypes Table"), ExcludeFromCodeCoverage]
     public class CreateActionTypesTable : Migration
     {
         protected override void Up()
