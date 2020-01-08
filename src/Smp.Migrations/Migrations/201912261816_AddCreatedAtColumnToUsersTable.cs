@@ -1,9 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using SimpleMigrations;
 
 namespace Smp.Migrations.Migrations
 {
-    [Migration(201912261816, "Add CreatedAt Column to Users table")]
+    [Migration(201912261816, "Add CreatedAt Column to Users table"), ExcludeFromCodeCoverage]
     public class AddCreatedAtColumnToUsersTable : Migration
     {
         protected override void Up()

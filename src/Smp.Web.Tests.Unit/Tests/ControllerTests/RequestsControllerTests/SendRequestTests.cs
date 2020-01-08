@@ -30,15 +30,15 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
                 _requestRequest = fixture.Create<RequestRequest>();
 
                 AuthService.Setup(service => service.AuthorizeSelf(It.IsAny<string>(), It.IsAny<Guid>())).Returns(true);
-                RequestsService.Setup(service => service.ValidateNewRequest(It.IsAny<Request>()))
-                    .Returns(Task.FromResult(new List<Error>()));
+                RequestValidator.Setup(validator => validator.ValidateNewRequest(It.IsAny<Request>()))
+                    .ReturnsAsync(new List<Error>());
 
                 _result = await RequestsController.SendRequest(_requestRequest);
             }
 
             [Test]
-            public void ThenRequestServiceValidateRequestShouldHaveBeenCalled()
-                => RequestsService.Verify(service => service.ValidateNewRequest(It.IsAny<Request>()), Times.Once);
+            public void ThenRequestValidatorValidateRequestShouldHaveBeenCalled()
+                => RequestValidator.Verify(validator => validator.ValidateNewRequest(It.IsAny<Request>()), Times.Once);
 
             [Test]
             public void ThenRequestRepositoryCreateRequestShouldHaveBeenCalled()
@@ -65,15 +65,15 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
                 _requestRequest = fixture.Create<RequestRequest>();
 
                 AuthService.Setup(service => service.AuthorizeSelf(It.IsAny<string>(), It.IsAny<Guid>())).Returns(true);
-                RequestsService.Setup(service => service.ValidateNewRequest(It.IsAny<Request>()))
-                    .Returns(Task.FromResult(new List<Error>{new Error(":^)", ":^)")}));
+                RequestValidator.Setup(validator => validator.ValidateNewRequest(It.IsAny<Request>()))
+                    .ReturnsAsync(new List<Error>{new Error(":^)", ":^)")});
 
                 _result = await RequestsController.SendRequest(_requestRequest);
             }
 
             [Test]
             public void ThenRequestServiceValidateRequestShouldHaveBeenCalled()
-                => RequestsService.Verify(service => service.ValidateNewRequest(It.IsAny<Request>()), Times.Once);
+                => RequestValidator.Verify(validator => validator.ValidateNewRequest(It.IsAny<Request>()), Times.Once);
 
             [Test]
             public void ThenRequestRepositoryCreateRequestShouldNotHaveBeenCalled()

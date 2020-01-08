@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Smp.Web.Models.Requests;
+using Smp.Web.Validators;
 
 namespace Smp.Web.Controllers
 {
@@ -16,12 +17,14 @@ namespace Smp.Web.Controllers
         private readonly IRequestsService _requestsService;
         private readonly IRequestsRepository _requestsRepository;
         private readonly IAuthService _authService;
+        private readonly IRequestValidator _requestValidator;
 
-        public RequestsController(IRequestsService requestsService, IRequestsRepository requestsRepository, IAuthService authService)
+        public RequestsController(IRequestsService requestsService, IRequestsRepository requestsRepository, IAuthService authService, IRequestValidator requestValidator)
         {
             _requestsService = requestsService;
             _requestsRepository = requestsRepository;
             _authService = authService;
+            _requestValidator = requestValidator;
         }
 
         [HttpGet("[action]/{userId:Guid}"), Authorize]
@@ -50,7 +53,7 @@ namespace Smp.Web.Controllers
 
             var newRequest = new Request(requestRequest);
 
-            var validationResult = await _requestsService.ValidateNewRequest(newRequest);
+            var validationResult = await _requestValidator.ValidateNewRequest(newRequest);
             if (validationResult.Any()) return BadRequest(validationResult);
 
             await _requestsRepository.CreateRequest(newRequest);
@@ -71,7 +74,7 @@ namespace Smp.Web.Controllers
                 RequestType = (RequestType)requestTypeId
             };
 
-            var validationResult = await _requestsService.ValidateAcceptRequest(request);
+            var validationResult = await _requestValidator.ValidateAcceptRequest(request);
             if (validationResult.Any()) return BadRequest(validationResult);
 
             await _requestsService.AcceptRequest(request);

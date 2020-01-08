@@ -1,7 +1,9 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Smp.Web.Models.DTOs
 {
+    [ExcludeFromCodeCoverage]
     public class Action
     {
         public Guid Id { get; set; }

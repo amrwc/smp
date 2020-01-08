@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
@@ -16,6 +17,7 @@ namespace Smp.Web.Repositories
         Task<IList<Post>> GetPostsByReceiverId(Guid receiverId, int count);
     }
 
+    [ExcludeFromCodeCoverage]
     public class PostsRepository : IPostsRepository
     {
         private readonly IDbConnection _dbConnection;
