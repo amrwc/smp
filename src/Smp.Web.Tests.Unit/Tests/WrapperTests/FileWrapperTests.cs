@@ -13,7 +13,7 @@ namespace Smp.Web.Tests.Unit.Tests.WrapperTests
             [OneTimeSetUp]
             public void GivenAValidFile_WhenReadAllTextGetsCalled()
             {
-                _fileContents = new FileWrapper().ReadAllText(@".\Resources\Email\email-template.html");
+                _fileContents = new FileWrapper().ReadAllText(@"Resources/Email/email-template.html");
             }
 
             [Test]
@@ -28,7 +28,7 @@ namespace Smp.Web.Tests.Unit.Tests.WrapperTests
             [OneTimeSetUp]
             public async Task GivenAValidFile_WhenReadAllTextAsyncGetsCalled()
             {
-                _fileContents = await new FileWrapper().ReadAllTextAsync(@".\Resources\Email\email-template.html");
+                _fileContents = await new FileWrapper().ReadAllTextAsync(@"Resources/Email/email-template.html");
             }
 
             [Test]
