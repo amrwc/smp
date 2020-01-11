@@ -46,12 +46,12 @@ namespace Smp.Web.Services
             };
 
             var view = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
-            var bgTop = new LinkedResource(@"Resources\Email\bg_top.jpg") { ContentId = "bg_top" };
-            var bgBottom = new LinkedResource(@"Resources\Email\bg_bottom.jpg") { ContentId = "bg_bottom" };
-            var smpLogo = new LinkedResource(@"Resources\Email\smp-logo.png") { ContentId = "smplogo" };
-            var instagram = new LinkedResource(@"Resources\Email\instagram2x.png") { ContentId = "instagram" };
-            var linkedin = new LinkedResource(@"Resources\Email\linkedin2x.png") { ContentId = "linkedin" };
-            var twitter = new LinkedResource(@"Resources\Email\twitter2x.png") { ContentId = "twitter" };
+            var bgTop = new LinkedResource(@"Resources/Email/bg_top.jpg") { ContentId = "bg_top" };
+            var bgBottom = new LinkedResource(@"Resources/Email/bg_bottom.jpg") { ContentId = "bg_bottom" };
+            var smpLogo = new LinkedResource(@"Resources/Email/smp-logo.png") { ContentId = "smplogo" };
+            var instagram = new LinkedResource(@"Resources/Email/instagram2x.png") { ContentId = "instagram" };
+            var linkedin = new LinkedResource(@"Resources/Email/linkedin2x.png") { ContentId = "linkedin" };
+            var twitter = new LinkedResource(@"Resources/Email/twitter2x.png") { ContentId = "twitter" };
 
 			view.LinkedResources.Add(bgTop);
 			view.LinkedResources.Add(bgBottom);
