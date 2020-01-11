@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 using System.Threading.Tasks;
 using Scriban;
 using Smp.Web.Wrappers;
-using System.IO;
 
 namespace Smp.Web.Services
 {
@@ -24,9 +22,9 @@ namespace Smp.Web.Services
 			_emailTemplate = fileWrapper.ReadAllText(@".\Resources\Email\email-template.html");
         }
 
-        public async Task SendEmail(string rcvr, string sub, string body)
+        public async Task SendEmail(string receiverEmail, string sub, string body)
         {
-            var email = new MailMessage(new MailAddress("noreply@smp.com", "SMP"), new MailAddress(rcvr))
+            var email = new MailMessage(new MailAddress("noreply@smp.com", "SMP"), new MailAddress(receiverEmail))
             {
                 Subject = sub,
                 Body = body,
