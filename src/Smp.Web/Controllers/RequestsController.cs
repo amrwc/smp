@@ -61,7 +61,7 @@ namespace Smp.Web.Controllers
             return Ok();
         }
 
-        [HttpGet("[action]/{userId:Guid}/{senderId:Guid}/{requestType:int}"), Authorize]
+        [HttpGet("[action]/{userId:Guid}/{requestTypeId:int}/{senderId:Guid}/"), Authorize]
         public async Task<IActionResult> AcceptRequest(Guid userId, Guid senderId, byte requestTypeId)
         {
             var tkn = Request.Headers["Authorization"];
@@ -80,6 +80,18 @@ namespace Smp.Web.Controllers
             await _requestsService.AcceptRequest(request);
 
             return Ok();
+        }
+
+        [HttpGet("[action]/{receiverId:Guid}/{requestTypeId:int}/{senderId:Guid}/"), Authorize]
+        public async Task<IActionResult> GetRequest(Guid receiverId, Guid senderId, byte requestTypeId)
+        {
+            var tkn = Request.Headers["Authorization"];
+            if (!(_authService.AuthorizeSelf(tkn, receiverId) || _authService.AuthorizeSelf(tkn, senderId))) return Unauthorized();
+
+            var expectedReq = new Request { ReceiverId = receiverId, SenderId = senderId, RequestType = (RequestType)requestTypeId };
+            var req = await _requestsRepository.GetRequestByUserIdsAndType(expectedReq);
+
+            return req == null ? (IActionResult) NotFound() : Ok(req);
         }
     }
 }

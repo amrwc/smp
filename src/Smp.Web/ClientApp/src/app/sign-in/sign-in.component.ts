@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SignInRequest } from '../models/sign-in-request';
+import { SignInRequest } from '../models/requests/sign-in-request';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
