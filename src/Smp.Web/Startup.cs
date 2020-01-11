@@ -50,6 +50,7 @@ namespace Smp.Web
 
             services.AddScoped<ICryptographyService, CryptographyService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddSingleton<IFileWrapper, FileWrapper>();
             services.AddSingleton<IMailService, MailService>();
             services.AddSingleton<ISmtpClient>(smtp => new SmtpClientWrapper(Configuration["Mail:Host"], ushort.Parse(Configuration["Mail:Port"])));
 
