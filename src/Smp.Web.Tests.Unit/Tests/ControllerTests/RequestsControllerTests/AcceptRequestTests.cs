@@ -26,6 +26,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
 
                 AuthService.Setup(service => service.AuthorizeSelf(It.IsAny<string>(), It.IsAny<Guid>())).Returns(true);
                 RequestValidator.Setup(validator => validator.ValidateAcceptRequest(It.IsAny<Request>())).ReturnsAsync(new List<Error>());
+
                 _result = await RequestsController.AcceptRequest(_userId, _senderId, RequestTypeId);
             }
 
