@@ -1,0 +1,17 @@
+<header>
+    <div class="header-content">
+        <h4>Requests</h4>
+        <img src="../../assets/img/smp-logo.svg">
+    </div>
+</header>
+
+<div class="request-body container-fluid">
+    <div class="request-content">
+        <h1>Requests</h1>
+        <div class="request card" *ngFor="let request of requests">
+            <div class="card-body">
+                <p>{{ request.senderName }} has sent you a {{ request.requestTypeName }} request.</p>
+            </div>
+        </div>
+    </div>
+  </div>
