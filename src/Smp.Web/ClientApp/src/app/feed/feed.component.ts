@@ -26,8 +26,5 @@ export class FeedComponent implements OnInit {
         this.posts = posts;
       });
     }
-    else {
-      alert("HOME PAGE FEED.");
-    }
   }
 }

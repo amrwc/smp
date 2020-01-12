@@ -23,4 +23,8 @@ export class RequestsService {
   public getRequest(senderId: string, receiverId: string, reqType: RequestType): Observable<Request> {
     return this.httpClient.get<Request>(`${this.baseUrl}api/Requests/GetRequest/${senderId}/${<number>reqType}/${receiverId}`, { headers: this.httpHeaders })
   }
+
+  public getIncomingRequests(userId: string): Observable<Request[]> {
+    return this.httpClient.get<Request[]>(`${this.baseUrl}api/Requests/GetIncomingRequests/${userId}`, { headers: this.httpHeaders });
+  }
 }
