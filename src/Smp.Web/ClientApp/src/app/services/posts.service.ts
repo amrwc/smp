@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CreatePostRequest } from '../models/create-post-request';
+import { CreatePostRequest } from '../models/requests/create-post-request';
 import { Post } from '../models/post';
 
 @Injectable({

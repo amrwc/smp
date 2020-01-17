@@ -7,7 +7,6 @@ using Moq;
 using NUnit.Framework;
 using Smp.Web.Models;
 using Smp.Web.Models.Requests;
-using Smp.Web.Repositories;
 
 namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
 {
