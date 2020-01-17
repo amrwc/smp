@@ -38,6 +38,7 @@
     <None Remove="Resources\Email\linkedin2x.png" />
     <None Remove="Resources\Email\smp-logo.png" />
     <None Remove="Resources\Email\twitter2x.png" />
+    <None Remove="Resources\Email\email-template.html" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,6 +49,7 @@
     <EmbeddedResource Include="Resources\Email\linkedin2x.png" />
     <EmbeddedResource Include="Resources\Email\smp-logo.png" />
     <EmbeddedResource Include="Resources\Email\twitter2x.png" />
+    <EmbeddedResource Include="Resources\Email\email-template.html" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
