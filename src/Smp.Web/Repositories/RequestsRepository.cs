@@ -95,11 +95,13 @@ namespace Smp.Web.Repositories
 
         public async Task<Request> GetRequestByUserIdsAndType(Request request)
         {
-            return (Request) await _dbConnection.QueryFirstAsync<Models.DTOs.Request>(
+            var req = await _dbConnection.QueryFirstOrDefaultAsync<Models.DTOs.Request>(
                 @"SELECT TOP 1 * FROM [dbo].Requests
                 WHERE ([SenderId] = @SenderId AND [ReceiverId] = @ReceiverId AND [RequestTypeId] = @RequestTypeId)
                 OR ([SenderId] = @ReceiverId AND [ReceiverId] = @SenderId AND [RequestTypeId] = @RequestTypeId)",
                 new {SenderId = request.SenderId, ReceiverId = request.ReceiverId, RequestTypeId = (byte)request.RequestType});
+
+            return req == null ? null : (Request)req; 
         }
     }
 }

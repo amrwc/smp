@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { PostsService } from '../services/posts.service';
-import { CreatePostRequest } from '../models/create-post-request';
+import { CreatePostRequest } from '../models/requests/create-post-request';
 import { GlobalHelper } from '../helpers/global';
 import { CurrentUser } from '../models/current-user';
 
@@ -32,7 +32,6 @@ export class CreatePostComponent implements OnInit {
     this.postsService.createPost(this.createPostRequest).subscribe(
       () => {
         this.loading = false;
-        //TODO: Perhaps include information about post in emit call.
         this.postCreated.emit(null);
       }, error => {
         this.loading = false;

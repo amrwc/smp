@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { CreateUserRequest } from '../models/create-user-request';
+import { CreateUserRequest } from '../models/requests/create-user-request';
 import { Error } from '../models/error';
 import { Router } from '@angular/router';
 import { UsersService } from '../services/users.service';
