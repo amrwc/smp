@@ -1,5 +1,4 @@
 import { RequestType } from './request-type.enum';
-import { UsersService } from '../services/users.service';
 
 export class Request {
   constructor(req: Request) {
@@ -12,25 +11,22 @@ export class Request {
   public receiverId: string;
   public senderId: string;
   public createdAt: Date;
-  public requestType: number;
+  public requestType: RequestType;
 
   public toFriendlyRequest(): FriendlyRequest {
-    return new FriendlyRequest(this.receiverId, this.senderId, this.requestType);
+    return new FriendlyRequest(this);
   }
 }
 
-export class FriendlyRequest {
-  constructor(receiverId: string, senderId: string, requestType: number) {
-    this.receiverId = receiverId;
-    this.senderId = senderId;
-    this.requestTypeName = RequestType[requestType];
-    this.requestType = requestType;
+export class FriendlyRequest extends Request {
+  constructor(request: Request) {
+    super(request);
+    this.requestTypeName = RequestType[this.requestType];
+    this.dateTimeSent = new Date(this.createdAt).toLocaleString();
   }
 
   public receiverName: string;
-  public receiverId: string;
   public senderName: string;
-  public senderId: string;
   public requestTypeName: string;
-  public requestType: RequestType;
+  public dateTimeSent: string;
 }

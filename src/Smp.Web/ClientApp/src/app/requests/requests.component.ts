@@ -17,14 +17,29 @@ export class RequestsComponent implements OnInit {
   constructor(private globalHelper: GlobalHelper, private requestsService: RequestsService, private usersService: UsersService) { }
 
   ngOnInit() {
-    this.requestsService.getIncomingRequests(this.globalHelper.localStorageItem<CurrentUser>('currentUser').id).subscribe({
-      next: (requests: any) => {
-        requests.forEach((request: Request) => {
-          this.requests.push(new Request(request).toFriendlyRequest());
-        });
-        this.fetchUserNames();
-      }
-    });
+    this.getRequests();
+  }
+
+  public answerRequest(request: FriendlyRequest, answer: boolean): void {
+    if (answer === true) {
+      this.requestsService.acceptRequest(request).subscribe({
+        next: () => {
+          this.getRequests();
+        },
+        error: (error: any) => {
+          alert("failed lol");
+        }
+      });
+    } else if (answer === false) {
+      this.requestsService.declineRequest(request).subscribe({
+        next: () => {
+          this.getRequests();
+        },
+        error: (error: any) => {
+          alert("failed lol");
+        }
+      });
+    }
   }
 
   private fetchUserNames(): void {
@@ -39,6 +54,19 @@ export class RequestsComponent implements OnInit {
           requestsArray[index].senderName = user.fullName;
         }
       });
+    });
+  }
+
+  private getRequests(): void {
+    this.requests = new Array<FriendlyRequest>();
+
+    this.requestsService.getIncomingRequests(this.globalHelper.localStorageItem<CurrentUser>('currentUser').id).subscribe({
+      next: (requests: any) => {
+        requests.forEach((request: Request) => {
+          this.requests.push(new Request(request).toFriendlyRequest());
+        });
+        this.fetchUserNames();
+      }
     });
   }
 }

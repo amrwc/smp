@@ -26,6 +26,7 @@
         <div id="col-right" class="col-xs-3" style="border:groove">
             <button *ngIf="showAddFriendButton" (click)="addFriend()">Send Friend Request</button>
             <button *ngIf="requestPending" disabled>Request Pending</button>
+            <button *ngIf="friends" disabled>Friends</button>
         </div>
     </div>
 </div>

@@ -26,15 +26,15 @@ export class ResetPasswordComponent implements OnInit {
     this.validationErrors = [];
     this.resetPasswordSuccessful = false;
 
-    this.accountsService.resetPassword(this.resetPasswordRequest).subscribe(
-      () => {
+    this.accountsService.resetPassword(this.resetPasswordRequest).subscribe({
+      next: () => {
         this.loading = false;
         this.resetPasswordSuccessful = true;
       },
-      error => {
+      error: (error: any) => {
         this.loading = false;
         this.validationErrors = error.error;
       }
-    );
+    });
   }
 }
