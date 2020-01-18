@@ -1,18 +1,39 @@
 @import '~sass/variables';
 @import '~sass/header-partial';
 
-.request-body {
+.requests-body {
   height: 100vh;
   margin: 0;
   padding: 0;
 
-  .request-content {
+  .requests-content {
     padding: 0 0 4.3rem 0;
     margin-top: 4rem;
 
     .request {
         width: 100vw;
         height: 10vw;
+
+        .request-content {
+
+          .request-decline {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 1.5rem;
+          }
+
+          .request-accept {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+          }
+
+          .request-date {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+          }
+        }
     }
   }
 }

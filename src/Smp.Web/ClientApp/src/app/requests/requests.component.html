@@ -5,12 +5,15 @@
     </div>
 </header>
 
-<div class="request-body container-fluid">
-    <div class="request-content">
+<div class="requests-body container-fluid">
+    <div class="requests-content">
         <h1>Requests</h1>
         <div class="request card" *ngFor="let request of requests">
-            <div class="card-body">
+            <div class="request-content card-body">
                 <p>{{ request.senderName }} has sent you a {{ request.requestTypeName }} request.</p>
+                <p class="request-date"> {{ request.createdAt }} </p>
+                <button (click)="answerRequest(request, true)" class="request-accept btn btn-success">Accept</button>
+                <button (click)="answerRequest(request, false)" class="request-decline btn btn-danger">Decline</button>
             </div>
         </div>
     </div>

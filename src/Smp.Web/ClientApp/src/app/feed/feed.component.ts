@@ -21,9 +21,10 @@ export class FeedComponent implements OnInit {
 
   public getPosts(): void {
     if (this.receiverId) {
-      this.postsService.getPosts(this.receiverId)
-      .subscribe(posts => {
-        this.posts = posts;
+      this.postsService.getPosts(this.receiverId).subscribe({
+        next: (posts: any) => {
+          this.posts = posts;
+        }
       });
     }
   }
