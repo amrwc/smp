@@ -33,7 +33,7 @@ export class SignUpComponent {
     this.usersService.createUser(this.createUserRequest).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/sign-in'], { queryParams: {signUpSuccessful: 'true' }});
+        this.router.navigate(['/sign-in'], { queryParams: { signUpSuccessful: 'true' } });
       },
       error: (error: any) => {
         this.validationErrors = error.error;

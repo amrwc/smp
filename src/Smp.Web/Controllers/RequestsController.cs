@@ -61,16 +61,16 @@ namespace Smp.Web.Controllers
             return Ok();
         }
 
-        [HttpGet("[action]/{userId:Guid}/{requestTypeId:int}/{senderId:Guid}/"), Authorize]
-        public async Task<IActionResult> AcceptRequest(Guid userId, Guid senderId, byte requestTypeId)
+        [HttpGet("[action]/{receiverId:Guid}/{requestTypeId:int}/{senderId:Guid}/"), Authorize]
+        public async Task<IActionResult> AcceptRequest(Guid receiverId, Guid senderId, byte requestTypeId)
         {
             var tkn = Request.Headers["Authorization"];
-            if (!_authService.AuthorizeSelf(tkn, userId)) return Unauthorized();
+            if (!_authService.AuthorizeSelf(tkn, receiverId)) return Unauthorized();
 
             var request = new Request
             {
                 SenderId = senderId,
-                ReceiverId = userId,
+                ReceiverId = receiverId,
                 RequestType = (RequestType)requestTypeId
             };
 
@@ -78,6 +78,20 @@ namespace Smp.Web.Controllers
             if (validationResult.Any()) return BadRequest(validationResult);
 
             await _requestsService.AcceptRequest(request);
+
+            return Ok();
+        }
+
+        [HttpGet("[action]/{receiverId:Guid}/{requestTypeId:int}/{senderId:Guid}/"), Authorize]
+        public async Task<IActionResult> DeclineRequest(Guid receiverId, Guid senderId, byte requestTypeId)
+        {
+            var tkn = Request.Headers["Authorization"];
+            if (!_authService.AuthorizeSelf(tkn, receiverId)) return Unauthorized();
+
+            var request = await _requestsRepository.GetRequestByUserIdsAndType(receiverId, senderId, (RequestType) requestTypeId);
+            if (request == null) return BadRequest(new Error("invalid_request", "There is no request to accept."));
+
+            await _requestsService.DeclineRequest(request);
 
             return Ok();
         }

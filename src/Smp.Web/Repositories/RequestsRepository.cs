@@ -18,6 +18,7 @@ namespace Smp.Web.Repositories
         Task<IList<Request>> GetRequestsBySenderId(Guid senderId);
         Task<IList<Request>> GetRequestsByReceiverId(Guid receiverId);
         Task<Request> GetRequestByUserIdsAndType(Request request);
+        Task<Request> GetRequestByUserIdsAndType(Guid receiverId, Guid senderId, RequestType requestType);
         Task<IList<RequestType>> GetRequestTypes();
         Task<RequestType> GetRequestTypeById(byte id);
         Task<RequestType> GetRequestTypeByName(string name);
@@ -102,6 +103,17 @@ namespace Smp.Web.Repositories
                 new {SenderId = request.SenderId, ReceiverId = request.ReceiverId, RequestTypeId = (byte)request.RequestType});
 
             return req == null ? null : (Request)req; 
+        }
+
+        public async Task<Request> GetRequestByUserIdsAndType(Guid receiverId, Guid senderId, RequestType requestType)
+        {
+            var req = await _dbConnection.QueryFirstOrDefaultAsync<Models.DTOs.Request>(
+                @"SELECT TOP 1 * FROM [dbo].Requests
+                WHERE ([SenderId] = @SenderId AND [ReceiverId] = @ReceiverId AND [RequestTypeId] = @RequestTypeId)
+                OR ([SenderId] = @ReceiverId AND [ReceiverId] = @SenderId AND [RequestTypeId] = @RequestTypeId)",
+                new { SenderId = senderId, ReceiverId = receiverId, RequestTypeId = (byte)requestType });
+
+            return req == null ? null : (Request)req;
         }
     }
 }

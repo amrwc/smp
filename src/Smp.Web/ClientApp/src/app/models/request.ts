@@ -1,4 +1,5 @@
 import { RequestType } from './request-type.enum';
+import { User } from './user';
 
 export class Request {
   constructor(req: Request) {
@@ -25,8 +26,8 @@ export class FriendlyRequest extends Request {
     this.dateTimeSent = new Date(this.createdAt).toLocaleString();
   }
 
-  public receiverName: string;
-  public senderName: string;
+  public receiver: User;
+  public sender: User;
   public requestTypeName: string;
   public dateTimeSent: string;
 }

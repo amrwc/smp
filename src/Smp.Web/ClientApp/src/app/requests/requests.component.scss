@@ -11,29 +11,35 @@
     margin-top: 4rem;
 
     .request {
-        width: 100vw;
-        height: 10vw;
+      width: 100vw;
+      height: 10vw;
 
-        .request-content {
+      .request-content {
 
-          .request-decline {
-            position: absolute;
-            bottom: 1.5rem;
-            left: 1.5rem;
-          }
-
-          .request-accept {
-            position: absolute;
-            bottom: 1.5rem;
-            right: 1.5rem;
-          }
-
-          .request-date {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-          }
+        .profile-picture {
+          display: inline-block;
+          width: 50px;
+          height: 50px;
         }
+
+        .request-decline {
+          position: absolute;
+          bottom: 1.5rem;
+          left: 1.5rem;
+        }
+
+        .request-accept {
+          position: absolute;
+          bottom: 1.5rem;
+          right: 1.5rem;
+        }
+
+        .request-date {
+          position: absolute;
+          top: 1.5rem;
+          right: 1.5rem;
+        }
+      }
     }
   }
 }
