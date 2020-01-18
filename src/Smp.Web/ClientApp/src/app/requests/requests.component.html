@@ -6,12 +6,15 @@
 </header>
 
 <div class="requests-body container-fluid">
-    <div class="requests-content">
+    <div id="test" class="requests-content">
         <h1>Requests</h1>
         <div class="request card" *ngFor="let request of requests">
-            <div class="request-content card-body">
-                <p>{{ request.senderName }} has sent you a {{ request.requestTypeName }} request.</p>
-                <p class="request-date"> {{ request.createdAt }} </p>
+            <div *ngIf="request.sender" class="request-content card-body">
+                <div class="request-body">
+                    <img class="profile-picture" [src]="request.sender.profilePictureUrl" />
+                    <p style="display:inline-block;padding-left: 1rem">{{ request.sender.fullName }} has sent you a {{ request.requestTypeName }} request.</p>
+                </div>
+                <p class="request-date"> {{ request.dateTimeSent }} </p>
                 <button (click)="answerRequest(request, true)" class="request-accept btn btn-success">Accept</button>
                 <button (click)="answerRequest(request, false)" class="request-decline btn btn-danger">Decline</button>
             </div>

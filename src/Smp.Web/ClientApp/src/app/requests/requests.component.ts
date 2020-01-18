@@ -42,16 +42,16 @@ export class RequestsComponent implements OnInit {
     }
   }
 
-  private fetchUserNames(): void {
+  private fetchUsers(): void {
     this.requests.forEach((request: FriendlyRequest, index: number, requestsArray: FriendlyRequest[]) => {
       this.usersService.getUser(request.receiverId).subscribe({
         next: (user: any) => {
-          requestsArray[index].receiverName = user.fullName;
+          requestsArray[index].receiver = user;
         }
       });
       this.usersService.getUser(request.senderId).subscribe({
         next: (user: any) => {
-          requestsArray[index].senderName = user.fullName;
+          requestsArray[index].sender = user;
         }
       });
     });
@@ -65,7 +65,7 @@ export class RequestsComponent implements OnInit {
         requests.forEach((request: Request) => {
           this.requests.push(new Request(request).toFriendlyRequest());
         });
-        this.fetchUserNames();
+        this.fetchUsers();
       }
     });
   }
