@@ -28,7 +28,7 @@ namespace Smp.Web.Controllers
         }
 
         [HttpGet("[action]/{userId:Guid}"), Authorize]
-        public async Task<IActionResult> GetOutgoingRequests(Guid userId)
+        public async Task<IActionResult> GetOutgoingRequests([FromRoute]Guid userId)
         {
             var tkn = Request.Headers["Authorization"];
             if (!_authService.AuthorizeSelf(tkn, userId)) return Unauthorized();
@@ -37,7 +37,7 @@ namespace Smp.Web.Controllers
         }
 
         [HttpGet("[action]/{userId:Guid}"), Authorize]
-        public async Task<IActionResult> GetIncomingRequests(Guid userId)
+        public async Task<IActionResult> GetIncomingRequests([FromRoute]Guid userId)
         {
             var tkn = Request.Headers["Authorization"];
             if (!_authService.AuthorizeSelf(tkn, userId)) return Unauthorized();
@@ -46,7 +46,7 @@ namespace Smp.Web.Controllers
         }
 
         [HttpPost("[action]"), Authorize]
-        public async Task<IActionResult> SendRequest([FromBody] RequestRequest requestRequest)
+        public async Task<IActionResult> SendRequest([FromBody]RequestRequest requestRequest)
         {
             var tkn = Request.Headers["Authorization"];
             if (!_authService.AuthorizeSelf(tkn, requestRequest.SenderId)) return Unauthorized();
@@ -62,7 +62,7 @@ namespace Smp.Web.Controllers
         }
 
         [HttpGet("[action]/{userId:Guid}/{requestTypeId:int}/{senderId:Guid}/"), Authorize]
-        public async Task<IActionResult> AcceptRequest(Guid userId, Guid senderId, byte requestTypeId)
+        public async Task<IActionResult> AcceptRequest([FromRoute]Guid userId, [FromRoute]Guid senderId, [FromRoute]byte requestTypeId)
         {
             var tkn = Request.Headers["Authorization"];
             if (!_authService.AuthorizeSelf(tkn, userId)) return Unauthorized();
@@ -83,7 +83,7 @@ namespace Smp.Web.Controllers
         }
 
         [HttpGet("[action]/{receiverId:Guid}/{requestTypeId:int}/{senderId:Guid}/"), Authorize]
-        public async Task<IActionResult> GetRequest(Guid receiverId, Guid senderId, byte requestTypeId)
+        public async Task<IActionResult> GetRequest([FromRoute]Guid receiverId, [FromRoute]Guid senderId, [FromRoute]byte requestTypeId)
         {
             var tkn = Request.Headers["Authorization"];
             if (!(_authService.AuthorizeSelf(tkn, receiverId) || _authService.AuthorizeSelf(tkn, senderId))) return Unauthorized();
