@@ -19,6 +19,7 @@ import { CreatePostComponent } from './create-post/create-post.component';
 import { FeedComponent } from './feed/feed.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RequestsComponent } from './requests/requests.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     CreatePostComponent,
     FeedComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    RequestsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -60,6 +62,11 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
       {
         path: 'search',
         component: SearchComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'requests',
+        component: RequestsComponent,
         canActivate: [AuthGuard]
       },
       {

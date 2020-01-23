@@ -30,13 +30,15 @@ export class SignUpComponent {
     this.loading = true;
     this.createUserRequest.email = this.createUserRequest.email.toLowerCase();
 
-    this.usersService.createUser(this.createUserRequest).subscribe(
-      () => {
+    this.usersService.createUser(this.createUserRequest).subscribe({
+      next: () => {
         this.loading = false;
-        this.router.navigate(['/sign-in'], { queryParams: {signUpSuccessful: 'true' }});
-      }, error => {
+        this.router.navigate(['/sign-in'], { queryParams: { signUpSuccessful: 'true' } });
+      },
+      error: (error: any) => {
         this.validationErrors = error.error;
         this.loading = false;
-      });
+      }
+    });
   }
 }

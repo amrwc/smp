@@ -26,7 +26,7 @@ namespace Smp.Web.Tests.Unit.Tests.ValidatorTests.RequestValidatorTests
 
                 _expectedErrors = new List<Error>
                 {
-                    new Error("invalid_request", "There is no request to accept."),
+                    new Error("invalid_request", "There is no pending request."),
                     new Error("invalid_request", "You are already connected.")
                 };
 

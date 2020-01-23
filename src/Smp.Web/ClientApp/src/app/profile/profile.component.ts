@@ -8,6 +8,8 @@ import { CurrentUser } from '../models/current-user';
 import { RequestsService } from '../services/requests.service';
 import { CreateRequestRequest } from '../models/requests/create-request-request';
 import { RequestType } from '../models/request-type.enum';
+import { RelationshipsService } from '../services/relationships.service';
+import { RelationshipType } from '../models/relationship-type.enum';
 
 @Component({
   selector: 'app-profile',
@@ -22,10 +24,12 @@ export class ProfileComponent implements OnInit {
 
   private showAddFriendButton: boolean = true;
   private requestPending: boolean = false;
+  private friends: boolean = false;
 
   constructor(
     private usersService: UsersService,
     private requestsService: RequestsService,
+    private relationshipsService: RelationshipsService,
     private globalHelper: GlobalHelper,
     private route: ActivatedRoute
   ) {  }
@@ -36,23 +40,33 @@ export class ProfileComponent implements OnInit {
     this.showAddFriendButton = this.userId != visitingUserId;
 
     if (this.showAddFriendButton) {
-      this.requestsService.getRequest(visitingUserId, this.userId, RequestType.Friend).subscribe(
-        () => {
+      this.requestsService.getRequest(visitingUserId, this.userId, RequestType.Friend).subscribe({
+        next: () => {
           this.showAddFriendButton = false;
           this.requestPending = true;
+        },
+        error: (error: any) => {
+          if (error.status === 404) {
+            this.relationshipsService.getRelationship(this.userId, visitingUserId, RelationshipType.Friend).subscribe({
+              next: () => {
+                this.showAddFriendButton = false;
+                this.friends = true;
+              }
+            });
+          }
         }
-      );
+      });
     }
 
     this.usersService.getUser(this.userId)
-      .subscribe(
-        result => {
+      .subscribe({
+        next: (result: any) => {
           this.user = result;
         },
-        error => {
+        error: (error: any) => {
           console.error(error);
         }
-      );
+      });
   }
 
   public updatePosts(): void {
@@ -61,11 +75,11 @@ export class ProfileComponent implements OnInit {
 
   public addFriend(): void {
     let req = new CreateRequestRequest(this.globalHelper.localStorageItem<CurrentUser>('currentUser').id, this.userId, RequestType.Friend);
-    this.requestsService.sendRequest(req).subscribe(
-      () => {
+    this.requestsService.sendRequest(req).subscribe({
+      next: () => {
         this.showAddFriendButton = false;
         this.requestPending = true;
       }
-    );
+    });
   }
 }

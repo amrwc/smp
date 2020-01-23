@@ -42,7 +42,7 @@ namespace Smp.Web.Validators
             var errors = new List<Error>();
 
             var req = await _requestsRepository.GetRequestByUserIdsAndType(request);
-            if (req == null) errors.Add(new Error("invalid_request", "There is no request to accept."));
+            if (req == null) errors.Add(new Error("invalid_request", "There is no pending request."));
 
             switch (request.RequestType)
             {
