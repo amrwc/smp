@@ -89,7 +89,7 @@ namespace Smp.Web.Controllers
             if (!_authService.AuthorizeSelf(tkn, receiverId)) return Unauthorized();
 
             var request = await _requestsRepository.GetRequestByUserIdsAndType(receiverId, senderId, (RequestType) requestTypeId);
-            if (request == null) return BadRequest(new Error("invalid_request", "There is no request to accept."));
+            if (request == null) return BadRequest(new Error("invalid_request", "There is no pending request."));
 
             await _requestsService.DeclineRequest(request);
 
