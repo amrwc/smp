@@ -17,14 +17,12 @@ namespace Smp.Web.Controllers
         private readonly IUsersRepository _usersRepository;
         private readonly IUserValidator _userValidator;
         private readonly ICryptographyService _cryptographyService;
-        private readonly IAuthService _authService;
 
         public UsersController(IUsersRepository usersRepository, IUserValidator userValidator, ICryptographyService cryptographyService, IAuthService authService)
         {
             _usersRepository = usersRepository;
             _userValidator = userValidator;
             _cryptographyService = cryptographyService;
-            _authService = authService;
         }
 
         [HttpPost("[action]")]
@@ -44,7 +42,7 @@ namespace Smp.Web.Controllers
         }
 
         [HttpGet("[action]/{id:Guid}"), Authorize]
-        public async Task<IActionResult> GetUser(Guid id)
+        public async Task<IActionResult> GetUser([FromRoute]Guid id)
         {
             var user = await _usersRepository.GetUserById(id);
 
