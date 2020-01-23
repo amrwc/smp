@@ -29,14 +29,16 @@ export class CreatePostComponent implements OnInit {
     this.loading = true;
     this.createPostRequest.senderId = this.global.localStorageItem<CurrentUser>('currentUser').id;
     this.createPostRequest.receiverId = this.postToId;
-    this.postsService.createPost(this.createPostRequest).subscribe(
-      () => {
+    this.postsService.createPost(this.createPostRequest).subscribe({
+      next: () => {
         this.loading = false;
         this.postCreated.emit(null);
-      }, error => {
+      },
+      error: (error: any) => {
         this.loading = false;
         this.errorMessage = error.error;
         //IF ERROR 401. REDIRECT TO HOME BECAUSE FAILED AUTHORIZATION
-      });
+      }
+    });
   }
 }

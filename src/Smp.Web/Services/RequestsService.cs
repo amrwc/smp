@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Smp.Web.Models;
 using Smp.Web.Repositories;
 
@@ -9,6 +8,7 @@ namespace Smp.Web.Services
     {
         Task<bool> IsRequestAlreadySent(Request request);
         Task AcceptRequest(Request request);
+        Task DeclineRequest(Request request);
     }
 
     public class RequestsService : IRequestsService
@@ -35,5 +35,8 @@ namespace Smp.Web.Services
                     break;
             }
         }
+
+        public async Task DeclineRequest(Request request)
+            => await _requestsRepository.DeleteRequest(request.SenderId, request.ReceiverId, request.RequestType);
     }
 }

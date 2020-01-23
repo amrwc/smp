@@ -1,0 +1,23 @@
+<header>
+    <div class="header-content">
+        <h4>Requests</h4>
+        <img src="../../assets/img/smp-logo.svg">
+    </div>
+</header>
+
+<div class="requests-body container-fluid">
+    <div id="test" class="requests-content">
+        <h1>Requests</h1>
+        <div class="request card" *ngFor="let request of requests">
+            <div *ngIf="request.sender" class="request-content card-body">
+                <div class="request-body">
+                    <img class="profile-picture" [src]="request.sender.profilePictureUrl" />
+                    <p style="display:inline-block;padding-left: 1rem">{{ request.sender.fullName }} has sent you a {{ request.requestTypeName }} request.</p>
+                </div>
+                <p class="request-date"> {{ request.dateTimeSent }} </p>
+                <button (click)="answerRequest(request, true)" class="request-accept btn btn-success">Accept</button>
+                <button (click)="answerRequest(request, false)" class="request-decline btn btn-danger">Decline</button>
+            </div>
+        </div>
+    </div>
+  </div>

@@ -42,18 +42,19 @@ export class SignInComponent implements OnInit {
     this.signUpSuccessful = false;
     this.signInRequest.email = this.signInRequest.email.toLowerCase();
 
-    this.httpClient
-      .post(this.baseUrl + 'api/Auth/SignIn', this.signInRequest)
-      .subscribe(result => {
+    this.httpClient.post(this.baseUrl + 'api/Auth/SignIn', this.signInRequest).subscribe({
+      next: (result: any) => {
         localStorage.setItem('currentUser', JSON.stringify(result));
         this.loading = false;
         this.router.navigate([this.returnUrl]);
-      }, error => {
+      },
+      error: (error: any) => {
         this.signInUnsuccessful = true;
         this.errorMessage = error.status === 401
           ? "Invalid sign in details. Please try again."
           : "We are experiencing technical difficulties right now. Please try again later.";
           this.loading = false;
-      });
+      }
+    });
   }
 }
