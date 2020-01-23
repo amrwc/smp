@@ -21,7 +21,7 @@ namespace Smp.Web.Controllers
         }
 
         [HttpPost("[action]"), Authorize]
-        public async Task<IActionResult> CreatePost([FromBody] CreatePostRequest createPostRequest)
+        public async Task<IActionResult> CreatePost([FromBody]CreatePostRequest createPostRequest)
         {
             var tkn = Request.Headers["Authorization"];
             var authorized = _authService.AuthorizeSelf(tkn, createPostRequest.SenderId) &&
@@ -35,7 +35,7 @@ namespace Smp.Web.Controllers
         }
 
         [HttpGet("[action]/{userId:Guid}"), Authorize]
-        public async Task<IActionResult> GetPosts(Guid userId, [FromQuery]int count = 10)
+        public async Task<IActionResult> GetPosts([FromRoute]Guid userId, [FromQuery]int count = 10)
         {
             return Ok(await _postsService.GetPostsByReceiverId(userId, count));
         }
