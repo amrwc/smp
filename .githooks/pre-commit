@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+readonly TXT_RED="$(tput setaf 1)"
+readonly TXT_GREEN="$(tput setaf 2)"
+readonly TXT_YELLOW="$(tput setaf 3)"
+readonly TXT_BOLD="$(tput bold)"
+readonly TXT_RESET="$(tput sgr0)"
+
+function raise_error() {
+	printf "${TXT_RED}${TXT_BOLD}ERROR: ${TXT_RESET}${TXT_RED}${1}${TXT_RESET}\n"
+	exit "${2}"
+}
+
+# Don't allow commits to master branch
+readonly CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+if [ "${CURRENT_BRANCH}" = "master" ]; then
+	raise_error "You can't commit directly to master branch" 1
+fi

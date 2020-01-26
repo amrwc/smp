@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+readonly TXT_RED="$(tput setaf 1)"
+readonly TXT_GREEN="$(tput setaf 2)"
+readonly TXT_YELLOW="$(tput setaf 3)"
+readonly TXT_BOLD="$(tput bold)"
+readonly TXT_RESET="$(tput sgr0)"
+
+function raise_error() {
+	printf "${TXT_RED}${TXT_BOLD}ERROR: ${TXT_RESET}${TXT_RED}${1}${TXT_RESET}\n"
+	exit "${2}"
+}
+
+readonly CWD="$(pwd)"
+if [ "$(printf "${CWD}" | tail -c 4)" = "/smp" ]; then
+	readonly REPO_PATH="${CWD}"
+else
+	if [ "$(printf "${CWD}" | tail -c 4)" = "/bin" ]; then
+		cd ..
+		updated_dir="$(pwd)"
+		if [ "$(printf "${updated_dir}" | tail -c 4)" = "/smp" ]; then
+			readonly REPO_PATH="${updated_dir}"
+		fi
+	else
+		raise_error "Run the script from inside of the repository." 1
+	fi
+fi
+
+# Set path to custom Git hooks
+git config core.hooksPath "${REPO_PATH}/.githooks"

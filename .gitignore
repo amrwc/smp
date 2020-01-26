@@ -22,8 +22,12 @@ x64/
 x86/
 build/
 bld/
-bin/
-Bin/
+# NOTE: The following two lines been commented out to omit
+#       the uppermost `bin` directory
+# bin/
+# Bin/
+*/bin/
+*/Bin/
 obj/
 Obj/
 
