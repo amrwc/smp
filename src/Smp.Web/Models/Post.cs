@@ -16,7 +16,6 @@ namespace Smp.Web.Models
             CreatedAt = DateTime.UtcNow;
         }
 
-
         public Guid Id { get; set; }
         public Guid ReceiverId { get; set; }
         public Guid SenderId { get; set; }

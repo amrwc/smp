@@ -61,6 +61,7 @@ namespace Smp.Web
             services.AddScoped<IPostsRepository, PostsRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IActionsRepository, ActionsRepository>();
+            services.AddScoped<IMessagesRepository, MessagesRepository>();
 
             services.AddScoped<IUserValidator, UserValidator>();
             services.AddScoped<IRequestValidator, RequestValidator>();
