@@ -7,6 +7,13 @@
 
 <div class="messages-body container-fluid">
   <div class="messages-content">
-
+    <div class="conversation-list" style="border: groove;">
+      <div *ngFor="let conversation of conversations" class="conversation-preview" style="border: groove;">
+        Conversation
+      </div>
+    </div>
+    <div class="conversation-window" style="border: groove;">
+      CONVERSATION WINDOW
+    </div>
   </div>
 </div>
