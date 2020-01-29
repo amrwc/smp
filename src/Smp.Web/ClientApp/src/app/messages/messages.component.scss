@@ -8,5 +8,15 @@
 
   .messages-content {
     padding: 4rem 0 4.3rem 0;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+
+    .conversation-list {
+      grid-column: span 3;
+    }
+
+    .conversation-window {
+      grid-column: span 9;
+    }
   }
 }
