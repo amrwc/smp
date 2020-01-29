@@ -13,5 +13,8 @@ namespace Smp.Web.Models.Requests
 
         [Required]
         public string Content { get; set; }
+
+        [Required]
+        public Guid ConversationId { get; set; }
     }
 }
