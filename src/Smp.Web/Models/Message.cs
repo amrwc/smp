@@ -13,6 +13,7 @@ namespace Smp.Web.Models
             SenderId = message.SenderId;
             Content = message.Content;
             CreatedAt = DateTime.UtcNow;
+            ConversationId = message.ConversationId;
         }
 
         public long Id { get; set; }
@@ -20,6 +21,7 @@ namespace Smp.Web.Models
         public Guid ReceiverId { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Content { get; set; }
+        public Guid ConversationId { get; set; }
 
         public static explicit operator Message(DTOs.Message message)
         {
@@ -29,7 +31,8 @@ namespace Smp.Web.Models
                 ReceiverId = message.ReceiverId,
                 SenderId = message.SenderId,
                 Content = message.Content,
-                CreatedAt = message.CreatedAt
+                CreatedAt = message.CreatedAt,
+                ConversationId = message.ConversationId
             };
         }
     }

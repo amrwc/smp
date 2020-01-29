@@ -24,8 +24,8 @@ namespace Smp.Web.Repositories
 
         public async Task CreateMessage(Message message)
         {
-            await _dbConnection.ExecuteAsync("INSERT INTO [dbo].[Messages] ([SenderId], [ReceiverId], [Content], [CreatedAt]) VALUES (@SenderId, @ReceiverId, @Content, @CreatedAt)",
-                new { SenderId = message.SenderId, ReceiverId = message.ReceiverId, Content = message.Content, CreatedAt = message.CreatedAt });
+            await _dbConnection.ExecuteAsync("INSERT INTO [dbo].[Messages] ([SenderId], [ReceiverId], [Content], [CreatedAt], [ConversationId]) VALUES (@SenderId, @ReceiverId, @Content, @CreatedAt, @ConversationId)",
+                new { SenderId = message.SenderId, ReceiverId = message.ReceiverId, Content = message.Content, CreatedAt = message.CreatedAt, ConversationId = message.ConversationId });
         }
     }
 }
