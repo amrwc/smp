@@ -3,6 +3,7 @@ import { Conversation } from '../models/conversation';
 import { GlobalHelper } from '../helpers/global';
 import { ConversationsService } from '../services/conversations.service';
 import { MessagesService } from '../services/messages.service';
+import { CurrentUser } from '../models/current-user';
 
 @Component({
   selector: 'app-messages',
@@ -20,9 +21,15 @@ export class MessagesComponent implements OnInit {
   }
 
   private fetchConversations(): void {
-    // TODO: call conversationsService method to get conversations for current user.
-    // then use messagesService to get the most recent message in that conversation and display
-    // endpoints on API may still need to be implemented.
+    this.conversationsService.getConversations(this.globalHelper.localStorageItem<CurrentUser>('currentUser').id).subscribe({
+      next: (conversations: any) => {
+        this.conversations = conversations;
+        
+        // use messagesService to get the most recent message in that conversation and display
+        // can use message information to know how to order conversations.
+        // endpoints on API may still need to be implemented.
+      }
+    });
   }
 
 }
