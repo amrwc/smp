@@ -27,7 +27,6 @@ export class RequestsComponent implements OnInit {
           this.getRequests();
         },
         error: (error: any) => {
-          alert("failed lol");
         }
       });
     } else if (answer === false) {
@@ -36,7 +35,6 @@ export class RequestsComponent implements OnInit {
           this.getRequests();
         },
         error: (error: any) => {
-          alert("failed lol");
         }
       });
     }
