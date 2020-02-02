@@ -1,4 +1,4 @@
-import { Message } from './message';
+import { FriendlyMessage } from './message';
 
 export class Conversation {
   public id: string;
@@ -6,5 +6,5 @@ export class Conversation {
 }
 
 export class ExtendedConversation extends Conversation {
-  public lastMessage? : Message;
+  public lastMessage? : FriendlyMessage;
 }

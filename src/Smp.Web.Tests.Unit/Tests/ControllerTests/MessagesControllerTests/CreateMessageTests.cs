@@ -31,7 +31,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.MessagesControllerTests
                     .Returns(true);
                 AuthService.Setup(service => service.AuthorizeFriend(It.IsAny<string>(), It.IsAny<Guid>()))
                     .ReturnsAsync(true);
-                MessagesRepository.Setup(repository => repository.CreateMessage(It.IsAny<Message>()))
+                MessagesService.Setup(repository => repository.CreateMessage(It.IsAny<Message>()))
                     .Callback<Message>(msg => _usedMessage = msg);
 
                 _result = await MessagesController.CreateMessage(_createMessageRequest);
@@ -47,7 +47,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.MessagesControllerTests
 
             [Test]
             public void ThenMessagesRepositoryCreatePostShouldHaveBeenCalled()
-                => MessagesRepository.Verify(repository => repository.CreateMessage(It.IsAny<Message>()), Times.Once);
+                => MessagesService.Verify(repository => repository.CreateMessage(It.IsAny<Message>()), Times.Once);
         }
 
         public class GivenAnUnauthorizedRequest : MessagesControllerTestBase
@@ -75,7 +75,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.MessagesControllerTests
 
             [Test]
             public void ThenMessagesRepositoryCreatePostShouldHaveBeenCalled()
-                => MessagesRepository.Verify(repository => repository.CreateMessage(It.IsAny<Message>()), Times.Never);
+                => MessagesService.Verify(repository => repository.CreateMessage(It.IsAny<Message>()), Times.Never);
         }
     }
 }

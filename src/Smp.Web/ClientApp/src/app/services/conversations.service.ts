@@ -12,7 +12,7 @@ export class ConversationsService {
 
   public getConversations(userId: string): Observable<Conversation[]> {
     let headers = new HttpHeaders();
-    headers.set('Authorization', "Bearer " + JSON.parse(localStorage.getItem('currentUser')).token);
+    headers = headers.set('Authorization', "Bearer " + JSON.parse(localStorage.getItem('currentUser')).token);
     return this.httpClient.get<Conversation[]>(`${this.baseUrl}api/Conversations/GetConversations/${userId}`, { headers: headers });
   }
 }

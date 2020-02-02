@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Smp.Web.Models;
 using Smp.Web.Repositories;
 using Smp.Web.Models.Requests;
+using System;
 
 namespace Smp.Web.Controllers
 {
@@ -12,12 +13,12 @@ namespace Smp.Web.Controllers
     public class MessagesController : Controller
     {
         private readonly IAuthService _authService;
-        private readonly IMessagesRepository _messagesRepository;
+        private readonly IMessagesService _messagesService;
 
-        public MessagesController(IAuthService authService, IMessagesRepository messagesRepository)
+        public MessagesController(IAuthService authService, IMessagesService messagesService)
         {
             _authService = authService;
-            _messagesRepository = messagesRepository;
+            _messagesService = messagesService;
         }
 
         [HttpPost("[action]"), Authorize]
@@ -29,9 +30,13 @@ namespace Smp.Web.Controllers
                 return Unauthorized();
             }
 
-            await _messagesRepository.CreateMessage(new Message(request));
+            await _messagesService.CreateMessage(new Message(request));
 
             return Ok();
         }
+
+        [HttpGet("[action]/{conversationId:Guid}"), Authorize]
+        public async Task<IActionResult> GetMessagesFromConversation([FromRoute]Guid conversationId, [FromQuery]int count = 10, [FromQuery]int page = 0)
+            => Ok(await _messagesService.GetMessagesFromConversation(conversationId, count, page));
     }
 }

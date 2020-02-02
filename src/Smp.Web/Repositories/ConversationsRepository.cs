@@ -12,7 +12,7 @@ namespace Smp.Web.Repositories
 {
     public interface IConversationsRepository
     {
-        Task<IList<Conversation>> GetConversationsByIds(IEnumerable<Guid> conversationIds);
+        Task<IList<Conversation>> GetConversationsByIds(IList<Guid> conversationIds);
         Task<IList<ConversationParticipant>> GetConversationParticipantsByUserId(Guid userId);
     }
 
@@ -26,7 +26,7 @@ namespace Smp.Web.Repositories
             _dbConnection = connectionFactory.GetDbConnection();
         }
 
-        public async Task<IList<Conversation>> GetConversationsByIds(IEnumerable<Guid> conversationIds)
+        public async Task<IList<Conversation>> GetConversationsByIds(IList<Guid> conversationIds)
         {
             var conversations = await _dbConnection.QueryAsync<Models.DTOs.Conversation>("SELECT * FROM [Conversations] WHERE [Id] IN @Ids",
                 new { Ids = conversationIds });
