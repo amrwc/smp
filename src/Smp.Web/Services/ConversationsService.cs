@@ -25,7 +25,7 @@ namespace Smp.Web.Services
         {
             var conversationParticipants = await _conversationsRepository.GetConversationParticipantsByUserId(userId);
 
-            return await _conversationsRepository.GetConversationsByIds(conversationParticipants.Select(ptcp => ptcp.UserId));
+            return await _conversationsRepository.GetConversationsByIds(conversationParticipants.Select(ptcp => ptcp.ConversationId).ToList());
         }
     }
 }

@@ -49,28 +49,31 @@ namespace Smp.Web
 
             services.AddAuthorization();
 
-            services.AddScoped<ICryptographyService, CryptographyService>();
-            services.AddScoped<IAuthService, AuthService>();
-            services.AddSingleton<IFileWrapper, FileWrapper>();
-            services.AddSingleton<IMailService, MailService>();
-            services.AddSingleton<ISmtpClient>(smtp => new SmtpClientWrapper(Configuration["Mail:Host"], ushort.Parse(Configuration["Mail:Port"])));
+            services.AddTransient<ICryptographyService, CryptographyService>();
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IFileWrapper, FileWrapper>();
+            services.AddTransient<IMailService, MailService>();
+            services.AddTransient<ISmtpClient>(smtp => new SmtpClientWrapper(Configuration["Mail:Host"], ushort.Parse(Configuration["Mail:Port"])));
 
-            services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
-            services.AddScoped<IRelationshipsRepository, RelationshipsRepository>();
-            services.AddScoped<IRequestsRepository, RequestsRepository>();
-            services.AddScoped<IPostsRepository, PostsRepository>();
-            services.AddScoped<IUsersRepository, UsersRepository>();
-            services.AddScoped<IActionsRepository, ActionsRepository>();
-            services.AddScoped<IMessagesRepository, MessagesRepository>();
+            services.AddTransient<IDbConnectionFactory, DbConnectionFactory>();
+            services.AddTransient<IRelationshipsRepository, RelationshipsRepository>();
+            services.AddTransient<IRequestsRepository, RequestsRepository>();
+            services.AddTransient<IPostsRepository, PostsRepository>();
+            services.AddTransient<IUsersRepository, UsersRepository>();
+            services.AddTransient<IActionsRepository, ActionsRepository>();
+            services.AddTransient<IMessagesRepository, MessagesRepository>();
+            services.AddTransient<IConversationsRepository, ConversationsRepository>();
 
-            services.AddScoped<IUserValidator, UserValidator>();
-            services.AddScoped<IRequestValidator, RequestValidator>();
-            services.AddScoped<IActionValidator, ActionValidator>();
+            services.AddTransient<IUserValidator, UserValidator>();
+            services.AddTransient<IRequestValidator, RequestValidator>();
+            services.AddTransient<IActionValidator, ActionValidator>();
 
-            services.AddScoped<IRelationshipsService, RelationshipsService>();
-            services.AddScoped<IRequestsService, RequestsService>();
-            services.AddScoped<IPostsService, PostsService>();
-            services.AddScoped<IAccountsService, AccountsService>();
+            services.AddTransient<IRelationshipsService, RelationshipsService>();
+            services.AddTransient<IRequestsService, RequestsService>();
+            services.AddTransient<IPostsService, PostsService>();
+            services.AddTransient<IAccountsService, AccountsService>();
+            services.AddTransient<IConversationsService, ConversationsService>();
+            services.AddTransient<IMessagesService, MessagesService>();
 
             services.AddMvc();
 
