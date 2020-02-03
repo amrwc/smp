@@ -8,14 +8,16 @@
 <div class="messages-body container-fluid">
   <div class="messages-content">
     <div class="conversation-list" style="border: groove;">
-      <div *ngFor="let conversation of conversations" class="conversation-preview" style="border: groove;">
+      <div *ngFor="let conversation of conversations" (click)="loadConversation(conversation.id)" class="conversation-preview" style="border: groove;">
         <div *ngIf="conversation.lastMessage">
-          {{ conversation.lastMessage.sender.fullName }} sent '{{ conversation.lastMessage.content }}' at {{ conversation.lastMessage.createdAtFriendly }}
+          <img class="profile-picture" [src]="getConversationPicture(conversation.id)" />
+          {{ getConversationName(conversation.id) }}
+          <p>{{ getLastMessageSender(conversation.id) }}: '{{ conversation.lastMessage.content }}' at {{ conversation.lastMessage.createdAtFriendly }}</p>
         </div>
       </div>
     </div>
     <div class="conversation-window" style="border: groove;">
-      CONVERSATION WINDOW
+      <h1 *ngIf="loadedConversation">POG</h1>
     </div>
   </div>
 </div>
