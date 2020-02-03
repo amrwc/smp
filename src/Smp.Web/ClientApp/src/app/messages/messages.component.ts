@@ -16,6 +16,7 @@ import { User } from '../models/user';
 export class MessagesComponent implements OnInit {
 
   public conversations: ExtendedConversation[];
+  public loadedConversation: Conversation;
 
   constructor(private globalHelper: GlobalHelper,
     private conversationsService: ConversationsService,
@@ -26,18 +27,56 @@ export class MessagesComponent implements OnInit {
     this.fetchConversationsData();
   }
 
+  public getConversationPicture(conversationId: string): string {
+    const userId = this.globalHelper.localStorageItem<CurrentUser>('currentUser').id;
+    const conversation = (this.conversations.filter((cnv) => {
+      return cnv.id == conversationId;
+    }))[0];
+
+    return conversation.lastMessage.receiverId == userId
+      ? conversation.lastMessage.sender.profilePictureUrl
+      : conversation.lastMessage.receiver.profilePictureUrl;
+  }
+
+  public getConversationName(conversationId: string): string {
+    const userId = this.globalHelper.localStorageItem<CurrentUser>('currentUser').id;
+    const conversation = (this.conversations.filter((cnv) => {
+      return cnv.id == conversationId;
+    }))[0];
+
+    return conversation.lastMessage.receiverId == userId
+      ? conversation.lastMessage.sender.fullName
+      : conversation.lastMessage.receiver.fullName;
+  }
+
+  public getLastMessageSender(conversationId: string): string {
+    const userId = this.globalHelper.localStorageItem<CurrentUser>('currentUser').id;
+    const conversation = (this.conversations.filter((cnv) => {
+      return cnv.id == conversationId;
+    }))[0];
+
+    return conversation.lastMessage.receiverId == userId
+      ? conversation.lastMessage.sender.fullName
+      : "You"
+  }
+
+  public loadConversation(conversationId: string): void {
+    alert(conversationId);
+    this.loadedConversation = new Conversation();
+  }
+
   private fetchConversationsData(): void {
     this.conversationsService.getConversations(this.globalHelper.localStorageItem<CurrentUser>('currentUser').id).subscribe({
       next: (conversations: Conversation[]) => {
         this.conversations = conversations;
-        this.fetchLastMessages();
+        this.fetchMessages(1, 0);
       }
     });
   }
 
-  private fetchLastMessages(): void {
+  private fetchMessages(count: number, page: number): void {
     this.conversations.forEach((cnv: ExtendedConversation, index: number, conversationsArray: ExtendedConversation[]) => {
-      this.messagesService.getMessagesFromConversation(cnv.id, 1, 0).subscribe({
+      this.messagesService.getMessagesFromConversation(cnv.id, count, page).subscribe({
         next: (message: Message[]) => {
           if (message) {
             conversationsArray[index].lastMessage = new FriendlyMessage(message[0]);
