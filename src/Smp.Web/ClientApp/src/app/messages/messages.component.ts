@@ -16,7 +16,7 @@ import { ConversationComponent } from '../conversation/conversation.component';
 })
 export class MessagesComponent implements OnInit {
 
-  @ViewChild(ConversationComponent, { static: false })
+  @ViewChild(ConversationComponent)
   conversation: ConversationComponent;
 
   public conversations: ExtendedConversation[];
