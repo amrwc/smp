@@ -12,7 +12,7 @@
 
             <!--TODO: Fix button position without it falling out of div?-->
 
-            <div *ngIf="postUnsuccessful" class="alert alert-danger">
+            <div *ngIf="errorMessage" class="alert alert-danger">
                 <p><strong>{{ errorMessage }}</strong></p>
             </div>
 
