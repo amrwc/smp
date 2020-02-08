@@ -2,14 +2,14 @@
 @import '~sass/header-partial';
 
 .messages-body {
-  height: 100vh;
+  padding: 4rem 0 0 0;
   margin: 0;
-  padding: 0;
 
   .messages-content {
-    padding: 4rem 0 4.3rem 0;
+    height: calc(100vh - 8rem);
     display: grid;
     grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
 
     .conversation-list {
       grid-column: span 3;
@@ -25,6 +25,8 @@
 
     .conversation-window {
       grid-column: span 9;
+      grid-row: span 12;
+      border-left: 2px solid $blue;
     }
   }
 }

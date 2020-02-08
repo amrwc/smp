@@ -1,6 +1,8 @@
 <div class="conversation-body">
-    <h4 style="grid-column: span 12;" *ngIf="conversationId">{{conversationId}}</h4>
     <div *ngFor="let message of messages" class="message">
-        MESSAGE
+        <div class="message-content">
+            <img class="profile-picture" *ngIf="users.has(message.senderId)" [src]="users.get(message.senderId).profilePictureUrl" />
+            {{message.content}}
+        </div> <div class="datetime"><em>{{message.getFriendlyDate()}}</em></div>
     </div>
 </div>

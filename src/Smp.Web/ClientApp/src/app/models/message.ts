@@ -16,6 +16,10 @@ export class Message {
   public createdAt: Date;
   public content: string;
   public conversationId: string;
+
+  public getFriendlyDate(): string {
+    return new Date(this.createdAt).toLocaleString();
+  }
 }
 
 export class FriendlyMessage extends Message {
@@ -24,7 +28,7 @@ export class FriendlyMessage extends Message {
     this.createdAtFriendly = new Date(this.createdAt).toLocaleString();
   }
 
-  public receiver: User;
-  public sender: User;
-  public createdAtFriendly: string;
+  public receiver?: User;
+  public sender?: User;
+  public createdAtFriendly?: string;
 }

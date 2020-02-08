@@ -10,6 +10,7 @@ namespace Smp.Web.Services
     public interface IConversationsService
     {
         Task<IList<Conversation>> GetConversations(Guid userId);
+        Task<IList<Guid>> GetConversationParticipants(Guid ConversationId);
     }
 
     public class ConversationsService : IConversationsService
@@ -26,6 +27,13 @@ namespace Smp.Web.Services
             var conversationParticipants = await _conversationsRepository.GetConversationParticipantsByUserId(userId);
 
             return await _conversationsRepository.GetConversationsByIds(conversationParticipants.Select(ptcp => ptcp.ConversationId).ToList());
+        }
+
+        public async Task<IList<Guid>> GetConversationParticipants(Guid conversationId)
+        {
+            var conversationParticipants=  await _conversationsRepository.GetConversationParticipantsByConversationId(conversationId);
+
+            return conversationParticipants.Select(ptcp => ptcp.UserId).ToList();
         }
     }
 }

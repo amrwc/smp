@@ -6,6 +6,7 @@ using Smp.Web.Models;
 using Smp.Web.Repositories;
 using Smp.Web.Models.Requests;
 using System;
+using System.Linq;
 
 namespace Smp.Web.Controllers
 {
@@ -27,6 +28,18 @@ namespace Smp.Web.Controllers
             if (!(_authService.AuthorizeSelf(Request.Headers["Authorization"], userId))) return Unauthorized();
             
             return Ok(await _conversationsService.GetConversations(userId));
+        }
+
+        [HttpGet("[action]/{conversationId:Guid}"), Authorize]
+        public async Task<IActionResult> GetConversationParticipants([FromRoute]Guid conversationId)
+        {
+            if(!Guid.TryParse(_authService.GetUserIdFromToken(Request.Headers["Authorization"]), out var userId)) return Unauthorized();
+
+            var conversationParticipantIds = await _conversationsService.GetConversationParticipants(conversationId);
+
+            if (!conversationParticipantIds.Any(id => id == userId)) return Unauthorized();
+
+            return Ok(conversationParticipantIds);
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Smp.Web.Repositories
     {
         Task<IList<Conversation>> GetConversationsByIds(IList<Guid> conversationIds);
         Task<IList<ConversationParticipant>> GetConversationParticipantsByUserId(Guid userId);
+        Task<IList<ConversationParticipant>> GetConversationParticipantsByConversationId(Guid conversationId);
     }
 
     [ExcludeFromCodeCoverage]
@@ -39,6 +40,16 @@ namespace Smp.Web.Repositories
             var conversationParticipants = await _dbConnection.QueryAsync<Models.DTOs.ConversationParticipant>(
                 "SELECT * FROM [ConversationParticipants] WHERE [UserId] = @UserId",
                 new { UserId = userId }
+            );
+
+            return conversationParticipants.Select(ptcp => (ConversationParticipant)ptcp).ToList();
+        }
+
+        public async Task<IList<ConversationParticipant>> GetConversationParticipantsByConversationId(Guid conversationId)
+        {
+            var conversationParticipants = await _dbConnection.QueryAsync<Models.DTOs.ConversationParticipant>(
+                "SELECT * FROM [ConversationParticipants] WHERE [ConversationId] = @ConversationId",
+                new { ConversationId = conversationId }
             );
 
             return conversationParticipants.Select(ptcp => (ConversationParticipant)ptcp).ToList();

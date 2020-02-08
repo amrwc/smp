@@ -15,4 +15,10 @@ export class ConversationsService {
     headers = headers.set('Authorization', "Bearer " + JSON.parse(localStorage.getItem('currentUser')).token);
     return this.httpClient.get<Conversation[]>(`${this.baseUrl}api/Conversations/GetConversations/${userId}`, { headers: headers });
   }
+
+  public getConversationParticipants(conversationId: string): Observable<string[]> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', "Bearer " + JSON.parse(localStorage.getItem('currentUser')).token);
+    return this.httpClient.get<string[]>(`${this.baseUrl}api/Conversations/GetConversationParticipants/${conversationId}`, { headers: headers });
+  }
 }
