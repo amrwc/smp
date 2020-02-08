@@ -21,11 +21,11 @@ export class ProfileComponent implements OnInit {
   feedComponent: FeedComponent;
 
   private userId: string;
-  private user: User;
+  public user: User;
 
-  private showAddFriendButton: boolean = true;
-  private requestPending: boolean = false;
-  private friends: boolean = false;
+  public showAddFriendButton: boolean = true;
+  public requestPending: boolean = false;
+  public friends: boolean = false;
 
   constructor(
     private usersService: UsersService,
@@ -36,8 +36,8 @@ export class ProfileComponent implements OnInit {
   ) {  }
 
   ngOnInit() {
-    this.userId = this.route.snapshot.paramMap.get('id');
     let visitingUserId = this.globalHelper.localStorageItem<CurrentUser>('currentUser').id;
+    this.userId = this.route.snapshot.paramMap.get('id') ?? visitingUserId;
     this.showAddFriendButton = this.userId != visitingUserId;
 
     if (this.showAddFriendButton) {
