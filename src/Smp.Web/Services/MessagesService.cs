@@ -26,6 +26,6 @@ namespace Smp.Web.Services
             => await _messagesRepository.CreateMessage(message);
 
         public async Task<IList<Message>> GetMessagesFromConversation(Guid conversationId, int count, int page)
-            => await _messagesRepository.GetMessagesByConversationId(conversationId, count, page, false);
+            => await _messagesRepository.GetMessagesByConversationId(conversationId, count, page, true);
     }
 }

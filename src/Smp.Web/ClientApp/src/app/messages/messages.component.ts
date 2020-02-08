@@ -36,9 +36,15 @@ export class MessagesComponent implements OnInit {
       return cnv.id == conversationId;
     }))[0];
 
-    return conversation.lastMessage.receiverId == userId
-      ? conversation.lastMessage.sender?.profilePictureUrl
-      : conversation.lastMessage.receiver?.profilePictureUrl;
+    let participant: User;
+
+    conversation.participants.forEach((usr: User, key: string) => {
+      if (key != userId) {
+        participant = usr;
+      }
+    });
+
+    return participant.profilePictureUrl;
   }
 
   public getConversationName(conversationId: string): string {
@@ -47,9 +53,15 @@ export class MessagesComponent implements OnInit {
       return cnv.id == conversationId;
     }))[0];
 
-    return conversation.lastMessage.receiverId == userId
-      ? conversation.lastMessage.sender?.fullName
-      : conversation.lastMessage.receiver?.fullName;
+    let participant: User;
+
+    conversation.participants.forEach((usr: User, key: string) => {
+      if (key != userId) {
+        participant = usr;
+      }
+    });
+
+    return participant.fullName;
   }
 
   public getLastMessageSender(conversationId: string): string {
@@ -71,17 +83,35 @@ export class MessagesComponent implements OnInit {
     this.conversationsService.getConversations(this.globalHelper.localStorageItem<CurrentUser>('currentUser').id).subscribe({
       next: (conversations: Conversation[]) => {
         this.conversations = conversations;
+        this.fetchConversationParticipants();
         this.fetchMessages(1, 0);
       }
+    });
+  }
+
+  private fetchConversationParticipants(): void {
+    this.conversations.forEach((cnv: ExtendedConversation, index: number, conversationsArray: ExtendedConversation[]) => {
+      this.conversationsService.getConversationParticipants(cnv.id).subscribe({
+        next: (ids: string[]) => {
+          conversationsArray[index].participants = new Map<string, User>(); 
+          ids.forEach(id => {
+            this.usersService.getUser(id).subscribe({
+              next: (user: User) => {
+                conversationsArray[index].participants.set(user.id, user);
+              }
+            });
+          });
+        }
+      });
     });
   }
 
   private fetchMessages(count: number, page: number): void {
     this.conversations.forEach((cnv: ExtendedConversation, index: number, conversationsArray: ExtendedConversation[]) => {
       this.messagesService.getMessagesFromConversation(cnv.id, count, page).subscribe({
-        next: (message: Message[]) => {
-          if (message) {
-            conversationsArray[index].lastMessage = new FriendlyMessage(message[0]);
+        next: (message: FriendlyMessage[]) => {
+          if (message.length > 0) {
+            conversationsArray[index].lastMessage = message[0];
             
             this.usersService.getUser(conversationsArray[index].lastMessage.receiverId).subscribe({
               next: (user: User) => {
