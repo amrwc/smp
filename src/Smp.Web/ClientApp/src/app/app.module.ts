@@ -20,6 +20,7 @@ import { FeedComponent } from './feed/feed.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RequestsComponent } from './requests/requests.component';
+import { ConversationComponent } from './conversation/conversation.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { RequestsComponent } from './requests/requests.component';
     FeedComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    RequestsComponent
+    RequestsComponent,
+    ConversationComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

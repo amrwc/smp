@@ -17,7 +17,8 @@ import { RelationshipType } from '../models/relationship-type.enum';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  @ViewChild(FeedComponent, { static: false }) feedComponent: FeedComponent;
+  @ViewChild(FeedComponent, { static: false })
+  feedComponent: FeedComponent;
 
   private userId: string;
   private user: User;

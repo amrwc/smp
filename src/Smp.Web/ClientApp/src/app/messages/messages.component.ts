@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Conversation, ExtendedConversation } from '../models/conversation';
 import { GlobalHelper } from '../helpers/global';
 import { ConversationsService } from '../services/conversations.service';
@@ -7,6 +7,7 @@ import { CurrentUser } from '../models/current-user';
 import { Message, FriendlyMessage } from '../models/message';
 import { UsersService } from '../services/users.service';
 import { User } from '../models/user';
+import { ConversationComponent } from '../conversation/conversation.component';
 
 @Component({
   selector: 'app-messages',
@@ -15,8 +16,10 @@ import { User } from '../models/user';
 })
 export class MessagesComponent implements OnInit {
 
+  @ViewChild(ConversationComponent, { static: false })
+  conversation: ConversationComponent;
+
   public conversations: ExtendedConversation[];
-  public loadedConversation: Conversation;
 
   constructor(private globalHelper: GlobalHelper,
     private conversationsService: ConversationsService,
@@ -34,8 +37,8 @@ export class MessagesComponent implements OnInit {
     }))[0];
 
     return conversation.lastMessage.receiverId == userId
-      ? conversation.lastMessage.sender.profilePictureUrl
-      : conversation.lastMessage.receiver.profilePictureUrl;
+      ? conversation.lastMessage.sender?.profilePictureUrl
+      : conversation.lastMessage.receiver?.profilePictureUrl;
   }
 
   public getConversationName(conversationId: string): string {
@@ -45,8 +48,8 @@ export class MessagesComponent implements OnInit {
     }))[0];
 
     return conversation.lastMessage.receiverId == userId
-      ? conversation.lastMessage.sender.fullName
-      : conversation.lastMessage.receiver.fullName;
+      ? conversation.lastMessage.sender?.fullName
+      : conversation.lastMessage.receiver?.fullName;
   }
 
   public getLastMessageSender(conversationId: string): string {
@@ -56,13 +59,12 @@ export class MessagesComponent implements OnInit {
     }))[0];
 
     return conversation.lastMessage.receiverId == userId
-      ? conversation.lastMessage.sender.fullName
+      ? conversation.lastMessage.sender?.fullName
       : "You"
   }
 
   public loadConversation(conversationId: string): void {
-    alert(conversationId);
-    this.loadedConversation = new Conversation();
+    this.conversation.conversationId = conversationId;
   }
 
   private fetchConversationsData(): void {
