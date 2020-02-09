@@ -10,7 +10,7 @@ namespace Smp.Web.Services
     public interface IConversationsService
     {
         Task<IList<Conversation>> GetConversations(Guid userId);
-        Task<IList<Guid>> GetConversationParticipants(Guid ConversationId);
+        Task<IList<Guid>> GetConversationParticipants(Guid conversationId);
     }
 
     public class ConversationsService : IConversationsService
