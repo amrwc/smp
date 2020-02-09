@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Smp.Web.Services;
 using System.Threading.Tasks;
-using Smp.Web.Models;
-using Smp.Web.Repositories;
-using Smp.Web.Models.Requests;
 using System;
 using System.Linq;
 
@@ -25,7 +22,7 @@ namespace Smp.Web.Controllers
         [HttpGet("[action]/{userId:Guid}"), Authorize]
         public async Task<IActionResult> GetConversations([FromRoute]Guid userId)
         {
-            if (!(_authService.AuthorizeSelf(Request.Headers["Authorization"], userId))) return Unauthorized();
+            if (!_authService.AuthorizeSelf(Request.Headers["Authorization"], userId)) return Unauthorized();
             
             return Ok(await _conversationsService.GetConversations(userId));
         }
@@ -37,7 +34,7 @@ namespace Smp.Web.Controllers
 
             var conversationParticipantIds = await _conversationsService.GetConversationParticipants(conversationId);
 
-            if (!conversationParticipantIds.Any(id => id == userId)) return Unauthorized();
+            if (conversationParticipantIds.All(id => id != userId)) return Unauthorized();
 
             return Ok(conversationParticipantIds);
         }

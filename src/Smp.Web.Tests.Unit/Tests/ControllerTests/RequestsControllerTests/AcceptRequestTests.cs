@@ -35,7 +35,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
                 => RequestsService.Verify(service => service.AcceptRequest(It.IsAny<Request>()), Times.Once);
 
             [Test]
-            public void ThenResultShouldBeOkResult()
+            public void ThenResultShouldBeOfExpectedType()
                 => Assert.IsInstanceOf<OkResult>(_result);
         }
     }
