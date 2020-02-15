@@ -10,6 +10,7 @@ using Smp.Web.Models.Requests;
 
 namespace Smp.Web.Tests.Unit.Tests.ControllerTests.MessagesControllerTests
 {
+    [TestFixture]
     public class CreateMessageTests
     {
         public class GivenAnAuthorizedRequest : MessagesControllerTestBase

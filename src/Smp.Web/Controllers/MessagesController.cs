@@ -6,6 +6,7 @@ using Smp.Web.Models;
 using Smp.Web.Repositories;
 using Smp.Web.Models.Requests;
 using System;
+using System.Linq;
 
 namespace Smp.Web.Controllers
 {
@@ -14,11 +15,13 @@ namespace Smp.Web.Controllers
     {
         private readonly IAuthService _authService;
         private readonly IMessagesService _messagesService;
+        private readonly IConversationsService _conversationsService;
 
-        public MessagesController(IAuthService authService, IMessagesService messagesService)
+        public MessagesController(IAuthService authService, IMessagesService messagesService, IConversationsService conversationsService)
         {
             _authService = authService;
             _messagesService = messagesService;
+            _conversationsService = conversationsService;
         }
 
         [HttpPost("[action]"), Authorize]
@@ -37,6 +40,23 @@ namespace Smp.Web.Controllers
 
         [HttpGet("[action]/{conversationId:Guid}"), Authorize]
         public async Task<IActionResult> GetMessagesFromConversation([FromRoute]Guid conversationId, [FromQuery]int count = 10, [FromQuery]int page = 0)
-            => Ok(await _messagesService.GetMessagesFromConversation(conversationId, count, page));
+        {
+            if (!Guid.TryParse(_authService.GetUserIdFromToken(Request.Headers["Authorization"]), out var userId)) return Unauthorized();
+
+            var conversationParticipantIds = await _conversationsService.GetConversationParticipants(conversationId);
+
+            var inConversation = false;
+
+            foreach (var id in conversationParticipantIds)
+            {
+                if (id != userId) continue;
+                inConversation = true;
+                break;
+            }
+
+            if (!inConversation) return Unauthorized();
+
+            return Ok(await _messagesService.GetMessagesFromConversation(conversationId, count, page));
+        }
     }
 }
