@@ -17,6 +17,7 @@ namespace Smp.Web.Services
     {
         Task<VerifyUserResult> VerifyUser(string email, string password);
         string CreateJwt(User user);
+        string GetUserIdFromToken(string authToken);
         bool AuthorizeSelf(string authToken, Guid userId);
         Task<bool> AuthorizeFriend(string authToken, Guid userId);
     }
@@ -65,6 +66,9 @@ namespace Smp.Web.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        public string GetUserIdFromToken(string authToken)
+            => new JwtSecurityTokenHandler().ReadJwtToken(StripBearer(authToken)).Id;
 
         public bool AuthorizeSelf(string authToken, Guid userId) 
             => new JwtSecurityTokenHandler().ReadJwtToken(StripBearer(authToken)).Id == userId.ToString();

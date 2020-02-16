@@ -41,7 +41,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
                 => RequestsRepository.Verify(repo => repo.GetRequestsByReceiverId(_userId), Times.Once);
 
             [Test]
-            public void ThenOkResultShouldHaveBeenReturned()
+            public void ThenResultShouldBeOfExpectedType()
                 => Assert.IsInstanceOf<OkObjectResult>(_result);
 
             [Test]

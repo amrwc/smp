@@ -45,7 +45,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
                     request.SenderId == _requestRequest.SenderId && request.ReceiverId == _requestRequest.ReceiverId && request.RequestType == (RequestType)_requestRequest.RequestTypeId)));
 
             [Test]
-            public void ThenResultShouldBeAnOkResult()
+            public void ThenResultShouldBeOfExpectedType()
                 => Assert.IsInstanceOf<OkResult>(_result);
         }
 
