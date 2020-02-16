@@ -8,7 +8,7 @@ import { CurrentUser } from '../models/current-user';
 })
 export class NavFooterComponent implements OnInit {
 
-  private currentUser: CurrentUser;
+  public currentUser: CurrentUser;
 
   constructor() { }
 

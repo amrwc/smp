@@ -1,0 +1,26 @@
+.conversation-body {
+    margin: 0;
+    padding: 0;
+
+    .message {
+        grid-template-columns: repeat(12, 1fr);
+        display: grid;
+
+        padding: 1rem 0rem 1rem 1rem;
+
+        .message-content {
+            .profile-picture {
+                width: 50px;
+                height: 50px;
+            }
+
+            display: inline-block;
+            grid-column: span 10;
+        }
+
+        .datetime {
+            display: inline-block;
+            grid-column: span 2;
+        }
+    }
+  }

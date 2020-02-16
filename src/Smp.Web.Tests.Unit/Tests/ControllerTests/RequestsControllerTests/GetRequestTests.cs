@@ -40,7 +40,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.RequestsControllerTests
             }
 
             [Test]
-            public void ThenTheResultShouldBeOfTheExpectedType()
+            public void ThenResultShouldBeOfExpectedType()
                 => Assert.IsInstanceOf<OkObjectResult>(_result);
 
             [Test]

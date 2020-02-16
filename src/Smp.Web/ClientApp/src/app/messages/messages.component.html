@@ -7,6 +7,17 @@
 
 <div class="messages-body container-fluid">
   <div class="messages-content">
-
+    <div class="conversation-list">
+      <div *ngFor="let conversation of conversations" (click)="loadConversation(conversation.id)" class="conversation-preview" style="border: groove;">
+        <div *ngIf="conversation.lastMessage">
+          <img class="profile-picture" *ngIf="conversation.lastMessage.sender && conversation.lastMessage.receiver" [src]="getConversationPicture(conversation.id)" />
+          {{ getConversationName(conversation.id) }}
+          <p>{{ getLastMessageSender(conversation.id) }}: '{{ conversation.lastMessage.content }}' at {{ conversation.lastMessage.createdAtFriendly }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="conversation-window">
+      <app-conversation></app-conversation>
+    </div>
   </div>
 </div>

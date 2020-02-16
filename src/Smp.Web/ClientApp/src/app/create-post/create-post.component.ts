@@ -37,7 +37,6 @@ export class CreatePostComponent implements OnInit {
       error: (error: any) => {
         this.loading = false;
         this.errorMessage = error.error;
-        //IF ERROR 401. REDIRECT TO HOME BECAUSE FAILED AUTHORIZATION
       }
     });
   }
