@@ -1,5 +1,6 @@
 @import '~sass/variables';
-@import '~sass/header-partial';
+@import '~sass/header';
+@import '~sass/button';
 
 .messages-body {
   padding: 4rem 0 0 0;
@@ -11,17 +12,35 @@
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(12, 1fr);
 
-    .conversation-list {
+    .conversations {
       grid-column: span 3;
+      grid-row: span 12;
+      grid-template-rows: repeat(12, 1fr);
+      display: grid;
 
-      .conversation-preview {
-        .profile-picture {
-          display: inline-block;
-          width: 50px;
-          height: 50px;
+      .conversation-list { 
+        grid-row: span 11;
+
+        .conversation-preview {
+          .profile-picture {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+          }
+        }
+      }
+
+      .conversation-start-new {
+        grid-row: span 1;
+
+        button.button-primary {
+          height: 100%;
+          font-size: large;
         }
       }
     }
+
+
 
     .conversation-window {
       grid-column: span 9;

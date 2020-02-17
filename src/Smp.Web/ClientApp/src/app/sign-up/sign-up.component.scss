@@ -1,4 +1,5 @@
 @import '~sass/variables';
+@import '~sass/button';
 
 .body {
   .side-panel {
@@ -50,22 +51,6 @@
       &:-ms-input-placeholder {
         color: $grey;
         font-size: 1.2rem;
-      }
-    }
-
-    button {
-      background-color: rgba($blue, 0.9);
-      border: 1px solid $blue;
-      border-radius: 6px;
-      color: white;
-      display: block;
-      font-size: 1.1rem;
-      height: 3.8rem;
-      margin: 2.7rem auto 0.96rem auto;
-      width: 100%;
-
-      &:hover {
-        background-color: $blue;
       }
     }
 
