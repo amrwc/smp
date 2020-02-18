@@ -18,11 +18,14 @@
         </div>
       </div>
       <div class="conversation-start-new">
-        <button class="button-primary">Start a new conversation</button> 
+        <button (click)="showStartConversation()" class="button-primary">Start a new conversation</button> 
       </div>
     </div>
-    <div class="conversation-window">
+    <div [hidden]="startNewConversation" class="conversation-window">
       <app-conversation></app-conversation>
+    </div>
+    <div [hidden]="!startNewConversation" class="message-composer">
+      <app-message-composer></app-message-composer>
     </div>
   </div>
 </div>
