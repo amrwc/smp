@@ -8,6 +8,7 @@ import { Message, FriendlyMessage } from '../models/message';
 import { UsersService } from '../services/users.service';
 import { User } from '../models/user';
 import { ConversationComponent } from '../conversation/conversation.component';
+import { MessageComposerComponent } from '../message-composer/message-composer.component';
 
 @Component({
   selector: 'app-messages',
@@ -16,8 +17,13 @@ import { ConversationComponent } from '../conversation/conversation.component';
 })
 export class MessagesComponent implements OnInit {
 
+  public startNewConversation: boolean;
+
   @ViewChild(ConversationComponent)
   conversation: ConversationComponent;
+
+  @ViewChild(MessageComposerComponent)
+  composer: MessageComposerComponent;
 
   public conversations: ExtendedConversation[];
 
@@ -76,7 +82,12 @@ export class MessagesComponent implements OnInit {
   }
 
   public loadConversation(conversationId: string): void {
+    this.startNewConversation = false;
     this.conversation.conversationId = conversationId;
+  }
+
+  public showStartConversation(): void {
+    this.startNewConversation = true;
   }
 
   private fetchConversationsData(): void {
