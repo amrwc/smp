@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
@@ -22,7 +24,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { RequestsComponent } from './requests/requests.component';
 import { ConversationComponent } from './conversation/conversation.component';
 import { MessageComposerComponent } from './message-composer/message-composer.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialModule } from './angular-material.module';
 
 @NgModule({
   declarations: [
@@ -101,7 +103,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       },
       { path: '**', redirectTo: '' }
     ]),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    BrowserModule,
+    AngularMaterialModule
   ],
   providers: [AuthGuard, AlreadySignedInGuard],
   bootstrap: [AppComponent]
