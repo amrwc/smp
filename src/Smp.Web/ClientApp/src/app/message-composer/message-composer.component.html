@@ -1,1 +1,13 @@
 <p>message-composer works!</p>
+
+<form>
+    <!-- <mat-form-field>
+        <input type="text" matInput [formControl]="friend" [matAutocomplete]="auto">
+    </mat-form-field> -->
+    
+    <mat-autocomplete>
+        <mat-option *ngFor="let friends of friends" [value]="friend">
+            {{ friend }}
+        </mat-option>
+    </mat-autocomplete>
+</form>
