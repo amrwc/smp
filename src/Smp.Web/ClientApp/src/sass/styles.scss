@@ -12,19 +12,19 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$Smp.Web-primary: mat-palette($mat-indigo);
-$Smp.Web-accent: mat-palette($mat-pink, A200, A100, A400);
+$smp-web-primary: mat-palette($mat-indigo);
+$smp-web-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$Smp.Web-warn: mat-palette($mat-red);
+$smp-web-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$Smp.Web-theme: mat-light-theme($Smp.Web-primary, $Smp.Web-accent, $Smp.Web-warn);
+$smp-web-theme: mat-light-theme($smp-web-primary, $smp-web-accent, $smp-web-warn);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($Smp.Web-theme);
+@include angular-material-theme($smp-web-theme);
 
 @import '~bootstrap/dist/css/bootstrap.css';
 @import './variables';
