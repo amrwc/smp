@@ -1,13 +1,34 @@
 <p>message-composer works!</p>
 
-<form>
-    <!-- <mat-form-field>
-        <input type="text" matInput [formControl]="friend" [matAutocomplete]="auto">
-    </mat-form-field> -->
-    
-    <mat-autocomplete>
-        <mat-option *ngFor="let friends of friends" [value]="friend">
-            {{ friend }}
-        </mat-option>
-    </mat-autocomplete>
-</form>
+<div class="form">
+    <form (ngSubmit)="f.form.valid && sendMessage()" #f="ngForm" novalidate>
+        <div class="form-group">
+            <mat-form-field>
+                <input type="text" class="form-control" placeholder="To:" name="receiver"
+                [(ngModel)]="messageRequest.receiver" #receiver="ngModel" required matInput [matAutocomplete]="auto">
+            </mat-form-field>
+        </div>
+            
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFriend">
+                <mat-option *ngFor="let friend of friends" [value]="friend">
+                    {{ friend.fullName }}
+                </mat-option>
+            </mat-autocomplete>
+        <div class="form-group">
+            <mat-form-field>
+                <textarea class="form-control" placeholder="Message" name="content"
+                [(ngModel)]="messageRequest.content" #content="ngModel" required matInput>
+                </textarea>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <button class="button-primary">Send</button>
+        </div>
+    </form>
+</div>
+
+
+<p *ngFor="let friend of friends">
+    {{ friend }}
+</p>

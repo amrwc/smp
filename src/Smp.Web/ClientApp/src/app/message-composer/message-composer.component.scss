@@ -2,54 +2,22 @@
 @import '~sass/header';
 @import '~sass/button';
 
-.messages-body {
-  padding: 4rem 0 0 0;
-  margin: 0;
 
-  .messages-content {
-    height: calc(100vh - 8rem);
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(12, 1fr);
 
-    .conversations {
-      grid-column: span 3;
-      grid-row: span 12;
-      grid-template-rows: repeat(12, 1fr);
-      display: grid;
+.form {
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+  display: grid;
 
-      .conversation-list { 
-        grid-row: span 11;
+  form {
+    grid-column-start: 2;
+    grid-column-end: 11;
+    grid-row: span 10;
 
-        .conversation-preview {
-          .profile-picture {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-          }
-        }
+    .form-group {
+      mat-form-field {
+         width: 100%;
       }
-
-      .conversation-start-new {
-        grid-row: span 1;
-
-        button.button-primary {
-          height: 100%;
-          font-size: large;
-        }
-      }
-    }
-
-    .conversation-window {
-      grid-column: span 9;
-      grid-row: span 12;
-      border-left: 2px solid $blue;
-    }
-
-    .message-composer {
-      grid-column: span 9;
-      grid-row: span 12;
-      border-left: 2px solid $blue;
     }
   }
 }

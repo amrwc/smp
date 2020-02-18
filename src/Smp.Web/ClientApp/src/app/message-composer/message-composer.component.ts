@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { CreateMessageRequest } from '../models/requests/create-message-request';
+import { User } from '../models/user';
+import { GlobalHelper } from '../helpers/global';
+import { CurrentUser } from '../models/current-user';
 
 @Component({
   selector: 'app-message-composer',
@@ -8,12 +11,24 @@ import { FormControl } from '@angular/forms';
 })
 export class MessageComposerComponent implements OnInit {
 
-  public friends: Array<string> = [ "john", "jessie", "julie", "ryan", "tom" ];
-  public friend = new FormControl('friend');
+  public messageRequest: CreateMessageRequest = new CreateMessageRequest();
+  public friends: User[] = [ { id: "1", fullName: "john", email: "", profilePictureUrl: "" },
+    { id: "2", fullName: "jessie", email : "", profilePictureUrl: "" } ];
 
-  constructor() { }
+  constructor(private globalHelper: GlobalHelper) { }
 
   ngOnInit(): void {
+    this.messageRequest.senderId = this.globalHelper.localStorageItem<CurrentUser>('currentUser').id;
   }
 
+  public sendMessage() {
+    this.messageRequest.receiverId = this.messageRequest.receiver.id;
+    debugger;
+    //create conversation?
+    //send message
+  }
+
+  public displayFriend(user: User) {
+    return user ? user.fullName : user;
+  }
 }
