@@ -24,11 +24,13 @@ namespace Smp.Web.Controllers
         public async Task<IActionResult> GetRelationship(Guid userOneId, Guid userTwoId, byte relationshipTypeId)
         {
             var tkn = Request.Headers["Authorization"];
-            if (!(_authService.AuthorizeSelf(tkn, userOneId) || _authService.AuthorizeSelf(tkn, userTwoId))) return Unauthorized();
+            if (!(_authService.AuthorizeSelf(tkn, userOneId) || _authService.AuthorizeSelf(tkn, userTwoId)))
+                return Unauthorized();
 
-            var relationship = await _relationshipsRepository.GetRelationshipByIdsAndType(userOneId, userTwoId, (RelationshipType)relationshipTypeId);
+            var relationship = await _relationshipsRepository.GetRelationshipByIdsAndType(userOneId, userTwoId,
+                (RelationshipType) relationshipTypeId);
 
-            return relationship == null ? (IActionResult)NotFound() : Ok(relationship);
+            return relationship == null ? (IActionResult) NotFound() : Ok(relationship);
         }
     }
 }
