@@ -4,13 +4,13 @@
     <form (ngSubmit)="f.form.valid && sendMessage()" #f="ngForm" novalidate>
         <div class="form-group">
             <mat-form-field>
-                <input type="text" class="form-control" placeholder="To:" name="receiver"
-                [(ngModel)]="messageRequest.receiver" #receiver="ngModel" required matInput [matAutocomplete]="auto">
+                <input type="text" class="form-control" placeholder="To:" name="receiverId"
+                [(ngModel)]="messageRequest.receiverId" #receiverId="ngModel" required matInput [matAutocomplete]="auto">
             </mat-form-field>
         </div>
             
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFriend">
-                <mat-option *ngFor="let friend of friends" [value]="friend">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFriend.bind(this)">
+                <mat-option *ngFor="let friend of friends" [value]="friend.id">
                     {{ friend.fullName }}
                 </mat-option>
             </mat-autocomplete>
@@ -27,8 +27,3 @@
         </div>
     </form>
 </div>
-
-
-<p *ngFor="let friend of friends">
-    {{ friend }}
-</p>

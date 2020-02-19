@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CreateMessageRequest } from '../models/requests/create-message-request';
 import { User } from '../models/user';
 import { GlobalHelper } from '../helpers/global';
 import { CurrentUser } from '../models/current-user';
+import { ConversationsService } from '../services/conversations.service';
+import { CreateConversationRequest } from '../models/requests/create-conversation-request';
 
 @Component({
   selector: 'app-message-composer',
@@ -11,24 +12,25 @@ import { CurrentUser } from '../models/current-user';
 })
 export class MessageComposerComponent implements OnInit {
 
-  public messageRequest: CreateMessageRequest = new CreateMessageRequest();
+  public createConversationRequest: CreateConversationRequest = new CreateConversationRequest();
   public friends: User[] = [ { id: "1", fullName: "john", email: "", profilePictureUrl: "" },
     { id: "2", fullName: "jessie", email : "", profilePictureUrl: "" } ];
 
-  constructor(private globalHelper: GlobalHelper) { }
+  constructor(private globalHelper: GlobalHelper, private conversationsService: ConversationsService) { }
 
   ngOnInit(): void {
-    this.messageRequest.senderId = this.globalHelper.localStorageItem<CurrentUser>('currentUser').id;
+    this.createConversationRequest.senderId = this.globalHelper.localStorageItem<CurrentUser>('currentUser').id;
   }
 
   public sendMessage() {
-    this.messageRequest.receiverId = this.messageRequest.receiver.id;
-    debugger;
-    //create conversation?
-    //send message
+    this.conversationsService.startConversation(this.createConversationRequest).subscribe({
+      next: () => {
+        
+      }
+    });
   }
 
-  public displayFriend(user: User) {
-    return user ? user.fullName : user;
+  public displayFriend(userId: string) {
+    return this.friends.find(friend => friend.id === userId).fullName;
   }
 }
