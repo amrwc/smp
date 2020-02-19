@@ -12,10 +12,10 @@ export class AccountsService {
   }
 
   public forgottenPassword(email: string): Observable<Object> {
-    return this.httpClient.get(this.baseUrl + "api/Accounts/ForgottenPassword/" + email);
+    return this.httpClient.get(`${this.baseUrl}api/Accounts/ForgottenPassword/${email}`);
   }
 
   public resetPassword(resetPasswordRequest: ResetPasswordRequest) {
-    return this.httpClient.post(this.baseUrl + "api/Accounts/ResetPassword", resetPasswordRequest);
+    return this.httpClient.post(`${this.baseUrl}api/Accounts/ResetPassword`, resetPasswordRequest);
   }
 }

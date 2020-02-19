@@ -24,8 +24,8 @@
     <div [hidden]="startNewConversation" class="conversation-window">
       <app-conversation></app-conversation>
     </div>
-    <div [hidden]="!startNewConversation" class="message-composer">
-      <app-message-composer></app-message-composer>
+    <div *ngIf="startNewConversation" class="message-composer">
+      <app-message-composer (conversationCreated)="loadConversation($event)"></app-message-composer>
     </div>
   </div>
 </div>

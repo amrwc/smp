@@ -5,7 +5,7 @@
         <div class="form-group">
             <mat-form-field>
                 <input type="text" class="form-control" placeholder="To:" name="receiverId"
-                [(ngModel)]="messageRequest.receiverId" #receiverId="ngModel" required matInput [matAutocomplete]="auto">
+                [(ngModel)]="createConversationRequest.receiverId" #receiverId="ngModel" required matInput [matAutocomplete]="auto">
             </mat-form-field>
         </div>
             
@@ -17,7 +17,7 @@
         <div class="form-group">
             <mat-form-field>
                 <textarea class="form-control" placeholder="Message" name="content"
-                [(ngModel)]="messageRequest.content" #content="ngModel" required matInput>
+                [(ngModel)]="createConversationRequest.content" #content="ngModel" required matInput>
                 </textarea>
             </mat-form-field>
         </div>
