@@ -5,7 +5,7 @@ using Smp.Web.Services;
 
 namespace Smp.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), ApiController]
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;

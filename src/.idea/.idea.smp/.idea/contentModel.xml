@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/.nuget/packages/microsoft.net.test.sdk/16.4.0/build/netcoreapp2.1" t="Include">
+      <e p="Microsoft.NET.Test.Sdk.Program.cs" t="Include" />
+    </e>
+    <e p="$USER_HOME$/.nuget/packages/nunit3testadapter/3.15.1/build/netcoreapp2.0/nunit.engine.api.dll" t="Include" />
+    <e p="$USER_HOME$/.nuget/packages/nunit3testadapter/3.15.1/build/netcoreapp2.0/nunit.engine.dll" t="Include" />
+    <e p="$USER_HOME$/.nuget/packages/nunit3testadapter/3.15.1/build/netcoreapp2.0/NUnit3.TestAdapter.dll" t="Include" />
+    <e p="$USER_HOME$/.nuget/packages/nunit3testadapter/3.15.1/build/netcoreapp2.0/NUnit3.TestAdapter.pdb" t="Include" />
+    <e p="$PROJECT_DIR$" t="IncludeFlat">
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Smp.Migrations" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Migrations" t="Include">
+          <e p="201809050840_CreateUsersTable.cs" t="Include" />
+          <e p="201809051339_CreateMessagesTable.cs" t="Include" />
+          <e p="201809051345_CreatePostsTable.cs" t="Include" />
+          <e p="201809051359_CreateRequestTypesTable.cs" t="Include" />
+          <e p="201809051404_CreateRequestsTable.cs" t="Include" />
+          <e p="201809051414_CreateCommentsTable.cs" t="Include" />
+          <e p="201809051419_CreateFriendsTable.cs" t="Include" />
+          <e p="201809051525_InsertRequestTypes.cs" t="Include" />
+          <e p="201809151600_RenameUsernameToFullName.cs" t="Include" />
+          <e p="201912222145_CreateRelationshipTypesTable.cs" t="Include" />
+          <e p="201912222158_InsertRelationshipTypes.cs" t="Include" />
+          <e p="201912222236_CreateRelationshipsTable.cs" t="Include" />
+          <e p="201912222250_DropFriendsTable.cs" t="Include" />
+          <e p="201912261626_DropPostsTable.cs" t="Include" />
+          <e p="201912261635_CreatePostsTable.cs" t="Include" />
+          <e p="201912261800_RenameDateToCreatedAt.cs" t="Include" />
+          <e p="201912261801_RenameAcceptedDateToCreatedAt.cs" t="Include" />
+          <e p="201912261809_RenameSentDateToCreatedAt.cs" t="Include" />
+          <e p="201912261816_AddCreatedAtColumnToUsersTable.cs" t="Include" />
+          <e p="201912261829_RenameDateToCreatedAt.cs" t="Include" />
+          <e p="201912290027_CreateActionTypesTable.cs" t="Include" />
+          <e p="201912290038_InsertActionTypes.cs" t="Include" />
+          <e p="201912290104_CreateActionsTable.cs" t="Include" />
+          <e p="Down" t="Include">
+            <e p="201809050840_CreateUsersTable.sql" t="Include" />
+            <e p="201809051339_CreateMessagesTable.sql" t="Include" />
+            <e p="201809051345_CreatePostsTable.sql" t="Include" />
+            <e p="201809051359_CreateRequestTypesTable.sql" t="Include" />
+            <e p="201809051404_CreateRequestsTable.sql" t="Include" />
+            <e p="201809051414_CreateCommentsTable.sql" t="Include" />
+            <e p="201809051419_CreateFriendsTable.sql" t="Include" />
+            <e p="201809051525_InsertRequestTypes.sql" t="Include" />
+            <e p="201809151600_RenameUsernameToFullName.sql" t="Include" />
+            <e p="201912222145_CreateRelationshipTypesTable.sql" t="Include" />
+            <e p="201912222158_InsertRelationshipTypes.sql" t="Include" />
+            <e p="201912222236_CreateRelationshipsTable.sql" t="Include" />
+            <e p="201912222250_DropFriendsTable.sql" t="Include" />
+            <e p="201912261626_DropPostsTable.sql" t="Include" />
+            <e p="201912261635_CreatePostsTable.sql" t="Include" />
+            <e p="201912261800_RenameDateToCreatedAt.sql" t="Include" />
+            <e p="201912261801_RenameAcceptedDateToCreatedAt.sql" t="Include" />
+            <e p="201912261809_RenameSentDateToCreatedAt.sql" t="Include" />
+            <e p="201912261816_AddCreatedAtColumnToUsersTable.sql" t="Include" />
+            <e p="201912261829_RenameDateToCreatedAt.sql" t="Include" />
+            <e p="201912290027_CreateActionTypesTable.sql" t="Include" />
+            <e p="201912290038_InsertActionTypes.sql" t="Include" />
+            <e p="201912290104_CreateActionsTable.sql" t="Include" />
+          </e>
+          <e p="Up" t="Include">
+            <e p="201809050840_CreateUsersTable.sql" t="Include" />
+            <e p="201809051339_CreateMessagesTable.sql" t="Include" />
+            <e p="201809051345_CreatePostsTable.sql" t="Include" />
+            <e p="201809051359_CreateRequestTypesTable.sql" t="Include" />
+            <e p="201809051404_CreateRequestsTable.sql" t="Include" />
+            <e p="201809051414_CreateCommentsTable.sql" t="Include" />
+            <e p="201809051419_CreateFriendsTable.sql" t="Include" />
+            <e p="201809051525_InsertRequestTypes.sql" t="Include" />
+            <e p="201809151600_RenameUsernameToFullName.sql" t="Include" />
+            <e p="201912222145_CreateRelationshipTypesTable.sql" t="Include" />
+            <e p="201912222158_InsertRelationshipTypes.sql" t="Include" />
+            <e p="201912222236_CreateRelationshipsTable.sql" t="Include" />
+            <e p="201912222250_DropFriendsTable.sql" t="Include" />
+            <e p="201912261626_DropPostsTable.sql" t="Include" />
+            <e p="201912261635_CreatePostsTable.sql" t="Include" />
+            <e p="201912261800_RenameDateToCreatedAt.sql" t="Include" />
+            <e p="201912261801_RenameAcceptedDateToCreatedAt.sql" t="Include" />
+            <e p="201912261809_RenameSentDateToCreatedAt.sql" t="Include" />
+            <e p="201912261816_AddCreatedAtColumnToUsersTable.sql" t="Include" />
+            <e p="201912261829_RenameDateToCreatedAt.sql" t="Include" />
+            <e p="201912290027_CreateActionTypesTable.sql" t="Include" />
+            <e p="201912290038_InsertActionTypes.sql" t="Include" />
+            <e p="201912290104_CreateActionsTable.sql" t="Include" />
+          </e>
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="Smp.Migrations.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Smp.Migrations.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="smp.sln" t="IncludeFlat" />
+      <e p="Smp.Web" t="IncludeRecursive">
+        <e p="appsettings.Development.json" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="ClientApp" t="Include">
+          <e p=".editorconfig" t="Include" />
+          <e p=".gitignore" t="Include" />
+          <e p="angular.json" t="Include" />
+          <e p="browserslist" t="Include" />
+          <e p="e2e" t="Include">
+            <e p="app.e2e-spec.ts" t="Include" />
+            <e p="app.po.ts" t="Include" />
+            <e p="tsconfig.e2e.json" t="Include" />
+          </e>
+          <e p="karma.conf.js" t="Include" />
+          <e p="node_modules/@angular/animations" t="IncludeRecursive" />
+          <e p="node_modules/@angular/cli" t="IncludeRecursive" />
+          <e p="node_modules/@angular/common" t="IncludeRecursive" />
+          <e p="node_modules/@angular/compiler" t="IncludeRecursive" />
+          <e p="node_modules/@angular/compiler-cli" t="IncludeRecursive" />
+          <e p="node_modules/@angular/core" t="IncludeRecursive" />
+          <e p="node_modules/@angular/forms" t="IncludeRecursive" />
+          <e p="node_modules/@angular/platform-browser" t="IncludeRecursive" />
+          <e p="node_modules/@angular/platform-browser-dynamic" t="IncludeRecursive" />
+          <e p="node_modules/@angular/platform-server" t="IncludeRecursive" />
+          <e p="node_modules/@angular/router" t="IncludeRecursive" />
+          <e p="node_modules/@angular-devkit/architect" t="IncludeRecursive" />
+          <e p="node_modules/@angular-devkit/build-angular" t="IncludeRecursive" />
+          <e p="node_modules/@angular-devkit/build-optimizer" t="IncludeRecursive" />
+          <e p="node_modules/@angular-devkit/build-webpack" t="IncludeRecursive" />
+          <e p="node_modules/@angular-devkit/core" t="IncludeRecursive" />
+          <e p="node_modules/@angular-devkit/schematics" t="IncludeRecursive" />
+          <e p="node_modules/@ngtools/webpack" t="IncludeRecursive" />
+          <e p="node_modules/@nguniversal/module-map-ngfactory-loader" t="IncludeRecursive" />
+          <e p="node_modules/@types" t="IncludeRecursive">
+            <e p="events" t="IncludeRecursive" />
+            <e p="jasmine" t="IncludeRecursive" />
+            <e p="jasminewd2" t="IncludeRecursive" />
+            <e p="minimatch" t="IncludeRecursive" />
+            <e p="node" t="IncludeRecursive" />
+            <e p="source-list-map" t="IncludeRecursive" />
+          </e>
+          <e p="node_modules/ajv" t="IncludeRecursive" />
+          <e p="node_modules/aspnet-prerendering" t="IncludeRecursive" />
+          <e p="node_modules/blocking-proxy" t="IncludeRecursive" />
+          <e p="node_modules/bootstrap" t="IncludeRecursive" />
+          <e p="node_modules/canonical-path" t="IncludeRecursive" />
+          <e p="node_modules/chalk" t="IncludeRecursive" />
+          <e p="node_modules/chokidar" t="IncludeRecursive" />
+          <e p="node_modules/codelyzer" t="IncludeRecursive" />
+          <e p="node_modules/commander" t="IncludeRecursive" />
+          <e p="node_modules/core-js" t="IncludeRecursive" />
+          <e p="node_modules/coverage-istanbul-loader" t="IncludeRecursive" />
+          <e p="node_modules/dependency-graph" t="IncludeRecursive" />
+          <e p="node_modules/domino" t="IncludeRecursive" />
+          <e p="node_modules/es6-promise" t="IncludeRecursive" />
+          <e p="node_modules/hoek" t="IncludeRecursive" />
+          <e p="node_modules/jasmine-core" t="IncludeRecursive" />
+          <e p="node_modules/jasmine-spec-reporter" t="IncludeRecursive" />
+          <e p="node_modules/jest-worker" t="IncludeRecursive" />
+          <e p="node_modules/jquery" t="IncludeRecursive" />
+          <e p="node_modules/karma" t="IncludeRecursive" />
+          <e p="node_modules/karma-chrome-launcher" t="IncludeRecursive" />
+          <e p="node_modules/karma-coverage-istanbul-reporter" t="IncludeRecursive" />
+          <e p="node_modules/karma-jasmine" t="IncludeRecursive" />
+          <e p="node_modules/karma-jasmine-html-reporter" t="IncludeRecursive" />
+          <e p="node_modules/license-webpack-plugin" t="IncludeRecursive" />
+          <e p="node_modules/magic-string" t="IncludeRecursive" />
+          <e p="node_modules/node-sass" t="IncludeRecursive" />
+          <e p="node_modules/popper.js" t="IncludeRecursive" />
+          <e p="node_modules/portfinder" t="IncludeRecursive" />
+          <e p="node_modules/postcss" t="IncludeRecursive" />
+          <e p="node_modules/protractor" t="IncludeRecursive" />
+          <e p="node_modules/reflect-metadata" t="IncludeRecursive" />
+          <e p="node_modules/rxjs" t="IncludeRecursive" />
+          <e p="node_modules/source-map" t="IncludeRecursive" />
+          <e p="node_modules/sourcemap-codec" t="IncludeRecursive" />
+          <e p="node_modules/symbol-observable" t="IncludeRecursive" />
+          <e p="node_modules/terser" t="IncludeRecursive" />
+          <e p="node_modules/tree-kill" t="IncludeRecursive" />
+          <e p="node_modules/ts-node" t="IncludeRecursive" />
+          <e p="node_modules/tsconfig" t="IncludeRecursive" />
+          <e p="node_modules/tslib" t="IncludeRecursive" />
+          <e p="node_modules/tslint" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.dom.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.dom.iterable.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2015.collection.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2015.core.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2015.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2015.generator.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2015.iterable.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2015.promise.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2015.proxy.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2015.reflect.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2015.symbol.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2016.array.include.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2016.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2016.full.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2017.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2017.full.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2017.intl.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2017.object.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2017.string.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2017.typedarrays.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2018.asynciterable.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2018.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2018.full.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2018.intl.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2018.promise.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2018.regexp.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2019.array.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2019.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2019.full.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2019.object.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2019.string.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2019.symbol.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2020.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2020.full.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2020.string.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es2020.symbol.wellknown.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es5.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.es6.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.esnext.array.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.esnext.asynciterable.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.esnext.bigint.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.esnext.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.esnext.full.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.esnext.intl.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.esnext.symbol.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.scripthost.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.webworker.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/typescript/lib/lib.webworker.importscripts.d.ts" t="IncludeRecursive" />
+          <e p="node_modules/upath" t="IncludeRecursive" />
+          <e p="node_modules/uri-js" t="IncludeRecursive" />
+          <e p="node_modules/webdriver-js-extender" t="IncludeRecursive" />
+          <e p="node_modules/webpack" t="IncludeRecursive" />
+          <e p="node_modules/webpack-dev-server" t="IncludeRecursive" />
+          <e p="node_modules/zone.js" t="IncludeRecursive" />
+          <e p="package-lock.json" t="Include" />
+          <e p="package.json" t="Include" />
+          <e p="protractor.conf.js" t="Include" />
+          <e p="README.md" t="Include" />
+          <e p="src" t="Include">
+            <e p="app" t="Include">
+              <e p="app.component.html" t="Include" />
+              <e p="app.component.scss" t="Include" />
+              <e p="app.component.ts" t="Include" />
+              <e p="app.module.ts" t="Include" />
+              <e p="create-post" t="Include">
+                <e p="create-post.component.html" t="Include" />
+                <e p="create-post.component.scss" t="Include" />
+                <e p="create-post.component.spec.ts" t="Include" />
+                <e p="create-post.component.ts" t="Include" />
+              </e>
+              <e p="feed" t="Include">
+                <e p="feed.component.html" t="Include" />
+                <e p="feed.component.scss" t="Include" />
+                <e p="feed.component.spec.ts" t="Include" />
+                <e p="feed.component.ts" t="Include" />
+              </e>
+              <e p="forgot-password" t="Include">
+                <e p="forgot-password.component.html" t="Include" />
+                <e p="forgot-password.component.scss" t="Include" />
+                <e p="forgot-password.component.spec.ts" t="Include" />
+                <e p="forgot-password.component.ts" t="Include" />
+              </e>
+              <e p="guards" t="Include">
+                <e p="already-signed-in.guard.spec.ts" t="Include" />
+                <e p="already-signed-in.guard.ts" t="Include" />
+                <e p="auth.guard.spec.ts" t="Include" />
+                <e p="auth.guard.ts" t="Include" />
+              </e>
+              <e p="helpers" t="Include">
+                <e p="global.spec.ts" t="Include" />
+                <e p="global.ts" t="Include" />
+              </e>
+              <e p="home" t="Include">
+                <e p="home.component.html" t="Include" />
+                <e p="home.component.scss" t="Include" />
+                <e p="home.component.ts" t="Include" />
+              </e>
+              <e p="messages" t="Include">
+                <e p="messages.component.html" t="Include" />
+                <e p="messages.component.scss" t="Include" />
+                <e p="messages.component.ts" t="Include" />
+              </e>
+              <e p="Models" t="Include">
+                <e p="current-user.ts" t="Include" />
+                <e p="error.ts" t="Include" />
+                <e p="post.ts" t="Include" />
+                <e p="relationship-type.enum.ts" t="Include" />
+                <e p="relationship.ts" t="Include" />
+                <e p="request-type.enum.ts" t="Include" />
+                <e p="request.ts" t="Include" />
+                <e p="Requests" t="Include">
+                  <e p="create-post-request.ts" t="Include" />
+                  <e p="create-request-request.ts" t="Include" />
+                  <e p="create-user-request.ts" t="Include" />
+                  <e p="reset-password-request.ts" t="Include" />
+                  <e p="sign-in-request.ts" t="Include" />
+                </e>
+                <e p="user.ts" t="Include" />
+              </e>
+              <e p="nav-footer" t="Include">
+                <e p="nav-footer.component.html" t="Include" />
+                <e p="nav-footer.component.scss" t="Include" />
+                <e p="nav-footer.component.ts" t="Include" />
+              </e>
+              <e p="profile" t="Include">
+                <e p="profile.component.html" t="Include" />
+                <e p="profile.component.scss" t="Include" />
+                <e p="profile.component.spec.ts" t="Include" />
+                <e p="profile.component.ts" t="Include" />
+              </e>
+              <e p="Requests" t="Include">
+                <e p="requests.component.html" t="Include" />
+                <e p="requests.component.scss" t="Include" />
+                <e p="requests.component.spec.ts" t="Include" />
+                <e p="requests.component.ts" t="Include" />
+              </e>
+              <e p="reset-password" t="Include">
+                <e p="reset-password.component.html" t="Include" />
+                <e p="reset-password.component.scss" t="Include" />
+                <e p="reset-password.component.spec.ts" t="Include" />
+                <e p="reset-password.component.ts" t="Include" />
+              </e>
+              <e p="search" t="Include">
+                <e p="search.component.html" t="Include" />
+                <e p="search.component.scss" t="Include" />
+                <e p="search.component.ts" t="Include" />
+              </e>
+              <e p="Services" t="Include">
+                <e p="accounts.service.spec.ts" t="Include" />
+                <e p="accounts.service.ts" t="Include" />
+                <e p="posts.service.spec.ts" t="Include" />
+                <e p="posts.service.ts" t="Include" />
+                <e p="relationships.service.spec.ts" t="Include" />
+                <e p="relationships.service.ts" t="Include" />
+                <e p="requests.service.spec.ts" t="Include" />
+                <e p="requests.service.ts" t="Include" />
+                <e p="users.service.spec.ts" t="Include" />
+                <e p="users.service.ts" t="Include" />
+              </e>
+              <e p="settings" t="Include">
+                <e p="settings.component.html" t="Include" />
+                <e p="settings.component.scss" t="Include" />
+                <e p="settings.component.ts" t="Include" />
+              </e>
+              <e p="sign-in" t="Include">
+                <e p="sign-in.component.html" t="Include" />
+                <e p="sign-in.component.scss" t="Include" />
+                <e p="sign-in.component.ts" t="Include" />
+              </e>
+              <e p="sign-up" t="Include">
+                <e p="sign-up.component.html" t="Include" />
+                <e p="sign-up.component.scss" t="Include" />
+                <e p="sign-up.component.ts" t="Include" />
+              </e>
+            </e>
+            <e p="assets" t="Include">
+              <e p=".gitkeep" t="Include" />
+              <e p="img" t="Include">
+                <e p="background-photo-group.png" t="Include" />
+                <e p="smp-logo-drop-shadow.svg" t="Include" />
+                <e p="smp-logo.svg" t="Include" />
+                <e p="spinner.svg" t="Include" />
+              </e>
+            </e>
+            <e p="environments" t="Include">
+              <e p="environment.prod.ts" t="Include" />
+              <e p="environment.ts" t="Include" />
+            </e>
+            <e p="favicon.ico" t="Include" />
+            <e p="index.html" t="Include" />
+            <e p="main.ts" t="Include" />
+            <e p="polyfills.ts" t="Include" />
+            <e p="sass" t="Include">
+              <e p="_header-partial.scss" t="Include" />
+              <e p="_mixins.scss" t="Include" />
+              <e p="_variables.scss" t="Include" />
+              <e p="styles.scss" t="Include" />
+            </e>
+            <e p="test.ts" t="Include" />
+            <e p="tsconfig.app.json" t="Include" />
+            <e p="tsconfig.spec.json" t="Include" />
+            <e p="typings.d.ts" t="Include" />
+          </e>
+          <e p="tsconfig.json" t="Include" />
+          <e p="tslint.json" t="Include" />
+        </e>
+        <e p="Controllers" t="Include">
+          <e p="AccountsController.cs" t="Include" />
+          <e p="AuthController.cs" t="Include" />
+          <e p="PostsController.cs" t="Include" />
+          <e p="RelationshipsController.cs" t="Include" />
+          <e p="RequestsController.cs" t="Include" />
+          <e p="UsersController.cs" t="Include" />
+        </e>
+        <e p="Factories" t="Include">
+          <e p="DbConnectionFactory.cs" t="Include" />
+        </e>
+        <e p="Models" t="Include">
+          <e p="Action.cs" t="Include" />
+          <e p="ActionType.cs" t="Include" />
+          <e p="DTOs" t="Include">
+            <e p="Action.cs" t="Include" />
+            <e p="ActionType.cs" t="Include" />
+            <e p="Post.cs" t="Include" />
+            <e p="Relationship.cs" t="Include" />
+            <e p="RelationshipType.cs" t="Include" />
+            <e p="Request.cs" t="Include" />
+            <e p="RequestType.cs" t="Include" />
+            <e p="User.cs" t="Include" />
+          </e>
+          <e p="Error.cs" t="Include" />
+          <e p="Post.cs" t="Include" />
+          <e p="Relationship.cs" t="Include" />
+          <e p="RelationshipType.cs" t="Include" />
+          <e p="Request.cs" t="Include" />
+          <e p="Requests" t="Include">
+            <e p="CreatePostRequest.cs" t="Include" />
+            <e p="CreateUserRequest.cs" t="Include" />
+            <e p="RequestRequest.cs" t="Include" />
+            <e p="ResetPasswordRequest.cs" t="Include" />
+            <e p="SignInRequest.cs" t="Include" />
+          </e>
+          <e p="RequestType.cs" t="Include" />
+          <e p="Results" t="Include">
+            <e p="VerifyUserResult.cs" t="Include" />
+          </e>
+          <e p="User.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="Smp.Web.AssemblyInfo.cs" t="Include" />
+              <e p="Smp.Web.RazorAssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Pages" t="Include">
+          <e p="_ViewImports.cshtml" t="Include" />
+          <e p="Error.cshtml" t="Include" />
+          <e p="Error.cshtml.cs" t="Include" />
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Repositories" t="Include">
+          <e p="ActionsRepository.cs" t="Include" />
+          <e p="PostsRepository.cs" t="Include" />
+          <e p="RelationshipsRepository.cs" t="Include" />
+          <e p="RequestsRepository.cs" t="Include" />
+          <e p="UsersRepository.cs" t="Include" />
+        </e>
+        <e p="Resources" t="Include">
+          <e p="Constants" t="Include">
+            <e p="ErrorMessages.cs" t="Include" />
+          </e>
+          <e p="Email" t="Include">
+            <e p="bg_bottom.jpg" t="Include" />
+            <e p="bg_top.jpg" t="Include" />
+            <e p="email-template.html" t="Include" />
+            <e p="instagram2x.png" t="Include" />
+            <e p="linkedin2x.png" t="Include" />
+            <e p="smp-logo.png" t="Include" />
+            <e p="twitter2x.png" t="Include" />
+          </e>
+        </e>
+        <e p="Services" t="Include">
+          <e p="AccountsService.cs" t="Include" />
+          <e p="AuthService.cs" t="Include" />
+          <e p="CryptographyService.cs" t="Include" />
+          <e p="MailService.cs" t="Include" />
+          <e p="PostsService.cs" t="Include" />
+          <e p="RelationshipsService.cs" t="Include" />
+          <e p="RequestsService.cs" t="Include" />
+        </e>
+        <e p="Smp.Web.csproj" t="IncludeRecursive" />
+        <e p="Startup.cs" t="Include" />
+        <e p="Validators" t="Include">
+          <e p="ActionValidator.cs" t="Include" />
+          <e p="RequestValidator.cs" t="Include" />
+          <e p="UserValidator.cs" t="Include" />
+        </e>
+        <e p="Wrappers" t="Include">
+          <e p="FileWrapper.cs" t="Include" />
+          <e p="SmtpClient.cs" t="Include" />
+        </e>
+        <e p="wwwroot" t="Include">
+          <e p="favicon.ico" t="Include" />
+        </e>
+      </e>
+      <e p="Smp.Web.Tests.Unit" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="Smp.Web.Tests.Unit.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Resources" t="Include">
+          <e p="Email" t="Include">
+            <e p="bg_bottom.jpg" t="Include" />
+            <e p="bg_top.jpg" t="Include" />
+            <e p="email-template.html" t="Include" />
+            <e p="instagram2x.png" t="Include" />
+            <e p="linkedin2x.png" t="Include" />
+            <e p="smp-logo.png" t="Include" />
+            <e p="twitter2x.png" t="Include" />
+          </e>
+        </e>
+        <e p="Smp.Web.Tests.Unit.csproj" t="IncludeRecursive" />
+        <e p="Tests" t="Include">
+          <e p="ControllerTests" t="Include">
+            <e p="AccountsControllerTests" t="Include">
+              <e p="AccountsControllerTestBase.cs" t="Include" />
+              <e p="ForgottenPasswordTests.cs" t="Include" />
+              <e p="ResetPasswordTests.cs" t="Include" />
+            </e>
+            <e p="AuthControllerTests" t="Include">
+              <e p="AuthControllerTestBase.cs" t="Include" />
+              <e p="SignInTests.cs" t="Include" />
+            </e>
+            <e p="PostsControllerTests" t="Include">
+              <e p="CreatePostTests.cs" t="Include" />
+              <e p="GetsPostsTests.cs" t="Include" />
+              <e p="PostsControllerTestBase.cs" t="Include" />
+            </e>
+            <e p="RequestsControllerTests" t="Include">
+              <e p="AcceptRequestTests.cs" t="Include" />
+              <e p="GetIncomingRequestsTests.cs" t="Include" />
+              <e p="GetOutgoingRequestsTests.cs" t="Include" />
+              <e p="GetRequestTests.cs" t="Include" />
+              <e p="RequestsControllerTestBase.cs" t="Include" />
+              <e p="SendRequestTests.cs" t="Include" />
+            </e>
+            <e p="UsersControllerTests" t="Include">
+              <e p="CreateUserTests.cs" t="Include" />
+              <e p="GetUserTests.cs" t="Include" />
+              <e p="UsersControllerTestBase.cs" t="Include" />
+            </e>
+          </e>
+          <e p="ServiceTests" t="Include">
+            <e p="AccountsServiceTests" t="Include">
+              <e p="AccountsServiceTestBase.cs" t="Include" />
+              <e p="CompletePasswordResetTests.cs" t="Include" />
+              <e p="InitiatePasswordResetTests.cs" t="Include" />
+            </e>
+            <e p="AuthServiceTests" t="Include">
+              <e p="AuthServiceTestBase.cs" t="Include" />
+              <e p="VerifyUserTests.cs" t="Include" />
+            </e>
+            <e p="CryptographyServiceTests" t="Include">
+              <e p="CheckPasswordTests.cs" t="Include" />
+              <e p="CryptographyServiceTestBase.cs" t="Include" />
+              <e p="HashAndSaltPasswordTests.cs" t="Include" />
+            </e>
+            <e p="MailServiceTests" t="Include">
+              <e p="MailServiceTestBase.cs" t="Include" />
+              <e p="SendEmailTests.cs" t="Include" />
+              <e p="SendResetPasswordEmailTests.cs" t="Include" />
+            </e>
+            <e p="PostsServiceTests" t="Include">
+              <e p="CreatePostTests.cs" t="Include" />
+              <e p="GetPostsByReceiverIdTests.cs" t="Include" />
+              <e p="PostsServiceTestBase.cs" t="Include" />
+            </e>
+            <e p="RelationshipsServiceTests" t="Include">
+              <e p="AddFriendTests.cs" t="Include" />
+              <e p="AreAlreadyFriendsTests.cs" t="Include" />
+              <e p="RelationshipsServiceTestBase.cs" t="Include" />
+            </e>
+            <e p="RequestsServiceTests" t="Include">
+              <e p="AcceptRequestTests.cs" t="Include" />
+              <e p="IsRequestAlreadySentTests.cs" t="Include" />
+              <e p="RequestsServiceTestBase.cs" t="Include" />
+            </e>
+          </e>
+          <e p="ValidatorTests" t="Include">
+            <e p="ActionValidatorTests" t="Include">
+              <e p="ActionValidatorTestBase.cs" t="Include" />
+              <e p="ValidateActionTests.cs" t="Include" />
+            </e>
+            <e p="RequestValidatorTests" t="Include">
+              <e p="RequestValidatorTestBase.cs" t="Include" />
+              <e p="ValidateAcceptRequestTests.cs" t="Include" />
+              <e p="ValidateNewRequestTests.cs" t="Include" />
+            </e>
+            <e p="UserValidatorTests" t="Include">
+              <e p="UserValidatorTestBase.cs" t="Include" />
+              <e p="ValidateCreateUserRequestTests.cs" t="Include" />
+            </e>
+          </e>
+          <e p="WrapperTests" t="Include">
+            <e p="FileWrapperTests.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+    </e>
+    <e p="$USER_HOME$/Library/Caches/Rider2019.3/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.3/resharper-host/local/Transient/ReSharperHost/v193/SolutionCaches/_smp.-1647307520.00" t="ExcludeRecursive" />
+  </component>
+</project>

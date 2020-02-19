@@ -11,18 +11,16 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.UsersControllerTests
         protected Mock<IUsersRepository> UsersRepository;
         protected Mock<IUserValidator> UserValidator;
         protected Mock<ICryptographyService> CryptographyService;
-        protected Mock<IAuthService> AuthService;
 
         protected UsersController UsersController;
 
-        public void Setup()
+        protected void Setup()
         {
             UsersRepository = new Mock<IUsersRepository>();
             UserValidator = new Mock<IUserValidator>();
             CryptographyService = new Mock<ICryptographyService>();
-            AuthService = new Mock<IAuthService>();
-
-            UsersController = new UsersController(UsersRepository.Object, UserValidator.Object, CryptographyService.Object, AuthService.Object);
+            UsersController =
+                new UsersController(UsersRepository.Object, UserValidator.Object, CryptographyService.Object);
         }
     }
 }
