@@ -19,7 +19,8 @@ namespace Smp.Web.Controllers
         private readonly IAuthService _authService;
         private readonly IRequestValidator _requestValidator;
 
-        public RequestsController(IRequestsService requestsService, IRequestsRepository requestsRepository, IAuthService authService, IRequestValidator requestValidator)
+        public RequestsController(IRequestsService requestsService, IRequestsRepository requestsRepository,
+            IAuthService authService, IRequestValidator requestValidator)
         {
             _requestsService = requestsService;
             _requestsRepository = requestsRepository;
@@ -28,7 +29,7 @@ namespace Smp.Web.Controllers
         }
 
         [HttpGet("[action]/{userId:Guid}"), Authorize]
-        public async Task<IActionResult> GetOutgoingRequests([FromRoute]Guid userId)
+        public async Task<IActionResult> GetOutgoingRequests([FromRoute] Guid userId)
         {
             var tkn = Request.Headers["Authorization"];
             if (!_authService.AuthorizeSelf(tkn, userId)) return Unauthorized();
@@ -37,7 +38,7 @@ namespace Smp.Web.Controllers
         }
 
         [HttpGet("[action]/{userId:Guid}"), Authorize]
-        public async Task<IActionResult> GetIncomingRequests([FromRoute]Guid userId)
+        public async Task<IActionResult> GetIncomingRequests([FromRoute] Guid userId)
         {
             var tkn = Request.Headers["Authorization"];
             if (!_authService.AuthorizeSelf(tkn, userId)) return Unauthorized();
@@ -46,7 +47,7 @@ namespace Smp.Web.Controllers
         }
 
         [HttpPost("[action]"), Authorize]
-        public async Task<IActionResult> SendRequest([FromBody]RequestRequest requestRequest)
+        public async Task<IActionResult> SendRequest([FromBody] RequestRequest requestRequest)
         {
             var tkn = Request.Headers["Authorization"];
             if (!_authService.AuthorizeSelf(tkn, requestRequest.SenderId)) return Unauthorized();
@@ -62,7 +63,8 @@ namespace Smp.Web.Controllers
         }
 
         [HttpGet("[action]/{receiverId:Guid}/{requestTypeId:int}/{senderId:Guid}/"), Authorize]
-        public async Task<IActionResult> AcceptRequest([FromRoute]Guid receiverId, [FromRoute]Guid senderId, [FromRoute]byte requestTypeId)
+        public async Task<IActionResult> AcceptRequest([FromRoute] Guid receiverId, [FromRoute] Guid senderId,
+            [FromRoute] byte requestTypeId)
         {
             var tkn = Request.Headers["Authorization"];
             if (!_authService.AuthorizeSelf(tkn, receiverId)) return Unauthorized();
@@ -71,7 +73,7 @@ namespace Smp.Web.Controllers
             {
                 SenderId = senderId,
                 ReceiverId = receiverId,
-                RequestType = (RequestType)requestTypeId
+                RequestType = (RequestType) requestTypeId
             };
 
             var validationResult = await _requestValidator.ValidateAcceptRequest(request);
@@ -88,7 +90,8 @@ namespace Smp.Web.Controllers
             var tkn = Request.Headers["Authorization"];
             if (!_authService.AuthorizeSelf(tkn, receiverId)) return Unauthorized();
 
-            var request = await _requestsRepository.GetRequestByUserIdsAndType(receiverId, senderId, (RequestType) requestTypeId);
+            var request = await _requestsRepository.GetRequestByUserIdsAndType(receiverId, senderId,
+                (RequestType) requestTypeId);
             if (request == null) return BadRequest(new Error("invalid_request", "There is no pending request."));
 
             await _requestsService.DeclineRequest(request);
@@ -97,12 +100,17 @@ namespace Smp.Web.Controllers
         }
 
         [HttpGet("[action]/{receiverId:Guid}/{requestTypeId:int}/{senderId:Guid}/"), Authorize]
-        public async Task<IActionResult> GetRequest([FromRoute]Guid receiverId, [FromRoute]Guid senderId, [FromRoute]byte requestTypeId)
+        public async Task<IActionResult> GetRequest([FromRoute] Guid receiverId, [FromRoute] Guid senderId,
+            [FromRoute] byte requestTypeId)
         {
             var tkn = Request.Headers["Authorization"];
-            if (!(_authService.AuthorizeSelf(tkn, receiverId) || _authService.AuthorizeSelf(tkn, senderId))) return Unauthorized();
+            if (!(_authService.AuthorizeSelf(tkn, receiverId) || _authService.AuthorizeSelf(tkn, senderId)))
+                return Unauthorized();
 
-            var expectedReq = new Request { ReceiverId = receiverId, SenderId = senderId, RequestType = (RequestType)requestTypeId };
+            var expectedReq = new Request
+            {
+                ReceiverId = receiverId, SenderId = senderId, RequestType = (RequestType) requestTypeId
+            };
             var req = await _requestsRepository.GetRequestByUserIdsAndType(expectedReq);
 
             return req == null ? (IActionResult) NotFound() : Ok(req);

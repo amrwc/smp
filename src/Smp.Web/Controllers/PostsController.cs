@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Smp.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), ApiController]
     public class PostsController : Controller
     {
         private readonly IPostsService _postsService;

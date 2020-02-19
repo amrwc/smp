@@ -1,24 +1,25 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Smp.Web.Models.Requests;
 using Smp.Web.Repositories;
 using Smp.Web.Models;
 using Smp.Web.Services;
 using Smp.Web.Validators;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Smp.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), ApiController]
     public class UsersController : Controller
     {
         private readonly IUsersRepository _usersRepository;
         private readonly IUserValidator _userValidator;
         private readonly ICryptographyService _cryptographyService;
 
-        public UsersController(IUsersRepository usersRepository, IUserValidator userValidator, ICryptographyService cryptographyService, IAuthService authService)
+        public UsersController(IUsersRepository usersRepository, IUserValidator userValidator,
+            ICryptographyService cryptographyService)
         {
             _usersRepository = usersRepository;
             _userValidator = userValidator;
