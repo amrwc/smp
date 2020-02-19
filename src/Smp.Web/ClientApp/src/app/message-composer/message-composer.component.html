@@ -1,20 +1,18 @@
-<p>message-composer works!</p>
-
 <div class="form">
     <form (ngSubmit)="f.form.valid && sendMessage()" #f="ngForm" novalidate>
-        <div class="form-group">
+        <div class="form-group" style="grid-row: span 1">
             <mat-form-field>
                 <input type="text" class="form-control" placeholder="To:" name="receiverId"
                 [(ngModel)]="createConversationRequest.receiverId" #receiverId="ngModel" required matInput [matAutocomplete]="auto">
             </mat-form-field>
         </div>
             
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFriend.bind(this)">
+            <mat-autocomplete [hidden]="true" #auto="matAutocomplete" [displayWith]="displayFriend.bind(this)">
                 <mat-option *ngFor="let friend of friends" [value]="friend.id">
                     {{ friend.fullName }}
                 </mat-option>
             </mat-autocomplete>
-        <div class="form-group">
+        <div class="form-group" style="grid-row: span 10">
             <mat-form-field>
                 <textarea class="form-control" placeholder="Message" name="content"
                 [(ngModel)]="createConversationRequest.content" #content="ngModel" required matInput>
@@ -22,7 +20,7 @@
             </mat-form-field>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" style="grid-row: span 1">
             <button class="button-primary">Send</button>
         </div>
     </form>

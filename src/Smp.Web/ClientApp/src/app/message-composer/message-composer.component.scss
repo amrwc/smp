@@ -2,21 +2,32 @@
 @import '~sass/header';
 @import '~sass/button';
 
-
+textarea {
+  max-height: 100%;
+ }
 
 .form {
+  height: 100%;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(12, 1fr);
   display: grid;
 
   form {
     grid-column-start: 2;
-    grid-column-end: 11;
-    grid-row: span 10;
+    grid-column-end: 12;
+    grid-row: span 12;
+
+    display: grid;
+    grid-template-rows: repeat(12, 1fr);
 
     .form-group {
       mat-form-field {
          width: 100%;
+      }
+
+      button.button-primary {
+        height: 100%;
+        font-size: large;
       }
     }
   }
