@@ -1,7 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Conversation } from '../models/conversation';
+import { CreateConversationRequest } from '../models/requests/create-conversation-request';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,9 @@ export class ConversationsService {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', "Bearer " + JSON.parse(localStorage.getItem('currentUser')).token);
     return this.httpClient.get<string[]>(`${this.baseUrl}api/Conversations/GetConversationParticipants/${conversationId}`, { headers: headers });
+  }
+
+  public startConversation(createConversationRequest: CreateConversationRequest): Observable<Object> {
+    return of();
   }
 }
