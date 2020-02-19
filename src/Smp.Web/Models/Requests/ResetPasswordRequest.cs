@@ -6,7 +6,8 @@ namespace Smp.Web.Models.Requests
 {
     public class ResetPasswordRequest
     {
-        [Required] public Guid ActionId { get; set; }
+        [Required]
+        public Guid ActionId { get; set; }
 
         [Required, StringLength(255, ErrorMessage = ErrorMessages.ValueTooLong)]
         public string NewPassword { get; set; }

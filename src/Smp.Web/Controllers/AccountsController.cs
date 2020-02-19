@@ -1,8 +1,8 @@
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Smp.Web.Models;
 using Smp.Web.Repositories;
-using Microsoft.AspNetCore.Mvc;
 using Smp.Web.Services;
 using Smp.Web.Models.Requests;
 using Smp.Web.Validators;
@@ -33,8 +33,8 @@ namespace Smp.Web.Controllers
         public async Task<IActionResult> ForgottenPassword(string email)
         {
             var user = await _usersRepository.GetUserByEmail(email);
-            if (user == null) return NotFound(new Error("invalid_email",
-                    "Email must be linked to an existing user account."));
+            if (user == null)
+                return NotFound(new Error("invalid_email", "Email must be linked to an existing user account."));
             await _accountsService.InitiatePasswordReset(user.Id, user.Email);
             return Ok();
         }

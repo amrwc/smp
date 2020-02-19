@@ -1,13 +1,13 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Smp.Web.Models.Requests;
 using Smp.Web.Repositories;
 using Smp.Web.Models;
 using Smp.Web.Services;
 using Smp.Web.Validators;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Smp.Web.Controllers
 {
