@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Smp.Web.Models;
 using Smp.Web.Repositories;
@@ -21,7 +20,8 @@ namespace Smp.Web.Services
 
         private readonly string _webAppUrl;
 
-        public AccountsService(IActionsRepository actionsRepository, IUsersRepository usersRepository, IMailService mailService, IConfiguration configuration)
+        public AccountsService(IActionsRepository actionsRepository, IUsersRepository usersRepository,
+            IMailService mailService, IConfiguration configuration)
         {
             _actionsRepository = actionsRepository;
             _usersRepository = usersRepository;
@@ -33,13 +33,14 @@ namespace Smp.Web.Services
         {
             var action = new Models.Action(userId, ActionType.ResetPassword);
             await _actionsRepository.CreateAction(action);
-            await _mailService.SendResetPasswordEmail(email, (await _usersRepository.GetUserById(userId)).FullName, $"{_webAppUrl}reset-password/{action.Id}");
+            await _mailService.SendResetPasswordEmail(email, (await _usersRepository.GetUserById(userId)).FullName,
+                $"{_webAppUrl}reset-password/{action.Id}");
         }
 
         public async Task CompletePasswordReset(Guid userId, string newPassword, Guid actionId)
-            {
-                await _usersRepository.UpdatePasswordById(userId, newPassword);
-                await _actionsRepository.CompleteActionById(actionId);
-            }
+        {
+            await _usersRepository.UpdatePasswordById(userId, newPassword);
+            await _actionsRepository.CompleteActionById(actionId);
+        }
     }
 }
