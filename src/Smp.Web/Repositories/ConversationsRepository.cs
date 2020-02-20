@@ -35,6 +35,12 @@ namespace Smp.Web.Repositories
             return conversations.Select(cnv => (Conversation)cnv).ToList();
         }
 
+        public async Task<IList<Conversation>> CreateConversation(Guid userOneId, Guid userTwoId)
+        {
+            await _dbConnection.QueryAsync("INSERT INTO [Conversations] ()");
+            return null;
+        }
+
         public async Task<IList<ConversationParticipant>> GetConversationParticipantsByUserId(Guid userId)
         {
             var conversationParticipants = await _dbConnection.QueryAsync<Models.DTOs.ConversationParticipant>(
