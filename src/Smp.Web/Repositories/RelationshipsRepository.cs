@@ -13,7 +13,7 @@ namespace Smp.Web.Repositories
     public interface IRelationshipsRepository
     {
         Task<Relationship> GetRelationshipByIdsAndType(Guid userOneId, Guid userTwoId, RelationshipType relationshipType);
-        Task AddRelationship(Relationship relationship);
+        Task CreateRelationship(Relationship relationship);
         Task<IList<RelationshipType>> GetRelationshipTypes();
         Task<RelationshipType> GetRelationshipTypeById(byte id);
         Task<RelationshipType> GetRelationshipTypeByName(string name);
@@ -72,7 +72,7 @@ namespace Smp.Web.Repositories
             return relationships?.Select(relationship => (Relationship) relationship).ToList();
         }
 
-        public async Task AddRelationship(Relationship relationship)
+        public async Task CreateRelationship(Relationship relationship)
         {
             await _dbConnection.ExecuteAsync(
                 "INSERT INTO [dbo].[Relationships] ([UserOneId], [UserTwoId], [RelationshipTypeId], [CreatedAt]) VALUES (@UserOneId, @UserTwoId, @RelationshipTypeId, @CreatedAt)",

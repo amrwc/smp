@@ -4,6 +4,12 @@ namespace Smp.Web.Models
 {
     public class Conversation
     {
+        public Conversation()
+        {
+            Id = Guid.NewGuid();
+            CreatedAt = DateTime.UtcNow;
+        }
+
         public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }
 

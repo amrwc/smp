@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Conversation } from '../models/conversation';
 import { CreateConversationRequest } from '../models/requests/create-conversation-request';
 import { GlobalHelper } from '../helpers/global';
@@ -21,8 +21,6 @@ export class ConversationsService {
   }
 
   public createConversation(createConversationRequest: CreateConversationRequest): Observable<Object> {
-    //let resp = this.httpClient.post<string>(`${this.baseUrl}api/Conversations/CreateConversation`, createConversationRequest, { headers: this.globalHelper.getAuthHeader() });
-
-    return of("2e365c68-d1ea-4ef7-8fab-2efcf1b60911");
+    return this.httpClient.post<string>(`${this.baseUrl}api/Conversations/CreateConversation`, createConversationRequest, { headers: this.globalHelper.getAuthHeader() });
   }
 }
