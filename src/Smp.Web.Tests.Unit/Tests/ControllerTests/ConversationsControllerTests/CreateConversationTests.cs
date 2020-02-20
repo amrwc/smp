@@ -34,9 +34,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.ConversationsControllerTests
             {
                 Setup();
                 AuthService.Setup(service => service.AuthorizeSelf(
-                    It.IsAny<string>(),
-                    It.IsAny<Guid>())
-                ).Returns(true);
+                    It.IsAny<string>(), It.IsAny<Guid>())).Returns(true);
                 _result = await ConversationsController.CreateConversation(_createConversationRequest);
             }
 
@@ -72,9 +70,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.ConversationsControllerTests
                 _createConversationRequest.ReceiverId = Guid.NewGuid();
                 _createConversationRequest.Content = "Hi Bob!";
                 AuthService.Setup(service => service.AuthorizeSelf(
-                    It.IsAny<string>(),
-                    It.IsAny<Guid>())
-                ).Returns(false);
+                    It.IsAny<string>(), It.IsAny<Guid>())).Returns(false);
                 _result = await ConversationsController.CreateConversation(_createConversationRequest);
             }
 

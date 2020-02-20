@@ -38,14 +38,12 @@ namespace Smp.Web.Controllers
         public async Task<IActionResult> GetRelationships(Guid userId, byte relationshipTypeId)
         {
             string tkn = Request.Headers["Authorization"];
-            if (!(_authService.AuthorizeSelf(tkn, userId) || _authService.AuthorizeSelf(tkn, userId)))
+            if (!_authService.AuthorizeSelf(tkn, userId))
             {
                 return Unauthorized();
             }
             IList<Relationship> relationships = await _relationshipsRepository.GetRelationshipsByIdAndType(
-                userId,
-                (RelationshipType) relationshipTypeId
-            );
+                userId, (RelationshipType) relationshipTypeId);
             return relationships.Count > 0 ? Ok(relationships) : (IActionResult) NoContent();
         }
     }
