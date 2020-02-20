@@ -4,6 +4,7 @@ using Smp.Web.Services;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using Smp.Web.Models;
 
 namespace Smp.Web.Controllers
 {
@@ -37,6 +38,19 @@ namespace Smp.Web.Controllers
             if (conversationParticipantIds.All(id => id != userId)) return Unauthorized();
 
             return Ok(conversationParticipantIds);
+        }
+
+        [HttpGet("[action]"), Authorize]
+        public async Task<IActionResult> CreateConversation(Message message)
+        {
+            if (!Guid.TryParse(_authService.GetUserIdFromToken(Request.Headers["Authorization"]), out var userId))
+            {
+                return Unauthorized();
+            }
+
+            // var conversationId = _conversationsService.
+            // return Ok(conversationId);
+            return null;
         }
     }
 }

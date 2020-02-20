@@ -35,5 +35,10 @@ namespace Smp.Web.Services
 
             return conversationParticipants.Select(ptcp => ptcp.UserId).ToList();
         }
+
+        public async Task<Conversation> CreateConversation(Message message)
+        {
+            return null;
+        }
     }
 }
