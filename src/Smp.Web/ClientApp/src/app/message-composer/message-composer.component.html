@@ -7,11 +7,12 @@
             </mat-form-field>
         </div>
             
-            <mat-autocomplete [hidden]="true" #auto="matAutocomplete" [displayWith]="displayFriend.bind(this)">
-                <mat-option *ngFor="let friend of friends" [value]="friend.id">
-                    {{ friend.fullName }}
-                </mat-option>
-            </mat-autocomplete>
+        <mat-autocomplete [hidden]="true" #auto="matAutocomplete" [displayWith]="displayFriend.bind(this)">
+            <mat-option *ngFor="let friend of friends" [value]="friend.id">
+                {{ friend.fullName }}
+            </mat-option>
+        </mat-autocomplete>
+        
         <div class="form-group" style="grid-row: span 10">
             <mat-form-field>
                 <textarea class="form-control" placeholder="Message" name="content"
