@@ -15,6 +15,8 @@ namespace Smp.Web.Repositories
         Task<IList<Conversation>> GetConversationsByIds(IList<Guid> conversationIds);
         Task<IList<ConversationParticipant>> GetConversationParticipantsByUserId(Guid userId);
         Task<IList<ConversationParticipant>> GetConversationParticipantsByConversationId(Guid conversationId);
+        Task CreateConversation(Conversation conversation);
+        Task CreateConversationParticipant(ConversationParticipant participant);
     }
 
     [ExcludeFromCodeCoverage]
@@ -35,12 +37,6 @@ namespace Smp.Web.Repositories
             return conversations.Select(cnv => (Conversation)cnv).ToList();
         }
 
-        public async Task<IList<Conversation>> CreateConversation(Guid userOneId, Guid userTwoId)
-        {
-            await _dbConnection.QueryAsync("INSERT INTO [Conversations] ()");
-            return null;
-        }
-
         public async Task<IList<ConversationParticipant>> GetConversationParticipantsByUserId(Guid userId)
         {
             var conversationParticipants = await _dbConnection.QueryAsync<Models.DTOs.ConversationParticipant>(
@@ -59,6 +55,21 @@ namespace Smp.Web.Repositories
             );
 
             return conversationParticipants.Select(ptcp => (ConversationParticipant)ptcp).ToList();
+        }
+
+        public async Task CreateConversation(Conversation conversation)
+        {
+            await _dbConnection.QueryAsync("INSERT INTO [Conversations] ([Id], [CreatedAt]) VALUES (@Id, @CreatedAt)",
+                new { Id = conversation.Id, CreatedAt = conversation.CreatedAt }
+            );
+        }
+
+        public async Task CreateConversationParticipant(ConversationParticipant participant)
+        {
+            await _dbConnection.ExecuteAsync(
+                @"INSERT INTO [ConversationParticipants] ([ConversationId], [UserId], [CreatedAt]) VALUES (@ConversationId, @UserId, @CreatedAt)",
+                new { ConversationId = participant.ConversationId, UserId = participant.UserId, CreatedAt = participant.CreatedAt }
+            );
         }
     }
 }

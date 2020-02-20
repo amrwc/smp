@@ -5,19 +5,22 @@ using System.Threading.Tasks;
 using System;
 using System.Linq;
 using Smp.Web.Models;
+using Smp.Web.Models.Requests;
 
 namespace Smp.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), ApiController]
     public class ConversationsController : Controller
     {
         private readonly IAuthService _authService;
         private readonly IConversationsService _conversationsService;
+        private readonly IMessagesService _messagesService;
 
-        public ConversationsController(IAuthService authService, IConversationsService conversationsService)
+        public ConversationsController(IAuthService authService, IConversationsService conversationsService, IMessagesService messagesService)
         {
             _authService = authService;
             _conversationsService = conversationsService;
+            _messagesService = messagesService;
         }
 
         [HttpGet("[action]/{userId:Guid}"), Authorize]
@@ -40,17 +43,19 @@ namespace Smp.Web.Controllers
             return Ok(conversationParticipantIds);
         }
 
-        [HttpGet("[action]"), Authorize]
-        public async Task<IActionResult> CreateConversation(Message message)
+        [HttpPost("[action]"), Authorize]
+        public async Task<IActionResult> CreateConversation(CreateConversationRequest createConversationRequest)
         {
-            if (!Guid.TryParse(_authService.GetUserIdFromToken(Request.Headers["Authorization"]), out var userId))
-            {
-                return Unauthorized();
-            }
+            if (!_authService.AuthorizeSelf(Request.Headers["Authorization"], createConversationRequest.SenderId)) return Unauthorized();
 
-            // var conversationId = _conversationsService.
-            // return Ok(conversationId);
-            return null;
+            var conversationId = await _conversationsService.CreateConversationWithParticipants(
+                createConversationRequest.SenderId,
+                createConversationRequest.ReceiverId);
+
+            if (!string.IsNullOrEmpty(createConversationRequest.Content))
+                await _messagesService.CreateMessage(new Message(createConversationRequest, conversationId));
+            
+            return Ok(conversationId);
         }
     }
 }
