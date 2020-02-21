@@ -8,6 +8,7 @@ import { RelationshipsService } from '../services/relationships.service';
 import { RelationshipType } from '../models/relationship-type.enum';
 import { Relationship } from '../models/relationship';
 import { UsersService } from '../services/users.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-message-composer',
@@ -16,12 +17,14 @@ import { UsersService } from '../services/users.service';
 })
 export class MessageComposerComponent implements OnInit {
 
-  @Output() conversationCreated: EventEmitter<any> = new EventEmitter();
+  @Output() conversationReady: EventEmitter<any> = new EventEmitter();
 
   public loading: boolean = false;
 
   public createConversationRequest: CreateConversationRequest = new CreateConversationRequest();
   public friends: User[] = new Array<User>();
+  public filteredFriends: User[] = new Array<User>();
+  public formControl: FormControl = new FormControl();
 
   constructor(
     private globalHelper: GlobalHelper,
@@ -45,6 +48,7 @@ export class MessageComposerComponent implements OnInit {
           this.usersService.getUser(id).subscribe({
             next: (user: User) => {
               this.friends.push(user);
+              this.filteredFriends.push(user);
             }
           });
         });
@@ -53,16 +57,32 @@ export class MessageComposerComponent implements OnInit {
   }
 
   public sendMessage() {
+    const availableReceiverIds = this.friends.map(friend => friend.id);
+    if (!availableReceiverIds.includes(this.createConversationRequest.receiverId))
+      return;
+
     this.loading = true;
+    debugger;
     this.conversationsService.createConversation(this.createConversationRequest).subscribe({
       next: (conversationId: string) => {
-        this.conversationCreated.emit(conversationId);
+        this.conversationReady.emit(conversationId);
         this.loading = false;
+      },
+      error: (error: any) => {
+        if (error.status === 409) {
+          this.conversationReady.emit(error.error);
+          this.loading = false;
+        }
       }
     });
   }
 
   public displayFriend(userId: string) {
     return this.friends.find(friend => friend.id === userId).fullName;
+  }
+
+  public filterFriends(name: string): void {
+    const filterValue = name.toLowerCase();
+    this.filteredFriends = this.friends.filter(friend => friend.fullName.toLowerCase().includes(filterValue));
   }
 }

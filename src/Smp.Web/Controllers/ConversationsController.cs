@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using Smp.Web.Models;
 using Smp.Web.Models.Requests;
+using Smp.Web.Validators;
 
 namespace Smp.Web.Controllers
 {
@@ -15,12 +16,14 @@ namespace Smp.Web.Controllers
         private readonly IAuthService _authService;
         private readonly IConversationsService _conversationsService;
         private readonly IMessagesService _messagesService;
+        private readonly IConversationValidator _conversationValidator;
 
-        public ConversationsController(IAuthService authService, IConversationsService conversationsService, IMessagesService messagesService)
+        public ConversationsController(IAuthService authService, IConversationsService conversationsService, IMessagesService messagesService, IConversationValidator conversationValidator)
         {
             _authService = authService;
             _conversationsService = conversationsService;
             _messagesService = messagesService;
+            _conversationValidator = conversationValidator;
         }
 
         [HttpGet("[action]/{userId:Guid}"), Authorize]
@@ -47,6 +50,9 @@ namespace Smp.Web.Controllers
         public async Task<IActionResult> CreateConversation(CreateConversationRequest createConversationRequest)
         {
             if (!_authService.AuthorizeSelf(Request.Headers["Authorization"], createConversationRequest.SenderId)) return Unauthorized();
+
+            var duplicateConversationId = await _conversationValidator.ValidateConversationDuplicate(createConversationRequest);
+            if (duplicateConversationId != Guid.Empty) return Conflict(duplicateConversationId);
 
             var conversationId = await _conversationsService.CreateConversationWithParticipants(
                 createConversationRequest.SenderId,
