@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -19,6 +18,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.ConversationsControllerTests
         {
             private readonly CreateConversationRequest _createConversationRequest = new CreateConversationRequest();
             private readonly int _timesCreateMessage;
+            private readonly Guid _conversationId = Guid.NewGuid();
             private IActionResult _result;
 
             public GivenAValidRequest(string content, int timesCreateMessage)
@@ -33,17 +33,23 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.ConversationsControllerTests
             public async Task WhenCreateConversationGetsCalled()
             {
                 Setup();
+
                 AuthService.Setup(service => service.AuthorizeSelf(
                     It.IsAny<string>(), It.IsAny<Guid>())).Returns(true);
+                ConversationsService.Setup(service => service.CreateConversationWithParticipants(
+                    _createConversationRequest.SenderId, _createConversationRequest.ReceiverId))
+                    .ReturnsAsync(_conversationId);
+                
                 _result = await ConversationsController.CreateConversation(_createConversationRequest);
             }
 
             [Test]
-            public void ThenResultShouldBeOfExpectedType() => Assert.IsInstanceOf<OkObjectResult>(_result);
+            public void ThenResultShouldBeOfExpectedType()
+                => Assert.IsInstanceOf<OkObjectResult>(_result);
 
             [Test]
             public void ThenResultValueShouldBeAsExpected()
-                => (_result as OkObjectResult)?.Value.Should().BeOfType<Guid>();
+                => Assert.AreEqual(_conversationId, (_result as OkObjectResult)!.Value);
 
             [Test]
             public void ThenConversationsServiceCreateConversationWithParticipantsShouldHaveBeenCalled()
@@ -75,7 +81,8 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.ConversationsControllerTests
             }
 
             [Test]
-            public void ThenResultShouldBeOfExpectedType() => Assert.IsInstanceOf<UnauthorizedResult>(_result);
+            public void ThenResultShouldBeOfExpectedType()
+                => Assert.IsInstanceOf<UnauthorizedResult>(_result);
 
             [Test]
             public void ThenConversationsServiceCreateConversationWithParticipantsShouldNotHaveBeenCalled()
