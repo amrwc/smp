@@ -17,6 +17,7 @@ namespace Smp.Web.Repositories
         Task<IList<ConversationParticipant>> GetConversationParticipantsByConversationId(Guid conversationId);
         Task CreateConversation(Conversation conversation);
         Task CreateConversationParticipant(ConversationParticipant participant);
+        Task<IList<Guid>> GetCommonConversationIds(Guid userOneId, Guid userTwoId);
     }
 
     [ExcludeFromCodeCoverage]
@@ -70,6 +71,20 @@ namespace Smp.Web.Repositories
                 @"INSERT INTO [ConversationParticipants] ([ConversationId], [UserId], [CreatedAt]) VALUES (@ConversationId, @UserId, @CreatedAt)",
                 new { ConversationId = participant.ConversationId, UserId = participant.UserId, CreatedAt = participant.CreatedAt }
             );
+        }
+
+        public async Task<IList<Guid>> GetCommonConversationIds(Guid userOneId, Guid userTwoId)
+        {
+            return (await _dbConnection.QueryAsync<Guid>(
+                @"
+                SELECT [ConversationId] FROM [ConversationParticipants]
+                JOIN (
+                    SELECT [ConversationId] cid FROM [ConversationParticipants]
+                    WHERE [UserId] = @UserOneId
+                ) AS cp ON cp.cid = [ConversationParticipants].[ConversationId]
+                WHERE [UserId] = @UserTwoId
+                ",
+                new { UserOneId = userOneId, UserTwoId = userTwoId })).ToList();
         }
     }
 }
