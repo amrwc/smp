@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Smp.Web.Services;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Smp.Web.Models;
 using Smp.Web.Repositories;
+using Smp.Web.Services;
 
 namespace Smp.Web.Controllers
 {
@@ -31,6 +32,19 @@ namespace Smp.Web.Controllers
                 (RelationshipType) relationshipTypeId);
 
             return relationship == null ? (IActionResult) NotFound() : Ok(relationship);
+        }
+
+        [HttpGet("[action]/{userId:Guid}/{relationshipTypeId:int}"), Authorize]
+        public async Task<IActionResult> GetRelationships(Guid userId, byte relationshipTypeId)
+        {
+            string tkn = Request.Headers["Authorization"];
+            if (!_authService.AuthorizeSelf(tkn, userId))
+            {
+                return Unauthorized();
+            }
+            IList<Relationship> relationships = await _relationshipsRepository.GetRelationshipsByIdAndType(
+                userId, (RelationshipType) relationshipTypeId);
+            return relationships.Count > 0 ? Ok(relationships) : (IActionResult) NoContent();
         }
     }
 }

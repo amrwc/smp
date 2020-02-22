@@ -7,6 +7,15 @@ namespace Smp.Web.Models
     {
         public Message() {}
 
+        public Message(CreateConversationRequest conversationRequest, Guid conversationId)
+        {
+            ReceiverId = conversationRequest.ReceiverId;
+            SenderId = conversationRequest.SenderId;
+            Content = conversationRequest.Content;
+            CreatedAt = DateTime.UtcNow;
+            ConversationId = conversationId;
+        }
+
         public Message(CreateMessageRequest message)
         {
             ReceiverId = message.ReceiverId;

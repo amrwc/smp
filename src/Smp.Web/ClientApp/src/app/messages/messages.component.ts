@@ -8,6 +8,7 @@ import { Message, FriendlyMessage } from '../models/message';
 import { UsersService } from '../services/users.service';
 import { User } from '../models/user';
 import { ConversationComponent } from '../conversation/conversation.component';
+import { MessageComposerComponent } from '../message-composer/message-composer.component';
 
 @Component({
   selector: 'app-messages',
@@ -16,8 +17,13 @@ import { ConversationComponent } from '../conversation/conversation.component';
 })
 export class MessagesComponent implements OnInit {
 
+  public startNewConversation: boolean;
+
   @ViewChild(ConversationComponent)
   conversation: ConversationComponent;
+
+  @ViewChild(MessageComposerComponent)
+  composer: MessageComposerComponent;
 
   public conversations: ExtendedConversation[];
 
@@ -30,11 +36,15 @@ export class MessagesComponent implements OnInit {
     this.fetchConversationsData();
   }
 
+  private getConversationById(conversationId: string): ExtendedConversation {
+    return this.conversations.filter((cnv) => {
+      return cnv.id === conversationId;
+    })[0];
+  }
+
   public getConversationPicture(conversationId: string): string {
     const userId = this.globalHelper.localStorageItem<CurrentUser>('currentUser').id;
-    const conversation = (this.conversations.filter((cnv) => {
-      return cnv.id == conversationId;
-    }))[0];
+    const conversation = this.getConversationById(conversationId);
 
     let participant: User;
 
@@ -49,9 +59,7 @@ export class MessagesComponent implements OnInit {
 
   public getConversationName(conversationId: string): string {
     const userId = this.globalHelper.localStorageItem<CurrentUser>('currentUser').id;
-    const conversation = (this.conversations.filter((cnv) => {
-      return cnv.id == conversationId;
-    }))[0];
+    const conversation = this.getConversationById(conversationId);
 
     let participant: User;
 
@@ -66,9 +74,7 @@ export class MessagesComponent implements OnInit {
 
   public getLastMessageSender(conversationId: string): string {
     const userId = this.globalHelper.localStorageItem<CurrentUser>('currentUser').id;
-    const conversation = (this.conversations.filter((cnv) => {
-      return cnv.id == conversationId;
-    }))[0];
+    const conversation = this.getConversationById(conversationId);
 
     return conversation.lastMessage.receiverId == userId
       ? conversation.lastMessage.sender?.fullName
@@ -76,7 +82,15 @@ export class MessagesComponent implements OnInit {
   }
 
   public loadConversation(conversationId: string): void {
+    this.startNewConversation = false;
     this.conversation.conversationId = conversationId;
+
+    const conversation = this.getConversationById(conversationId);
+    if (!conversation) this.fetchConversationsData();
+  }
+
+  public showStartConversation(): void {
+    this.startNewConversation = true;
   }
 
   private fetchConversationsData(): void {

@@ -24,7 +24,7 @@ namespace Smp.Web.Services
         {
             var relationship = new Relationship(userOneId, userTwoId, RelationshipType.Friend);
 
-            await _relationshipsRepository.AddRelationship(relationship);
+            await _relationshipsRepository.CreateRelationship(relationship);
         }
 
         public async Task<bool> AreAlreadyFriends(Guid senderId, Guid receiverId)

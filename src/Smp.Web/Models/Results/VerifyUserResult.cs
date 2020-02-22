@@ -1,5 +1,3 @@
-using Smp.Web.Models;
-
 namespace Smp.Web.Models.Results
 {
     public class VerifyUserResult

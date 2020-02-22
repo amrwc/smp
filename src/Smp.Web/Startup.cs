@@ -67,6 +67,7 @@ namespace Smp.Web
             services.AddTransient<IUserValidator, UserValidator>();
             services.AddTransient<IRequestValidator, RequestValidator>();
             services.AddTransient<IActionValidator, ActionValidator>();
+            services.AddTransient<IConversationValidator, ConversationValidator>();
 
             services.AddTransient<IRelationshipsService, RelationshipsService>();
             services.AddTransient<IRequestsService, RequestsService>();

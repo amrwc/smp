@@ -1,10 +1,10 @@
+using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper;
 using Smp.Web.Factories;
 using Smp.Web.Models;
 
@@ -13,10 +13,11 @@ namespace Smp.Web.Repositories
     public interface IRelationshipsRepository
     {
         Task<Relationship> GetRelationshipByIdsAndType(Guid userOneId, Guid userTwoId, RelationshipType relationshipType);
-        Task AddRelationship(Relationship relationship);
+        Task CreateRelationship(Relationship relationship);
         Task<IList<RelationshipType>> GetRelationshipTypes();
         Task<RelationshipType> GetRelationshipTypeById(byte id);
         Task<RelationshipType> GetRelationshipTypeByName(string name);
+        Task<IList<Relationship>> GetRelationshipsByIdAndType(Guid userId, RelationshipType relationshipType);
     }
 
     [ExcludeFromCodeCoverage]
@@ -61,7 +62,17 @@ namespace Smp.Web.Repositories
             return relationship == null ? null : (Relationship) relationship;
         }
 
-        public async Task AddRelationship(Relationship relationship)
+        public async Task<IList<Relationship>> GetRelationshipsByIdAndType(Guid userId,
+            RelationshipType relationshipType)
+        {
+            var relationships = await _dbConnection.QueryAsync<Models.DTOs.Relationship>(
+                @"SELECT * FROM [dbo].[Relationships] WHERE [UserOneId] = @UserId OR [UserTwoId] = @UserId
+                    AND [RelationshipTypeId] = @RelationshipTypeId",
+                new {UserId = userId, RelationshipTypeId = (byte) relationshipType});
+            return relationships?.Select(relationship => (Relationship) relationship).ToList();
+        }
+
+        public async Task CreateRelationship(Relationship relationship)
         {
             await _dbConnection.ExecuteAsync(
                 "INSERT INTO [dbo].[Relationships] ([UserOneId], [UserTwoId], [RelationshipTypeId], [CreatedAt]) VALUES (@UserOneId, @UserTwoId, @RelationshipTypeId, @CreatedAt)",

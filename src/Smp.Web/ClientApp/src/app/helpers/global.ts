@@ -1,4 +1,5 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -6,6 +7,10 @@ import { Injectable, Inject } from '@angular/core';
 export class GlobalHelper {
 
   public localStorageItem<T>(key: string): T {
-    return <T> JSON.parse(localStorage.getItem(key));
+    return JSON.parse(localStorage.getItem(key)) as T;
+  }
+
+  public getAuthHeader(): HttpHeaders {
+    return new HttpHeaders().set('Authorization', 'Bearer ' + JSON.parse(localStorage.getItem('currentUser')).token);
   }
 }

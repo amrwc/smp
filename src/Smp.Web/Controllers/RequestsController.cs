@@ -11,7 +11,7 @@ using Smp.Web.Validators;
 
 namespace Smp.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), ApiController]
     public class RequestsController : Controller
     {
         private readonly IRequestsService _requestsService;
