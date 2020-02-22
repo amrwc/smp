@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
@@ -21,6 +23,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RequestsComponent } from './requests/requests.component';
 import { ConversationComponent } from './conversation/conversation.component';
+import { MessageComposerComponent } from './message-composer/message-composer.component';
+import { AngularMaterialModule } from './angular-material.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,8 @@ import { ConversationComponent } from './conversation/conversation.component';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     RequestsComponent,
-    ConversationComponent
+    ConversationComponent,
+    MessageComposerComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -97,7 +102,10 @@ import { ConversationComponent } from './conversation/conversation.component';
         canActivate: [AlreadySignedInGuard]
       },
       { path: '**', redirectTo: '' }
-    ])
+    ]),
+    BrowserAnimationsModule,
+    BrowserModule,
+    AngularMaterialModule
   ],
   providers: [AuthGuard, AlreadySignedInGuard],
   bootstrap: [AppComponent]

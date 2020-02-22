@@ -25,7 +25,7 @@ namespace Smp.Web.Tests.Unit.Tests.ServiceTests.RelationshipsServiceTests
 
                 _relationship = new Relationship(_userOneId, _userTwoId, RelationshipType.Friend);
 
-                RelationshipsRepository.Setup(repository => repository.AddRelationship(It.IsAny<Relationship>()))
+                RelationshipsRepository.Setup(repository => repository.CreateRelationship(It.IsAny<Relationship>()))
                     .Callback<Relationship>(rel => _usedRelationship = rel);
 
                 await RelationshipsService.AddFriend(_userOneId, _userTwoId);
@@ -33,7 +33,7 @@ namespace Smp.Web.Tests.Unit.Tests.ServiceTests.RelationshipsServiceTests
 
             [Test]
             public void ThenRelationshipsRepositoryAddRelationshipShouldHaveBeenCalled()
-                => RelationshipsRepository.Verify(repository => repository.AddRelationship(It.IsAny<Relationship>()), Times.Once);
+                => RelationshipsRepository.Verify(repository => repository.CreateRelationship(It.IsAny<Relationship>()), Times.Once);
 
             [Test]
             public void ThenUsedRelationshipShouldBeAsExpected()

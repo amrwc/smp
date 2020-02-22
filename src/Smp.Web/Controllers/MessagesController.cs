@@ -3,14 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Smp.Web.Services;
 using System.Threading.Tasks;
 using Smp.Web.Models;
-using Smp.Web.Repositories;
 using Smp.Web.Models.Requests;
 using System;
-using System.Linq;
 
 namespace Smp.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), ApiController]
     public class MessagesController : Controller
     {
         private readonly IAuthService _authService;
