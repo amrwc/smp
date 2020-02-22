@@ -5,4 +5,15 @@
             {{message.content}}
         </div> <div class="datetime"><em>{{message.getFriendlyDate()}}</em></div>
     </div>
+    <div class="chat-box">
+        <form (ngSubmit)="f.form.valid && sendMessage()" #f="ngForm" novalidate>
+            <div class="form-group">
+                <mat-form-field>
+                    <textarea class="form-control" placeholder="Message" name="content"
+                    [(ngModel)]="createMessageRequest.content" #content="ngModel" required matInput>
+                    </textarea>
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
 </div>
