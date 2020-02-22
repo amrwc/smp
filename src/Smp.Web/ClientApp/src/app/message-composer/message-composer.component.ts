@@ -8,7 +8,6 @@ import { RelationshipsService } from '../services/relationships.service';
 import { RelationshipType } from '../models/relationship-type.enum';
 import { Relationship } from '../models/relationship';
 import { UsersService } from '../services/users.service';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-message-composer',
@@ -24,7 +23,6 @@ export class MessageComposerComponent implements OnInit {
   public createConversationRequest: CreateConversationRequest = new CreateConversationRequest();
   public friends: User[] = new Array<User>();
   public filteredFriends: User[] = new Array<User>();
-  public formControl: FormControl = new FormControl();
 
   constructor(
     private globalHelper: GlobalHelper,
@@ -62,7 +60,6 @@ export class MessageComposerComponent implements OnInit {
       return;
 
     this.loading = true;
-    debugger;
     this.conversationsService.createConversation(this.createConversationRequest).subscribe({
       next: (conversationId: string) => {
         this.conversationReady.emit(conversationId);
@@ -71,8 +68,8 @@ export class MessageComposerComponent implements OnInit {
       error: (error: any) => {
         if (error.status === 409) {
           this.conversationReady.emit(error.error);
-          this.loading = false;
         }
+        this.loading = false;
       }
     });
   }
@@ -82,7 +79,6 @@ export class MessageComposerComponent implements OnInit {
   }
 
   public filterFriends(name: string): void {
-    const filterValue = name.toLowerCase();
-    this.filteredFriends = this.friends.filter(friend => friend.fullName.toLowerCase().includes(filterValue));
+    this.filteredFriends = this.friends.filter(friend => friend.fullName.toLowerCase().includes(name.toLowerCase()));
   }
 }
