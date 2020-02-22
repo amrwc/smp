@@ -11,4 +11,8 @@ button.button-primary {
   &:hover {
     background-color: $blue;
   }
+
+  &:disabled  {
+    background-color: $grey;
+  }
 }
