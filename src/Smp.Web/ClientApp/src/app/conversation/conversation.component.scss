@@ -1,26 +1,63 @@
+@import '~sass/variables';
+@import '~sass/header';
+@import '~sass/button';
+
 .conversation-body {
-    margin: 0;
-    padding: 0;
+    height: 100%;
+    grid-template-rows: repeat(12, 1fr);
+    grid-template-columns: repeat(12, 1fr);
+    display: grid;
 
-    .message {
-        grid-template-columns: repeat(12, 1fr);
-        display: grid;
+    .messages {
+        grid-row: span 11;
+        grid-column: span 12;
 
-        padding: 1rem 0rem 1rem 1rem;
-
-        .message-content {
-            .profile-picture {
-                width: 50px;
-                height: 50px;
+        .message {    
+            grid-template-columns: repeat(12, 1fr);
+            display: grid;
+    
+            padding: 1rem 0rem 1rem 1rem;
+    
+            .message-content {
+                .profile-picture {
+                    width: 50px;
+                    height: 50px;
+                }
+    
+                display: inline-block;
+                grid-column: span 10;
             }
-
-            display: inline-block;
-            grid-column: span 10;
-        }
-
-        .datetime {
-            display: inline-block;
-            grid-column: span 2;
+    
+            .datetime {
+                display: inline-block;
+                grid-column: span 2;
+            }
         }
     }
-  }
+
+    .chat-box {
+        grid-row: span 1;
+        grid-column: span 12;
+
+        form {
+            grid-template-columns: repeat(12, 1fr);
+            display: grid;
+
+            height: 100%;
+
+            .form-group {
+                height: 100%;
+
+                textarea {
+                    height: 100%;
+                    //grid-column: span 10;
+                }
+
+                button {
+                    height: 100%;
+                }
+            } 
+        }
+    }
+}
+
