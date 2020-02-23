@@ -39,6 +39,7 @@ namespace Smp.Web.Controllers
                 return Unauthorized();
 
             await _messagesService.CreateMessage(new Message(request));
+            await _messageHub.Clients.All.SendAsync("newmessage", request.ConversationId);
 
             return Ok();
         }

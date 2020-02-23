@@ -77,6 +77,17 @@ namespace Smp.Web
             services.AddTransient<IConversationsService, ConversationsService>();
             services.AddTransient<IMessagesService, MessagesService>();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder.WithOrigins("https://localhost:5001")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+                });
+            });
+
             services.AddSignalR();
             services.AddMvc();
 
@@ -134,6 +145,8 @@ namespace Smp.Web
             });
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

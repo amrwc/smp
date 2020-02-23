@@ -55,9 +55,9 @@ export class ConversationComponent implements OnInit {
     this._hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('/hub')
       .build();
-
-    this._hubConnection.on('newmessage', (data: any) => {
-      console.log(data);
+    this._hubConnection.start();
+    this._hubConnection.on('newmessage', (conversationId: any) => {
+      this.getMessages();
     });
   }
 
@@ -86,12 +86,9 @@ export class ConversationComponent implements OnInit {
     createMessageRequest.content = this.form.value.content;
     createMessageRequest.conversationId = this._conversationId;
     createMessageRequest.senderId = this.globalHelper.localStorageItem<CurrentUser>('currentUser').id;
-    console.log(createMessageRequest);
 
     this.messagesService.createMessage(createMessageRequest).subscribe({
-      next: () => {
-
-      }
+      next: () => { }
     });
 
     this.form.reset();
