@@ -4,6 +4,7 @@ import { MessagesService } from '../services/messages.service';
 import { UsersService } from '../services/users.service';
 import { FriendlyMessage } from '../models/message';
 import { User } from '../models/user';
+import { CreateMessageRequest } from '../models/requests/create-message-request';
 
 @Component({
   selector: 'app-conversation',
@@ -13,13 +14,16 @@ import { User } from '../models/user';
 export class ConversationComponent implements OnInit {
 
   private _conversationId: string;
+  public loadedConversation: boolean = false;
 
+  public createMessageRequest: CreateMessageRequest = new CreateMessageRequest();
   public users: Map<string, User> = new Map<string, User>();
 
   @Input() set conversationId(id: string) {
     if (id == this._conversationId) return;
 
     this._conversationId = id;
+    this.loadedConversation = true;
     this.users = new Map<string, User>();
     this.getMessages();
   }
@@ -55,5 +59,9 @@ export class ConversationComponent implements OnInit {
         this.messages = messages;
       }
     });
+  }
+
+  public sendMessage(): void {
+    alert(`HI MESSAGE CONTENT IS: ${this.createMessageRequest.content}`);
   }
 }
