@@ -8,6 +8,7 @@ import { CreateMessageRequest } from '../models/requests/create-message-request'
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { GlobalHelper } from '../helpers/global';
 import { CurrentUser } from '../models/current-user';
+import * as signalR from '@aspnet/signalr';
 
 @Component({
   selector: 'app-conversation',
@@ -15,6 +16,8 @@ import { CurrentUser } from '../models/current-user';
   styleUrls: ['./conversation.component.scss']
 })
 export class ConversationComponent implements OnInit {
+
+  private _hubConnection: signalR.HubConnection;
 
   private _conversationId: string;
   public loadedConversation: boolean = false;
@@ -49,6 +52,13 @@ export class ConversationComponent implements OnInit {
     }
 
   ngOnInit() {
+    this._hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl('/hub')
+      .build();
+
+    this._hubConnection.on('newmessage', (data: any) => {
+      console.log(data);
+    });
   }
 
   private getMessages(): void {
