@@ -9,9 +9,6 @@ namespace Smp.Web.Models.Requests
         [Required]
         public Guid SenderId { get; set; }
         
-        [Required]
-        public Guid ReceiverId { get; set; }
-
         [Required, StringLength(10000, ErrorMessage = ErrorMessages.ValueTooLong)]
         public string Content { get; set; }
 

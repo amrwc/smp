@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Smp.Web.Factories;
+using Smp.Web.Hubs;
 using Smp.Web.Repositories;
 using Smp.Web.Services;
 using Smp.Web.Validators;
@@ -76,6 +77,7 @@ namespace Smp.Web
             services.AddTransient<IConversationsService, ConversationsService>();
             services.AddTransient<IMessagesService, MessagesService>();
 
+            services.AddSignalR();
             services.AddMvc();
 
             services.AddSwaggerGen(options =>
@@ -142,6 +144,7 @@ namespace Smp.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<MessageHub>("/hub");
             });
 
             app.UseSpa(spa =>
