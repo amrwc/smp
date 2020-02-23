@@ -28,8 +28,8 @@ namespace Smp.Web.Repositories
 
         public async Task CreateMessage(Message message)
         {
-            await _dbConnection.ExecuteAsync("INSERT INTO [dbo].[Messages] ([SenderId], [ReceiverId], [Content], [CreatedAt], [ConversationId]) VALUES (@SenderId, @ReceiverId, @Content, @CreatedAt, @ConversationId)",
-                new { SenderId = message.SenderId, ReceiverId = message.ReceiverId, Content = message.Content, CreatedAt = message.CreatedAt, ConversationId = message.ConversationId });
+            await _dbConnection.ExecuteAsync("INSERT INTO [dbo].[Messages] ([SenderId], [Content], [CreatedAt], [ConversationId]) VALUES (@SenderId, @Content, @CreatedAt, @ConversationId)",
+                new { SenderId = message.SenderId, Content = message.Content, CreatedAt = message.CreatedAt, ConversationId = message.ConversationId });
         }
 
         public async Task<IList<Message>> GetMessagesByConversationId(Guid conversationId, int count, int page, bool ascending)

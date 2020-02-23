@@ -1,15 +1,12 @@
 using Smp.Web.Repositories;
 using Smp.Web.Models;
-using Smp.Web.Models.Requests;
 using Smp.Web.Models.Results;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using System;
-using System.Linq;
 
 namespace Smp.Web.Services
 {
