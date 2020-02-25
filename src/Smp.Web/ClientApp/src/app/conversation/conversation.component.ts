@@ -76,7 +76,7 @@ export class ConversationComponent implements OnInit {
 
     this.messagesService.getMessagesFromConversation(this._conversationId, 25, 0).subscribe({
       next: (messages: FriendlyMessage[]) => {
-        this.messages = messages.reverse();
+        this.messages = messages;
       }
     });
   }
