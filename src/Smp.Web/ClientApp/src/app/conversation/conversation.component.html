@@ -4,7 +4,10 @@
             <div class="message-content">
                 <img class="profile-picture" *ngIf="users.has(message.senderId)" [src]="users.get(message.senderId).profilePictureUrl" />
                 {{message.content}}
-            </div> <div class="datetime"><em>{{message.getFriendlyDate()}}</em></div>
+            </div>
+            <div class="datetime">
+                <em>{{message.getFriendlyDate()}}</em>
+            </div>
         </div>
     </div>
     <div class="chat-box">
