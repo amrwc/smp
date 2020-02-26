@@ -17,24 +17,37 @@ import * as signalR from '@aspnet/signalr';
 })
 export class ConversationComponent implements OnInit {
 
-  private _hubConnection: signalR.HubConnection;
-
-  private _conversationId: string;
   public loadedConversation: boolean = false;
-
   public users: Map<string, User> = new Map<string, User>();
-  public messages: FriendlyMessage[];
-
+  public messages: FriendlyMessage[] = new Array<FriendlyMessage>();
   public form: FormGroup;
   public content: FormControl = new FormControl("", Validators.required);
+  private _hubConnection: signalR.HubConnection;
+  private _conversationId: string;
+  private _currentPage: number;
 
+  /**
+   * This property runs every time a conversation is selected.
+   * @param {string} id conversation ID
+   */
   @Input() set conversationId(id: string) {
-    if (id == this._conversationId) return;
+    if (id === this._conversationId) return;
 
     this._conversationId = id;
+    this._currentPage = 0;
     this.loadedConversation = true;
     this.users = new Map<string, User>();
-    this.getMessages();
+    this.initialiseMessages();
+
+    this._hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl('/hub')
+      .build();
+    this._hubConnection.start();
+    this._hubConnection.on('newmessage', (conversationId: any) => {
+      this.getNewestMessages();
+    });
+
+    // TODO: Add event listener for scroll to top (bottom, really) and change page + get new messages
   }
 
   get conversationId() {
@@ -52,33 +65,6 @@ export class ConversationComponent implements OnInit {
     }
 
   ngOnInit() {
-    this._hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('/hub')
-      .build();
-    this._hubConnection.start();
-    this._hubConnection.on('newmessage', (conversationId: any) => {
-      this.getMessages();
-    });
-  }
-
-  private getMessages(): void {
-    this.conversationsService.getConversationParticipants(this._conversationId).subscribe({
-      next: (userIds: string[]) => {
-        userIds.forEach((userId: string) => {
-          this.usersService.getUser(userId).subscribe({
-            next: (user: User) => {
-              this.users.set(user.id, user);
-            }
-          });
-        });
-      }
-    });
-
-    this.messagesService.getMessagesFromConversation(this._conversationId, 25, 0).subscribe({
-      next: (messages: FriendlyMessage[]) => {
-        this.messages = messages;
-      }
-    });
   }
 
   public sendMessage(): void {
@@ -95,9 +81,42 @@ export class ConversationComponent implements OnInit {
   }
 
   public keyDown(event: KeyboardEvent): void {
-    if(event.keyCode === 13) {
+    if (event.keyCode === 13) {
       this.sendMessage();
       event.preventDefault();
     }
+  }
+
+  private getMessages(messagesCount: number, pageNumber: number): void {
+    this.messagesService.getMessagesFromConversation(this._conversationId, messagesCount, pageNumber).subscribe({
+      next: (messages: FriendlyMessage[]) => {
+        this.messages.push(...messages);
+      }
+    });
+  }
+
+  private initialiseMessages(): void {
+    this.conversationsService.getConversationParticipants(this._conversationId).subscribe({
+      next: (userIds: string[]) => {
+        userIds.forEach((userId: string) => {
+          this.usersService.getUser(userId).subscribe({
+            next: (user: User) => {
+              this.users.set(user.id, user);
+            }
+          });
+        });
+      }
+    });
+    this.getMessages(25, this._currentPage);
+  }
+
+  private getNewestMessages(): void {
+    this.messagesService.getMessagesFromConversation(this._conversationId, 10, 0).subscribe({
+      next: (messages: FriendlyMessage[]) => {
+        const stringifiedMessages: string[] = messages.concat(this.messages).map(el => JSON.stringify(el));
+        const uniqueMessages: Set<string> = new Set<string>(stringifiedMessages);
+        this.messages = Array.from(uniqueMessages).map(el => new FriendlyMessage(JSON.parse(el) as FriendlyMessage));
+      }
+    });
   }
 }
