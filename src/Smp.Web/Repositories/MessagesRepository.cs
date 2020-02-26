@@ -34,7 +34,9 @@ namespace Smp.Web.Repositories
 
         public async Task<IList<Message>> GetMessagesByConversationId(Guid conversationId, int count, int page, bool ascending)
         {
-            var messages = await _dbConnection.QueryAsync<Models.DTOs.Message>($"SELECT * FROM [Messages] WHERE [ConversationId] = @ConversationId ORDER BY [Id] {(ascending ? "ASC" : "DESC")} OFFSET (@Skip) ROWS FETCH NEXT (@Count) ROWS ONLY",
+            var messages = await _dbConnection.QueryAsync<Models.DTOs.Message>(
+                $@"SELECT * FROM [Messages] WHERE [ConversationId] = @ConversationId
+                ORDER BY [Id] {(ascending ? "ASC" : "DESC")} OFFSET (@Skip) ROWS FETCH NEXT (@Count) ROWS ONLY",
                 new { ConversationId = conversationId, Skip = count * page, Count = count });
 
             return messages.Select(msg => (Message)msg).ToList();
