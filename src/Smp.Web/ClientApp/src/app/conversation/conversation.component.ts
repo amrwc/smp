@@ -13,7 +13,7 @@ import * as signalR from '@aspnet/signalr';
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
-  styleUrls: ['./conversation.component.scss']
+  styleUrls: ['./conversation.component.scss'],
 })
 export class ConversationComponent implements OnInit {
 
@@ -25,10 +25,11 @@ export class ConversationComponent implements OnInit {
   private _hubConnection: signalR.HubConnection;
   private _conversationId: string;
   private _currentPage: number;
+  private _lastMessageElement: Element;
 
   /**
    * This property runs every time a conversation is selected.
-   * @param {string} id conversation ID
+   * @param id conversation ID
    */
   @Input() set conversationId(id: string) {
     if (id === this._conversationId) return;
@@ -42,12 +43,18 @@ export class ConversationComponent implements OnInit {
     this._hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('/hub')
       .build();
-    this._hubConnection.start();
+    this._hubConnection.start()
+      .then(() => {
+        this._lastMessageElement = this.getOldestMessageElement();
+        const observer = new IntersectionObserver(
+          (entries, observer) => this.lastMessageObserverCallback(entries, observer),
+          { threshold: 0.5 }
+        );
+        observer.observe(this._lastMessageElement);
+      });
     this._hubConnection.on('newmessage', (conversationId: any) => {
       this.getNewestMessages();
     });
-
-    // TODO: Add event listener for scroll to top (bottom, really) and change page + get new messages
   }
 
   get conversationId() {
@@ -82,19 +89,33 @@ export class ConversationComponent implements OnInit {
 
   public keyDown(event: KeyboardEvent): void {
     if (event.keyCode === 13) {
-      this.sendMessage();
       event.preventDefault();
+      this.sendMessage();
     }
   }
 
-  private getMessages(messagesCount: number, pageNumber: number): void {
-    this.messagesService.getMessagesFromConversation(this._conversationId, messagesCount, pageNumber).subscribe({
-      next: (messages: FriendlyMessage[]) => {
-        this.messages.push(...messages);
-      }
+  /**
+   * Fetches messages, appends them to `this.messages` and returns count of fetched messages.
+   * @private
+   * @param messagesCount number of messages to fetch
+   * @param pageNumber which page to fetch
+   * @returns fetched messages count
+   */
+  private async getMessages(messagesCount: number, pageNumber: number): Promise<number> {
+    return new Promise((resolve, reject) => {
+      this.messagesService.getMessagesFromConversation(this._conversationId, messagesCount, pageNumber).subscribe({
+        next: (messages: FriendlyMessage[]) => {
+          this.messages.push(...messages);
+          resolve(messages.length);
+        }
+      });
     });
   }
 
+  /**
+   * Initialises the conversation component by fetching the last 25 messages.
+   * @private
+   */
   private initialiseMessages(): void {
     this.conversationsService.getConversationParticipants(this._conversationId).subscribe({
       next: (userIds: string[]) => {
@@ -110,6 +131,11 @@ export class ConversationComponent implements OnInit {
     this.getMessages(25, this._currentPage);
   }
 
+  /**
+   * Fetches 10 newest messages and only appends unique entries to `this.messages` in case of any networking issue that
+   * could cause multiple copies of the same message being displayed.
+   * @private
+   */
   private getNewestMessages(): void {
     this.messagesService.getMessagesFromConversation(this._conversationId, 10, 0).subscribe({
       next: (messages: FriendlyMessage[]) => {
@@ -118,5 +144,41 @@ export class ConversationComponent implements OnInit {
         this.messages = Array.from(uniqueMessages).map(el => new FriendlyMessage(JSON.parse(el) as FriendlyMessage));
       }
     });
+  }
+
+  /**
+   * Returns the oldest message element currently loaded.
+   * @private
+   * @returns the oldest message on the current page
+   */
+  private getOldestMessageElement(): Element {
+    const messages = document.getElementsByClassName('message');
+    return messages[messages.length - 1];
+  }
+
+  /**
+   * Detects whether the last message element is in the viewport and loads the next 25 messages from the next page.
+   * Then, it changes the observation target to the current oldest message. If the most recent target is the last
+   * available message, it bails.
+   * @private
+   * @param entries Intersection Observer entries
+   * @param observer the Intersection Observer instance
+   * @returns void promise
+   */
+  private async lastMessageObserverCallback(
+    entries: IntersectionObserverEntry[],
+    observer: IntersectionObserver
+  ): Promise<void> {
+    if (entries[entries.length - 1].isIntersecting) {
+      observer.unobserve(this._lastMessageElement);
+      if (!await this.getMessages(25, ++this._currentPage)) {
+        --this._currentPage;
+        return;
+      }
+      setTimeout(() => {
+        this._lastMessageElement = this.getOldestMessageElement();
+        observer.observe(this._lastMessageElement);
+      }, 100);
+    }
   }
 }
