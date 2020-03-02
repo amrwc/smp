@@ -1,6 +1,6 @@
 <div *ngIf="loadedConversation" class="conversation-body">
     <div class="messages">
-        <div *ngFor="let message of messages" class="message">
+        <div *ngFor="let message of messages" #message class="message">
             <div class="message-content">
                 <img class="profile-picture" *ngIf="users.has(message.senderId)" [src]="users.get(message.senderId).profilePictureUrl" />
                 {{message.content}}

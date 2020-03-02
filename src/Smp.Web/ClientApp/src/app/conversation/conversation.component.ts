@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { ConversationsService } from '../services/conversations.service';
 import { MessagesService } from '../services/messages.service';
 import { UsersService } from '../services/users.service';
@@ -25,7 +25,9 @@ export class ConversationComponent implements OnInit {
   private _hubConnection: signalR.HubConnection;
   private _conversationId: string;
   private _currentPage: number;
+
   private _lastMessageElement: Element;
+  @ViewChildren('message') _messageElements: QueryList<any>;
 
   /**
    * This property runs every time a conversation is selected.
@@ -43,15 +45,7 @@ export class ConversationComponent implements OnInit {
     this._hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('/hub')
       .build();
-    this._hubConnection.start()
-      .then(() => {
-        this._lastMessageElement = this.getOldestMessageElement();
-        const observer = new IntersectionObserver(
-          (entries, observer) => this.lastMessageObserverCallback(entries, observer),
-          { threshold: 0.5 }
-        );
-        observer.observe(this._lastMessageElement);
-      });
+    this._hubConnection.start();
     this._hubConnection.on('newmessage', (conversationId: any) => {
       this.getNewestMessages();
     });
@@ -72,6 +66,19 @@ export class ConversationComponent implements OnInit {
     }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this._messageElements.changes.subscribe(msg => {
+      if (this._messageElements.length) {
+        this._lastMessageElement = this.getOldestMessageElement();
+        const observer = new IntersectionObserver(
+          (entries, observer) => this.lastMessageObserverCallback(entries, observer),
+          { threshold: 0.5 }
+        );
+        observer.observe(this._lastMessageElement);
+      }
+    });
   }
 
   public sendMessage(): void {
