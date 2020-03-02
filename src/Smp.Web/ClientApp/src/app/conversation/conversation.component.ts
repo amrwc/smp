@@ -43,10 +43,10 @@ export class ConversationComponent implements OnInit {
     this.initialiseMessages();
 
     this._hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('/hub')
+      .withUrl('/hubs/messages', { accessTokenFactory: () => this.globalHelper.localStorageItem<CurrentUser>('currentUser').token })
       .build();
     this._hubConnection.start();
-    this._hubConnection.on('newmessage', (conversationId: any) => {
+    this._hubConnection.on(`newmessage/${this._conversationId}`, () => {
       this.getNewestMessages();
     });
   }
