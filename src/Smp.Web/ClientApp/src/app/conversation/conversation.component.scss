@@ -11,17 +11,15 @@
     .messages {
         grid-row: span 11;
         grid-column: span 12;
-        overflow: auto;
+        display: flex;
+        flex-direction: column-reverse;
+        overflow-y: scroll;
         padding-right: 0.5rem;
-        transform: rotate(180deg);
-        transform: scaleY(-1);
 
         .message {    
             display: grid;
             grid-template-columns: repeat(12, 1fr);
             padding: 1rem 0rem 1rem 1rem;
-            transform: rotate(180deg);
-            transform: scaleY(-1);
 
             .message-content {
                 .profile-picture {
