@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -46,6 +47,22 @@ namespace Smp.Web
                     ValidateIssuer = false,
                     IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(Configuration["Tokens:SigningKey"]))
                 };
+
+                jwt.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+                        var path = context.HttpContext.Request.Path;
+
+                        if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/hubs/messages")))
+                        {
+                            context.Token = accessToken;
+                        }
+                        
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
             services.AddAuthorization();
@@ -76,17 +93,6 @@ namespace Smp.Web
             services.AddTransient<IAccountsService, AccountsService>();
             services.AddTransient<IConversationsService, ConversationsService>();
             services.AddTransient<IMessagesService, MessagesService>();
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy", builder =>
-                {
-                    builder.WithOrigins("https://localhost:5001")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials();
-                });
-            });
 
             services.AddSignalR();
             services.AddMvc();
@@ -146,8 +152,6 @@ namespace Smp.Web
 
             app.UseRouting();
 
-            app.UseCors();
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
@@ -157,7 +161,7 @@ namespace Smp.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<MessageHub>("/hub");
+                endpoints.MapHub<MessageHub>("/hubs/messages");
             });
 
             app.UseSpa(spa =>
