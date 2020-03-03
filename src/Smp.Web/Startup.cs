@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Smp.Web.Factories;
+using Smp.Web.Hubs;
 using Smp.Web.Repositories;
 using Smp.Web.Services;
 using Smp.Web.Validators;
@@ -45,6 +47,22 @@ namespace Smp.Web
                     ValidateIssuer = false,
                     IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(Configuration["Tokens:SigningKey"]))
                 };
+
+                jwt.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+                        var path = context.HttpContext.Request.Path;
+
+                        if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/hubs/messages")))
+                        {
+                            context.Token = accessToken;
+                        }
+                        
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
             services.AddAuthorization();
@@ -76,6 +94,7 @@ namespace Smp.Web
             services.AddTransient<IConversationsService, ConversationsService>();
             services.AddTransient<IMessagesService, MessagesService>();
 
+            services.AddSignalR();
             services.AddMvc();
 
             services.AddSwaggerGen(options =>
@@ -142,6 +161,7 @@ namespace Smp.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<MessageHub>("/hubs/messages");
             });
 
             app.UseSpa(spa =>

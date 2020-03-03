@@ -73,12 +73,12 @@ export class MessagesComponent implements OnInit {
   }
 
   public getLastMessageSender(conversationId: string): string {
-    const userId = this.globalHelper.localStorageItem<CurrentUser>('currentUser').id;
+    const currentUserId = this.globalHelper.localStorageItem<CurrentUser>('currentUser').id;
     const conversation = this.getConversationById(conversationId);
 
-    return conversation.lastMessage.receiverId == userId
-      ? conversation.lastMessage.sender?.fullName
-      : "You"
+    return conversation.lastMessage.senderId === currentUserId
+      ? "You"
+      : conversation.lastMessage.sender?.fullName;
   }
 
   public loadConversation(conversationId: string): void {
@@ -126,12 +126,6 @@ export class MessagesComponent implements OnInit {
         next: (message: FriendlyMessage[]) => {
           if (message.length > 0) {
             conversationsArray[index].lastMessage = message[0];
-            
-            this.usersService.getUser(conversationsArray[index].lastMessage.receiverId).subscribe({
-              next: (user: User) => {
-                conversationsArray[index].lastMessage.receiver = user;
-              }
-            });
             this.usersService.getUser(conversationsArray[index].lastMessage.senderId).subscribe({
               next: (user: User) => {
                 conversationsArray[index].lastMessage.sender = user;

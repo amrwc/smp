@@ -28,13 +28,15 @@ namespace Smp.Web.Repositories
 
         public async Task CreateMessage(Message message)
         {
-            await _dbConnection.ExecuteAsync("INSERT INTO [dbo].[Messages] ([SenderId], [ReceiverId], [Content], [CreatedAt], [ConversationId]) VALUES (@SenderId, @ReceiverId, @Content, @CreatedAt, @ConversationId)",
-                new { SenderId = message.SenderId, ReceiverId = message.ReceiverId, Content = message.Content, CreatedAt = message.CreatedAt, ConversationId = message.ConversationId });
+            await _dbConnection.ExecuteAsync("INSERT INTO [dbo].[Messages] ([SenderId], [Content], [CreatedAt], [ConversationId]) VALUES (@SenderId, @Content, @CreatedAt, @ConversationId)",
+                new { SenderId = message.SenderId, Content = message.Content, CreatedAt = message.CreatedAt, ConversationId = message.ConversationId });
         }
 
         public async Task<IList<Message>> GetMessagesByConversationId(Guid conversationId, int count, int page, bool ascending)
         {
-            var messages = await _dbConnection.QueryAsync<Models.DTOs.Message>($"SELECT * FROM [Messages] WHERE [ConversationId] = @ConversationId ORDER BY [Id] {(ascending ? "ASC" : "DESC")} OFFSET (@Skip) ROWS FETCH NEXT (@Count) ROWS ONLY",
+            var messages = await _dbConnection.QueryAsync<Models.DTOs.Message>(
+                $@"SELECT * FROM [Messages] WHERE [ConversationId] = @ConversationId
+                ORDER BY [Id] {(ascending ? "ASC" : "DESC")} OFFSET (@Skip) ROWS FETCH NEXT (@Count) ROWS ONLY",
                 new { ConversationId = conversationId, Skip = count * page, Count = count });
 
             return messages.Select(msg => (Message)msg).ToList();

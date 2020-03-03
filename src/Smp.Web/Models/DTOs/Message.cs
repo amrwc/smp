@@ -8,7 +8,6 @@ namespace Smp.Web.Models.DTOs
     {
         public long Id { get; set; }
         public Guid SenderId { get; set; }
-        public Guid ReceiverId { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Content { get; set; }
         public Guid ConversationId { get; set; }
