@@ -82,7 +82,7 @@ export class ConversationComponent implements OnInit {
   }
 
   public sendMessage(): void {
-    let createMessageRequest = new CreateMessageRequest();
+    const createMessageRequest = new CreateMessageRequest();
     createMessageRequest.content = this.form.value.content;
     createMessageRequest.conversationId = this._conversationId;
     createMessageRequest.senderId = this.globalHelper.localStorageItem<CurrentUser>('currentUser').id;
