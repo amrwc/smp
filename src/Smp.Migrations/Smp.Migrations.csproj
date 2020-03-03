@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Migrations\Down\201912261809_RenameSentDateToCreatedAt.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="Migrations\Down\201809050840_CreateUsersTable.sql" />
     <EmbeddedResource Include="Migrations\Down\201809051339_CreateMessagesTable.sql" />
     <EmbeddedResource Include="Migrations\Down\201809051345_CreatePostsTable.sql" />
@@ -23,6 +27,7 @@
     <EmbeddedResource Include="Migrations\Down\201912261635_CreatePostsTable.sql" />
     <EmbeddedResource Include="Migrations\Down\201912261800_RenameDateToCreatedAt.sql" />
     <EmbeddedResource Include="Migrations\Down\201912261801_RenameAcceptedDateToCreatedAt.sql" />
+    <EmbeddedResource Include="Migrations\Down\201912261809_RenameSentDateToCreatedAt.sql" />
     <EmbeddedResource Include="Migrations\Down\201912261816_AddCreatedAtColumnToUsersTable.sql" />
     <EmbeddedResource Include="Migrations\Down\201912261829_RenameDateToCreatedAt.sql" />
     <EmbeddedResource Include="Migrations\Down\201912290027_CreateActionTypesTable.sql" />

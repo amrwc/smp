@@ -1,4 +1,5 @@
-﻿using SimpleMigrations;
+﻿using System;
+using SimpleMigrations;
 using SimpleMigrations.DatabaseProvider;
 using System.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
@@ -18,15 +19,12 @@ namespace Smp.Migrations
                 IntegratedSecurity = true
             }.ConnectionString;
 
-            using (var connection = new SqlConnection(connectionString))
-            {
-                var databaseProvider = new MssqlDatabaseProvider(connection);
-                var migrator = new SimpleMigrator(migrationsAssembly, databaseProvider);
+            using var connection = new SqlConnection(connectionString);
+            var databaseProvider = new MssqlDatabaseProvider(connection);
+            var migrator = new SimpleMigrator(migrationsAssembly, databaseProvider);
 
-                migrator.Load();
-                //migrator.MigrateToLatest();
-                migrator.MigrateTo(202001291943);
-            }
+            migrator.Load();
+            migrator.MigrateToLatest();
         }
     }
 }

@@ -9,12 +9,12 @@ namespace Smp.Migrations.Migrations
     {
         protected override void Up()
         {
-            Execute(File.ReadAllText(@"../../../Migrations/Up/202001291935_CreateConversationsTable.sql"));
+            Execute(MigrationUtils.ReadMigration("202001291935_CreateConversationsTable", true));
         }
 
         protected override void Down()
         {
-            Execute(File.ReadAllText(@"../../../Migrations/Down/202001291935_CreateConversationsTable.sql"));
+            Execute(MigrationUtils.ReadMigration("202001291935_CreateConversationsTable", false));
         }
     }
 }
