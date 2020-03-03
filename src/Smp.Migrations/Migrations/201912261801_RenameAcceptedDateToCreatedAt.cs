@@ -9,12 +9,12 @@ namespace Smp.Migrations.Migrations
     {
         protected override void Up()
         {
-            Execute(File.ReadAllText(@"../../../Migrations/Up/201912261801_RenameAcceptedDateToCreatedAt.sql"));
+            Execute(MigrationUtils.ReadMigration("201912261801_RenameAcceptedDateToCreatedAt", true));
         }
 
         protected override void Down()
         {
-            Execute(File.ReadAllText(@"../../../Migrations/Down/201912261801_RenameAcceptedDateToCreatedAt.sql"));
+            Execute(MigrationUtils.ReadMigration("201912261801_RenameAcceptedDateToCreatedAt", false));
         }
     }
 }

@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using SimpleMigrations;
 
 namespace Smp.Migrations.Migrations
@@ -9,12 +8,12 @@ namespace Smp.Migrations.Migrations
     {
         protected override void Up()
         {
-            Execute(File.ReadAllText(@"../../../Migrations/Up/202001291938_CreateConversationParticipantsTable.sql"));
+            Execute(MigrationUtils.ReadMigration("202001291938_CreateConversationParticipantsTable", true));
         }
 
         protected override void Down()
         {
-            Execute(File.ReadAllText(@"../../../Migrations/Down/202001291938_CreateConversationParticipantsTable.sql"));
+            Execute(MigrationUtils.ReadMigration("202001291938_CreateConversationParticipantsTable", false));
         }
     }
 }
