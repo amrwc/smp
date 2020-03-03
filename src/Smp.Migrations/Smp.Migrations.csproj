@@ -34,6 +34,7 @@
     <EmbeddedResource Include="Migrations\Down\202001291935_CreateConversationsTable.sql" />
     <EmbeddedResource Include="Migrations\Down\202001291938_CreateConversationParticipantsTable.sql" />
     <EmbeddedResource Include="Migrations\Down\202001291943_AddConversationIdColumnToMessagesTable.sql" />
+    <EmbeddedResource Include="Migrations\Down\202002231450_DropReceiverIdFromMessagesTable.sql" />
     <EmbeddedResource Include="Migrations\Up\201809051414_CreateCommentsTable.sql" />
     <EmbeddedResource Include="Migrations\Up\201809051404_CreateRequestsTable.sql" />
     <EmbeddedResource Include="Migrations\Up\201809051359_CreateRequestTypesTable.sql" />
@@ -62,6 +63,7 @@
     <EmbeddedResource Include="Migrations\Up\202001291935_CreateConversationsTable.sql" />
     <EmbeddedResource Include="Migrations\Up\202001291938_CreateConversationParticipantsTable.sql" />
     <EmbeddedResource Include="Migrations\Up\202001291943_AddConversationIdColumnToMessagesTable.sql" />
+    <EmbeddedResource Include="Migrations\Up\202002231450_DropReceiverIdFromMessagesTable.sql" />
   </ItemGroup>
 
   <ItemGroup>
