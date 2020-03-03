@@ -1,5 +1,4 @@
-﻿using System;
-using SimpleMigrations;
+﻿using SimpleMigrations;
 using SimpleMigrations.DatabaseProvider;
 using System.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
