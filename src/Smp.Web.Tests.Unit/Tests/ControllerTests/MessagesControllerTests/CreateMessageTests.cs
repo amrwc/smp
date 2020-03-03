@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoFixture;
 using FluentAssertions;
@@ -16,6 +18,7 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.MessagesControllerTests
         public class GivenAnAuthorizedRequest : MessagesControllerTestBase
         {
             private CreateMessageRequest _createMessageRequest;
+            private IList<Guid> _conversationParticipants;
 
             private IActionResult _result;
 
@@ -26,12 +29,17 @@ namespace Smp.Web.Tests.Unit.Tests.ControllerTests.MessagesControllerTests
             {
                 Setup();
 
-                _createMessageRequest = new Fixture().Create<CreateMessageRequest>();
+                var fixture = new Fixture();
+                _conversationParticipants = fixture.CreateMany<Guid>().ToList();
+                _createMessageRequest = fixture.Build<CreateMessageRequest>()
+                    .With(request => request.SenderId, _conversationParticipants.Last())
+                    .Create();
 
+                AuthService.Setup(service => service.GetUserIdFromToken(It.IsAny<string>())).Returns(_createMessageRequest.SenderId.ToString());
                 AuthService.Setup(service => service.AuthorizeSelf(It.IsAny<string>(), It.IsAny<Guid>()))
                     .Returns(true);
-                AuthService.Setup(service => service.AuthorizeFriend(It.IsAny<string>(), It.IsAny<Guid>()))
-                    .ReturnsAsync(true);
+                ConversationsService.Setup(service => service.GetConversationParticipants(It.IsAny<Guid>()))
+                    .ReturnsAsync(_conversationParticipants);
                 MessagesService.Setup(repository => repository.CreateMessage(It.IsAny<Message>()))
                     .Callback<Message>(msg => _usedMessage = msg);
 
