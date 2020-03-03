@@ -9,12 +9,12 @@ namespace Smp.Migrations.Migrations
     {
         protected override void Up()
         {
-            Execute(File.ReadAllText(@"../../../Migrations/Up/201809151600_RenameUsernameToFullName.sql"));
+            Execute(MigrationUtils.ReadMigration("201809151600_RenameUsernameToFullName", true));
         }
 
         protected override void Down()
         {
-            Execute(File.ReadAllText(@"../../../Migrations/Down/201809151600_RenameUsernameToFullName.sql"));
+            Execute(MigrationUtils.ReadMigration("201809151600_RenameUsernameToFullName", false));
         }
     }
 }
