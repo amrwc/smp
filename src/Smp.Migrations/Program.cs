@@ -24,10 +24,9 @@ namespace Smp.Migrations
                 var migrator = new SimpleMigrator(migrationsAssembly, databaseProvider);
 
                 migrator.Load();
-                migrator.MigrateToLatest();
+                //migrator.MigrateToLatest();
+                migrator.MigrateTo(202001291943);
             }
         }
-            
-
     }
 }
