@@ -1,8 +1,23 @@
-<div class="conversation-body">
-    <div *ngFor="let message of messages" class="message">
-        <div class="message-content">
-            <img class="profile-picture" *ngIf="users.has(message.senderId)" [src]="users.get(message.senderId).profilePictureUrl" />
-            {{message.content}}
-        </div> <div class="datetime"><em>{{message.getFriendlyDate()}}</em></div>
+<div *ngIf="loadedConversation" class="conversation-body">
+    <div class="messages">
+        <div *ngFor="let message of messages" #message class="message">
+            <div class="message-content">
+                <img class="profile-picture" *ngIf="users.has(message.senderId)" [src]="users.get(message.senderId).profilePictureUrl" />
+                {{message.content}}
+            </div>
+            <div class="datetime">
+                <em>{{message.getFriendlyDate()}}</em>
+            </div>
+        </div>
+    </div>
+    <div class="chat-box">
+        <form [formGroup]="form" (ngSubmit)="sendMessage()">
+            <div class="form-group" style="display: inline-block; grid-column: span 11;">
+                <textarea class="form-control" placeholder="Message" name="content" [formControl]="content" (keydown)="keyDown($event)"></textarea>
+            </div>
+            <div class="form-group" style="display: inline-block; grid-column: span 1;">
+                <button class="button-primary" [disabled]="!form.valid">Send</button>
+            </div>
+        </form>
     </div>
 </div>

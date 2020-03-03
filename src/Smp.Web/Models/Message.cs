@@ -9,7 +9,6 @@ namespace Smp.Web.Models
 
         public Message(CreateConversationRequest conversationRequest, Guid conversationId)
         {
-            ReceiverId = conversationRequest.ReceiverId;
             SenderId = conversationRequest.SenderId;
             Content = conversationRequest.Content;
             CreatedAt = DateTime.UtcNow;
@@ -18,7 +17,6 @@ namespace Smp.Web.Models
 
         public Message(CreateMessageRequest message)
         {
-            ReceiverId = message.ReceiverId;
             SenderId = message.SenderId;
             Content = message.Content;
             CreatedAt = DateTime.UtcNow;
@@ -27,7 +25,6 @@ namespace Smp.Web.Models
 
         public long Id { get; set; }
         public Guid SenderId { get; set; }
-        public Guid ReceiverId { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Content { get; set; }
         public Guid ConversationId { get; set; }
@@ -37,7 +34,6 @@ namespace Smp.Web.Models
             return new Message
             {
                 Id = message.Id,
-                ReceiverId = message.ReceiverId,
                 SenderId = message.SenderId,
                 Content = message.Content,
                 CreatedAt = message.CreatedAt,

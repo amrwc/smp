@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Message, FriendlyMessage } from '../models/message';
 import { map } from 'rxjs/operators';
 import { GlobalHelper } from '../helpers/global';
+import { CreateMessageRequest } from '../models/requests/create-message-request';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +17,9 @@ export class MessagesService {
     const messages = this.httpClient.get<Message[]>(
       `${this.baseUrl}api/Messages/GetMessagesFromConversation/${conversationId}?count=${count}&page=${page}`, { headers: this.globalHelper.getAuthHeader() });
     return messages.pipe(map(msgs => msgs.map(m => new FriendlyMessage(m))));
+  }
+
+  public createMessage(createMessageRequest: CreateMessageRequest): Observable<Object> {
+    return this.httpClient.post(`${this.baseUrl}api/Messages/CreateMessage`, createMessageRequest, { headers: this.globalHelper.getAuthHeader() });
   }
 }
