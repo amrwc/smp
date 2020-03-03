@@ -27,7 +27,5 @@ namespace Smp.Migrations
                 migrator.MigrateToLatest();
             }
         }
-            
-
     }
 }
