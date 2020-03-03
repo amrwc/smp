@@ -9,12 +9,12 @@ namespace Smp.Migrations.Migrations
     {
         protected override void Up()
         {
-            Execute(File.ReadAllText(@"../../../Migrations/Up/202002231450_DropReceiverIdFromMessagesTable.sql"));
+            Execute(MigrationUtils.ReadMigration("202002231450_DropReceiverIdFromMessagesTable", true));
         }
 
         protected override void Down()
         {
-            Execute(File.ReadAllText(@"../../../Migrations/Down/202002231450_DropReceiverIdFromMessagesTable.sql"));
+            Execute(MigrationUtils.ReadMigration("202002231450_DropReceiverIdFromMessagesTable", false));
         }
     }
 }

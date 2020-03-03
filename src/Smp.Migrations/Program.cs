@@ -18,14 +18,12 @@ namespace Smp.Migrations
                 IntegratedSecurity = true
             }.ConnectionString;
 
-            using (var connection = new SqlConnection(connectionString))
-            {
-                var databaseProvider = new MssqlDatabaseProvider(connection);
-                var migrator = new SimpleMigrator(migrationsAssembly, databaseProvider);
+            using var connection = new SqlConnection(connectionString);
+            var databaseProvider = new MssqlDatabaseProvider(connection);
+            var migrator = new SimpleMigrator(migrationsAssembly, databaseProvider);
 
-                migrator.Load();
-                migrator.MigrateToLatest();
-            }
+            migrator.Load();
+            migrator.MigrateToLatest();
         }
     }
 }

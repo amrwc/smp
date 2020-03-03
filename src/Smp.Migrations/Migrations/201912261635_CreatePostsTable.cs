@@ -9,12 +9,12 @@ namespace Smp.Migrations.Migrations
     {
         protected override void Up()
         {
-            Execute(File.ReadAllText(@"../../../Migrations/Up/201912261635_CreatePostsTable.sql"));
+            Execute(MigrationUtils.ReadMigration("201912261635_CreatePostsTable", true));
         }
 
         protected override void Down()
         {
-            Execute(File.ReadAllText(@"../../../Migrations/Down/201912261635_CreatePostsTable.sql"));
+            Execute(MigrationUtils.ReadMigration("201912261635_CreatePostsTable", false));
         }
     }
 }
