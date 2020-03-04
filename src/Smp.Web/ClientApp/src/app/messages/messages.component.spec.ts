@@ -1,34 +1,32 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProfileComponent } from './profile.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing'; 
+import { ConversationsService } from '../services/conversations.service';
 import { UsersService } from '../services/users.service';
-import { RelationshipsService } from '../services/relationships.service';
 import { GlobalHelper } from '../helpers/global';
-import { RequestsService } from '../services/requests.service';
+import { MessagesComponent } from './messages.component';
+import { MessagesService } from '../services/messages.service';
 
-describe('ProfileComponent', () => {
-  let component: ProfileComponent;
-  let fixture: ComponentFixture<ProfileComponent>;
+describe('MessagesComponent', () => {
+  let component: MessagesComponent;
+  let fixture: ComponentFixture<MessagesComponent>;
 
   beforeEach(() => {
     localStorage.setItem('currentUser', '{ "id": "id" }');
-
     TestBed.configureTestingModule({
-      declarations: [ ProfileComponent ],
-      imports: [HttpClientTestingModule, RouterTestingModule],
+      declarations: [ MessagesComponent ],
+      imports: [HttpClientTestingModule],
       providers: [
-        UsersService,
-        RequestsService,
-        RelationshipsService,
         GlobalHelper,
+        ConversationsService,
+        MessagesService,
+        UsersService,
         { provide: 'BASE_URL', useValue: "https://www.smp.org/" }
       ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ProfileComponent);
+    fixture = TestBed.createComponent(MessagesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
