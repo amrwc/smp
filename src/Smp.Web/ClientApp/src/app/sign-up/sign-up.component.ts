@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CreateUserRequest } from '../models/requests/create-user-request';
 import { Error } from '../models/error';
 import { Router } from '@angular/router';
