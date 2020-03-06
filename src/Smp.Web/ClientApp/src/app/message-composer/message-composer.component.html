@@ -1,4 +1,4 @@
-<div class="form">
+<div *ngIf="friends" class="form">
     <form (ngSubmit)="f.form.valid && sendMessage()" #f="ngForm" novalidate>
         <div class="form-group" style="grid-row: span 1">
             <mat-form-field>
@@ -7,7 +7,7 @@
             </mat-form-field>
         </div>
 
-        <mat-autocomplete *ngIf="friends" [hidden]="true" #auto="matAutocomplete" [displayWith]="displayFriend.bind(this)">
+        <mat-autocomplete [hidden]="true" #auto="matAutocomplete" [displayWith]="displayFriend.bind(this)">
             <mat-option *ngFor="let friend of filteredFriends" [value]="friend.id">
                 {{ friend.fullName }}
             </mat-option>
