@@ -3,22 +3,21 @@ import { TestBed } from '@angular/core/testing';
 import { AccountsService } from './accounts.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
 import { ResetPasswordRequest } from '../models/requests/reset-password-request';
 
 describe('AccountsService', () => {
   const baseUrl = 'https://www.smp.org/';
 
-  let service: AccountsService;
   let httpClient: HttpClient;
+  let service: AccountsService;
 
   let httpClientGetSpy: jasmine.Spy;
   let httpClientPostSpy: jasmine.Spy;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [HttpClientTestingModule],
-    providers: [{ provide: 'BASE_URL', useValue: baseUrl }]
+      imports: [HttpClientTestingModule],
+      providers: [{ provide: 'BASE_URL', useValue: baseUrl }]
     });
 
     httpClient = TestBed.get(HttpClient);
@@ -26,11 +25,6 @@ describe('AccountsService', () => {
 
     httpClientGetSpy = spyOn(httpClient, 'get');
     httpClientPostSpy = spyOn(httpClient, 'post');
-  });
-
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
   });
 
   describe('forgottenPassword', () => {
