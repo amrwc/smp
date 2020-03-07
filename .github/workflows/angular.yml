@@ -15,4 +15,4 @@ jobs:
         sudo npm install --exact-versions
         sudo npm install -g @angular/cli
         sudo ng build
-        sudo ng test --watch=false
+        sudo ng test --watch=false --browsers=ChromeHeadless
