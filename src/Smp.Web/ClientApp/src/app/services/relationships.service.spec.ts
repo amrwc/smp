@@ -9,9 +9,12 @@ import { RelationshipsService } from './relationships.service';
 
 describe('RelationshipsService', () => {
   const baseUrl = 'https://www.smp.org/';
-  const userOneId = 'aksdfnknkj-123sdf-0asdfasd';
-  const userTwoId = 'adsifasfuh1231231-asxzcz9v8bc9-213123';
-  const relationshipType = RelationshipType.Friend;
+  const relationship: Relationship = {
+    userOneId: 'aksdfnknkj-123sdf-0asdfasd',
+    userTwoId: 'adsifasfuh1231231-asxzcz9v8bc9-213123',
+    relationshipType: RelationshipType.Friend,
+    createdAt: new Date(),
+  } as Relationship;
   let headers: Object;
   let httpClientGetSpy: jasmine.Spy;
   let service: RelationshipsService;
@@ -39,67 +42,59 @@ describe('RelationshipsService', () => {
   });
 
   describe('getRelationship', () => {
-    const expected: Relationship = {
-      userOneId,
-      userTwoId,
-      relationshipType,
-      createdAt: new Date(),
-    } as Relationship;
-
     beforeEach(() => {
-      httpClientGetSpy = spyOn(TestBed.get(HttpClient), 'get').and.returnValue(of(expected));
+      httpClientGetSpy = spyOn(TestBed.get(HttpClient), 'get').and.returnValue(of(relationship));
     });
 
     it('should have called HttpClient.get correctly', () => {
-      service.getRelationship(userOneId, userTwoId, relationshipType);
+      service.getRelationship(
+        relationship.userOneId,
+        relationship.userTwoId,
+        relationship.relationshipType
+      );
       expect(httpClientGetSpy.calls.count()).toEqual(1);
       expect(httpClientGetSpy.calls.argsFor(0)).toEqual([
-        `${baseUrl}api/Relationships/GetRelationship/${userOneId}/${userTwoId}/${relationshipType}`,
+        `${baseUrl}api/Relationships/GetRelationship/${relationship.userOneId}/` +
+          `${relationship.userTwoId}/${relationship.relationshipType}`,
         headers,
       ]);
     });
 
     it('should have returned the expected value', () => {
-      const result = service.getRelationship(userOneId, userTwoId, relationshipType);
+      const result = service.getRelationship(
+        relationship.userOneId,
+        relationship.userTwoId,
+        relationship.relationshipType
+      );
       result.subscribe({
         next: (relationship: Relationship) => {
-          expect(relationship).toEqual(expected);
+          expect(relationship).toEqual(relationship);
         },
       });
     });
   });
 
   describe('getRelationships', () => {
-    const expected: Relationship[] = [
-      {
-        userOneId,
-        userTwoId,
-        relationshipType,
-        createdAt: new Date(),
-      },
-      {
-        userOneId,
-        userTwoId,
-        relationshipType,
-        createdAt: new Date(),
-      },
-    ] as Relationship[];
+    const expected: Relationship[] = [relationship, relationship] as Relationship[];
 
     beforeEach(() => {
       httpClientGetSpy = spyOn(TestBed.get(HttpClient), 'get').and.returnValue(of());
     });
 
     it('should have called HttpClient.get correctly', () => {
-      service.getRelationships(userOneId, relationshipType);
+      service.getRelationships(relationship.userOneId, relationship.relationshipType);
       expect(httpClientGetSpy.calls.count()).toEqual(1);
       expect(httpClientGetSpy.calls.argsFor(0)).toEqual([
-        `${baseUrl}api/Relationships/GetRelationships/${userOneId}/${relationshipType}`,
+        `${baseUrl}api/Relationships/GetRelationships/${relationship.userOneId}/${relationship.relationshipType}`,
         headers,
       ]);
     });
 
     it('should have returned the expected values', () => {
-      const result = service.getRelationships(userOneId, relationshipType);
+      const result = service.getRelationships(
+        relationship.userOneId,
+        relationship.relationshipType
+      );
       result.subscribe({
         next: (relationships: Relationship[]) => {
           expect(relationships).toEqual(expected);
