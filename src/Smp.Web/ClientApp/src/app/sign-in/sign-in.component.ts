@@ -1,12 +1,13 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
 import { SignInRequest } from '../models/requests/sign-in-request';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss']
+  styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent implements OnInit {
   private readonly baseUrl: string;
@@ -50,11 +51,12 @@ export class SignInComponent implements OnInit {
       },
       error: (error: any) => {
         this.signInUnsuccessful = true;
-        this.errorMessage = error.status === 401
-          ? "Invalid sign in details. Please try again."
-          : "We are experiencing technical difficulties right now. Please try again later.";
-          this.loading = false;
-      }
+        this.errorMessage =
+          error.status === 401
+            ? 'Invalid sign in details. Please try again.'
+            : 'We are experiencing technical difficulties right now. Please try again later.';
+        this.loading = false;
+      },
     });
   }
 }

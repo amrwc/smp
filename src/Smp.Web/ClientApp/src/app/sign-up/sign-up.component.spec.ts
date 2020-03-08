@@ -52,7 +52,7 @@ describe('SignUpComponent', () => {
       expect(component.validationErrors.length).toEqual(1);
       expect(component.validationErrors[0].key).toEqual('invalid_full_name');
       expect(usersServiceCreateUserSpy.calls.count()).toEqual(1);
-      expect(usersServiceCreateUserSpy.calls.argsFor(0).toString()).toEqual(createUserRequest.toString());
+      expect(usersServiceCreateUserSpy.calls.argsFor(0)).toEqual([createUserRequest]);
     });
 
     it('should navigate to /sign-in', () => {
@@ -71,7 +71,7 @@ describe('SignUpComponent', () => {
       expect(component.createUserRequest.email).toEqual('my@email.com');
       expect(component.validationErrors.length).toEqual(0);
       expect(usersServiceCreateUserSpy.calls.count()).toEqual(1);
-      expect(usersServiceCreateUserSpy.calls.argsFor(0).toString()).toEqual(createUserRequest.toString());
+      expect(usersServiceCreateUserSpy.calls.argsFor(0)).toEqual([createUserRequest]);
       expect(routerNavigateSpy.calls.count()).toEqual(1);
       expect(routerNavigateSpy.calls.argsFor(0)).toEqual([['/sign-in'], { queryParams: { signUpSuccessful: 'true' } }]);
     });
