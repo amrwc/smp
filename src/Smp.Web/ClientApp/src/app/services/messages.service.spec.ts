@@ -24,7 +24,7 @@ describe('MessagesService', () => {
 
   afterAll(() => {
     localStorage.removeItem('currentUser');
-  })
+  });
 
   beforeEach(() => {
     TestBed.configureTestingModule({
