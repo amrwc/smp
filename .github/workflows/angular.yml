@@ -4,15 +4,20 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    env:
+      directory: ./src/Smp.Web/ClientApp
 
     steps:
     - uses: actions/checkout@v1
-    - name: npm install and ng build
+    - name: npm install
       run: |
-        cd src/Smp.Web/ClientApp
         sudo npm install --exact-versions
         sudo npm install -g @angular/cli
-        sudo ng build
-        sudo npm run test -- --configuration=headless
+      working-directory: ${{env.directory}}
+    - name:  ng build
+      run: sudo ng build
+      working-directory: ${{env.directory}}
+    - name: ng test
+      run: sudo npm run test -- --configuration=headless
+      working-directory: ${{env.directory}}
