@@ -59,7 +59,7 @@ describe('RelationshipsService', () => {
       ]);
     });
 
-    it('should have returned the expected values', () => {
+    it('should have returned the expected value', () => {
       const result = service.getRelationship(userOneId, userTwoId, relationshipType);
       result.subscribe({
         next: (relationship: Relationship) => {
