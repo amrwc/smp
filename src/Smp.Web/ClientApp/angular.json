@@ -97,7 +97,7 @@
           "configurations": {
             "headless": {
               "watch": false,
-              "browsers": "ChromeHeadless"
+              "browsers": "Headless"
             }
           }
         },
