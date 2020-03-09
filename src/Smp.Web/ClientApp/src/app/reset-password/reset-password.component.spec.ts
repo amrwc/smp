@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -16,25 +17,48 @@ describe('ResetPasswordComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ResetPasswordComponent],
       imports: [HttpClientTestingModule, RouterTestingModule, FormsModule],
-      providers: [AccountsService, { provide: 'BASE_URL', useValue: 'https://www.smp.org/' }],
+      providers: [
+        AccountsService,
+        { provide: 'BASE_URL', useValue: 'https://www.smp.org/' },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              paramMap: {
+                get: anyArg => 'bob',
+              },
+            },
+          },
+        },
+      ],
     }).compileComponents();
     fixture = TestBed.createComponent(ResetPasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  describe('resetPassword', async () => {
-    const accountsServiceCreateUserSpy: jasmine.Spy = spyOn(TestBed.get(AccountsService), 'resetPassword');
+  describe('ngOnInit', () => {
+    it('should get correct actionId', () => {
+      expect(component.resetPasswordRequest.actionId).toEqual('bob');
+    });
+  });
+
+  describe('resetPassword', () => {
     const req: ResetPasswordRequest = {
       actionId: '1', // ActionType.ResetPassword
       newPassword: 'qwerty',
       confirmNewPassword: 'qwerty',
     } as ResetPasswordRequest;
+    let accountsServiceCreateUserSpy: jasmine.Spy;
+
+    beforeEach(() => {
+      component.resetPasswordRequest = req;
+      accountsServiceCreateUserSpy = spyOn(TestBed.get(AccountsService), 'resetPassword');
+    });
 
     it('should have a validation error coming from the API', () => {
       const error = new Error('Descriptive error message.');
       accountsServiceCreateUserSpy.and.returnValue(throwError({ error }));
-      component.resetPasswordRequest = req;
       component.resetPassword();
       expect(accountsServiceCreateUserSpy.calls.count()).toEqual(1);
       expect(accountsServiceCreateUserSpy.calls.argsFor(0)).toEqual([req]);
@@ -45,7 +69,6 @@ describe('ResetPasswordComponent', () => {
 
     it('should successfully reset a password', () => {
       accountsServiceCreateUserSpy.and.returnValue(of({}));
-      component.resetPasswordRequest = req;
       component.resetPassword();
       expect(accountsServiceCreateUserSpy.calls.count()).toEqual(1);
       expect(accountsServiceCreateUserSpy.calls.argsFor(0)).toEqual([req]);
