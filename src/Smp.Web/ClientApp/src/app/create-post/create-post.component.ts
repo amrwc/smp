@@ -31,7 +31,6 @@ export class CreatePostComponent implements OnInit {
     this.createPostRequest.receiverId = this.postToId;
     this.postsService.createPost(this.createPostRequest).subscribe({
       next: () => {
-        console.log('bruhhh');
         this.loading = false;
         this.postCreated.emit(null);
       },
