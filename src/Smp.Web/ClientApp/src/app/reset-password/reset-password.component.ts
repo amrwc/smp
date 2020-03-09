@@ -33,7 +33,7 @@ export class ResetPasswordComponent implements OnInit {
       },
       error: (error: any) => {
         this.loading = false;
-        this.validationErrors = error.error;
+        this.validationErrors.push(error.error);
       }
     });
   }
