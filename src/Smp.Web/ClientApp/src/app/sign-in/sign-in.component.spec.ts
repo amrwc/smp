@@ -11,8 +11,13 @@ import { SignInRequest } from '../models/requests/sign-in-request';
 
 describe('SignInComponent', () => {
   const baseUrl: string = 'https://www.smp.org/';
+  const signInRequest: SignInRequest = {
+    email: 'MY@EMAIL.com',
+    password: '280913',
+  } as SignInRequest;
   let component: SignInComponent;
   let fixture: ComponentFixture<SignInComponent>;
+  let httpClientPostSpy: jasmine.Spy;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -22,20 +27,14 @@ describe('SignInComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(SignInComponent);
     component = fixture.componentInstance;
+    component.signInRequest = signInRequest;
     fixture.detectChanges();
+    httpClientPostSpy = spyOn(TestBed.get(HttpClient), 'post');
   });
 
   describe('signIn', () => {
-    const signInRequest: SignInRequest = {
-      email: 'MY@EMAIL.com',
-      password: '280913',
-    } as SignInRequest;
-
     it('should get a 401 error from the API', () => {
-      const httpClientPostSpy: jasmine.Spy = spyOn(TestBed.get(HttpClient), 'post').and.returnValue(
-        throwError({ status: 401 })
-      );
-      component.signInRequest = signInRequest;
+      httpClientPostSpy.and.returnValue(throwError({ status: 401 }));
       component.signIn();
       expect(component.signInRequest.email).toEqual('my@email.com');
       expect(component.signInUnsuccessful).toEqual(true);
@@ -45,10 +44,7 @@ describe('SignInComponent', () => {
     });
 
     it('should get an error other than 401 from the API', () => {
-      const httpClientPostSpy: jasmine.Spy = spyOn(TestBed.get(HttpClient), 'post').and.returnValue(
-        throwError({ status: 500 })
-      );
-      component.signInRequest = signInRequest;
+      httpClientPostSpy.and.returnValue(throwError({ status: 500 }));
       component.signIn();
       expect(component.signInRequest.email).toEqual('my@email.com');
       expect(component.signInUnsuccessful).toEqual(true);
@@ -60,11 +56,8 @@ describe('SignInComponent', () => {
     });
 
     it('should navigate to /', () => {
-      const httpClientPostSpy: jasmine.Spy = spyOn(TestBed.get(HttpClient), 'post').and.returnValue(
-        of({ currentUser: 'bob' })
-      );
       const routerNavigateSpy: jasmine.Spy = spyOn(TestBed.get(Router), 'navigate');
-      component.signInRequest = signInRequest;
+      httpClientPostSpy.and.returnValue(of({ currentUser: 'bob' }));
       component.signIn();
       expect(component.signInRequest.email).toEqual('my@email.com');
       expect(localStorage.getItem('currentUser')).toEqual(JSON.stringify({ currentUser: 'bob' }));

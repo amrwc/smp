@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { AccountsService } from '../services/accounts.service';
 import { ResetPasswordRequest } from '../models/requests/reset-password-request';
 
