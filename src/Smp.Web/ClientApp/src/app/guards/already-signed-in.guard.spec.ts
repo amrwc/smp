@@ -6,12 +6,16 @@ class MockRouter {
 }
 
 describe('AlreadySignedInGuard canActivate', () => {
-  afterEach(() => {
-    localStorage.removeItem('currentUser');
-  })
-
   const router: Router = new MockRouter() as Router;
   const alreadySignedInGuard = new AlreadySignedInGuard(router);
+
+  beforeAll(() => {
+    localStorage.removeItem('currentUser');
+  });
+
+  afterEach(() => {
+    localStorage.removeItem('currentUser');
+  });
 
   it('should return true for a non-logged in user', () => {
     expect(alreadySignedInGuard.canActivate()).toEqual(true);
