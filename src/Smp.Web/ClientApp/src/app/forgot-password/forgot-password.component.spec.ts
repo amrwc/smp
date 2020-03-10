@@ -6,10 +6,18 @@ import { AccountsService } from '../services/accounts.service';
 import { Error } from '../models/error';
 import { FormsModule } from '@angular/forms';
 import { throwError, of } from 'rxjs';
+import { CurrentUser } from '../models/current-user';
 
 describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;
   let fixture: ComponentFixture<ForgotPasswordComponent>;
+
+  const user: CurrentUser = {
+    id: 'cuId',
+    fullName: 'cuFullName',
+    email: 'cu@email.com',
+    token: 'cuToken'
+  } as CurrentUser;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -24,6 +32,14 @@ describe('ForgotPasswordComponent', () => {
     fixture.detectChanges();
 
     component.accountEmail = "MiXeDcAsE@email.com";
+  });
+
+  beforeAll(() => {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+  });
+
+  afterAll(() => {
+    localStorage.removeItem('currentUser');
   });
 
   describe('startPasswordReset', () => {

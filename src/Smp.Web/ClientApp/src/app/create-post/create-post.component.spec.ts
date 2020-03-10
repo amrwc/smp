@@ -4,12 +4,10 @@ import { CreatePostComponent } from './create-post.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { GlobalHelper } from '../helpers/global';
 import { PostsService } from '../services/posts.service';
-import { Error } from '../models/error';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { throwError, of } from 'rxjs';
 import { CreatePostRequest } from '../models/requests/create-post-request';
-import { EventEmitter } from 'protractor';
 
 describe('CreatePostComponent', () => {
   let component: CreatePostComponent;
