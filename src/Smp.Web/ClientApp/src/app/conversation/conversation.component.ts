@@ -37,6 +37,7 @@ export class ConversationComponent implements OnInit {
     if (id === this._conversationId) return;
 
     this._conversationId = id;
+    this.messages = new Array<FriendlyMessage>();
     this._currentPage = 0;
     this.loadedConversation = true;
     this.users = new Map<string, User>();

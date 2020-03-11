@@ -11,6 +11,7 @@ import { FormBuilder } from '@angular/forms';
 import { ExtendedConversation } from '../models/conversation';
 import { User } from '../models/user';
 import { FriendlyMessage } from '../models/message';
+import { of } from 'rxjs';
 
 describe('MessagesComponent', () => {
   let component: MessagesComponent;
@@ -54,8 +55,14 @@ describe('MessagesComponent', () => {
     } as ExtendedConversation
   ];
 
+  const unloadedConversation = { 
+      id: 'conversationid-3',
+      participants: participantsOne,
+      lastMessage: lastMessages[0]
+    } as ExtendedConversation;
+
   beforeEach(() => {
-    localStorage.setItem('currentUser', '{ "id": "userid-1" }');
+    localStorage.setItem('currentUser', JSON.stringify({ id: users[0].id }));
     TestBed.configureTestingModule({
       declarations: [ MessagesComponent, ConversationComponent ],
       imports: [HttpClientTestingModule],
@@ -122,7 +129,85 @@ describe('MessagesComponent', () => {
   });
 
   describe('loadConversation', () => {
+    let cnvSvcGetConversationsSpy: jasmine.Spy;
 
+    beforeEach(() => {
+      cnvSvcGetConversationsSpy = spyOn(TestBed.inject(ConversationsService), 'getConversations');
+      component.conversations = conversations;
+    });
+
+    describe('if the conversation has not already been loaded', () => {
+      let cnvSvcGetConversationParticipantsSpy: jasmine.Spy;
+      let usrSvcGetUserSpy: jasmine.Spy;
+      let msgSvcGetMessagesFromConversationSpy: jasmine.Spy;
+
+      const convId = unloadedConversation.id;
+
+      beforeEach(() => {
+        component.conversation.conversationId = unloadedConversation.id;
+        cnvSvcGetConversationsSpy.and.returnValue(of([unloadedConversation]));
+        cnvSvcGetConversationParticipantsSpy = spyOn(TestBed.inject(ConversationsService), 'getConversationParticipants')
+          .and.returnValue(of([users[0].id, users[1].id]));
+        usrSvcGetUserSpy = spyOn(TestBed.inject(UsersService), 'getUser')
+          .and.returnValue(of(users[0]));
+        msgSvcGetMessagesFromConversationSpy = spyOn(TestBed.inject(MessagesService), 'getMessagesFromConversation')
+          .and.returnValue(of(lastMessages[0]));
+      });
+
+      it('should set variables correctly', () => {
+        component.loadConversation(convId);
+
+        expect(component.startNewConversation).toEqual(false);
+        expect(component.conversation.conversationId).toEqual(convId);
+        expect(component.conversations).toEqual([unloadedConversation]);
+      });
+
+      it('should call ConversationsService getConversations',() => {
+        component.loadConversation(convId);
+
+        expect(cnvSvcGetConversationsSpy.calls.count()).toEqual(1);
+        expect(cnvSvcGetConversationsSpy.calls.argsFor(0)).toEqual([users[0].id]);
+      });
+
+      it('should call ConversationsService getConversationParticipants', () => {
+        component.loadConversation(convId);
+
+        expect(cnvSvcGetConversationParticipantsSpy.calls.count()).toEqual(1);
+        expect(cnvSvcGetConversationParticipantsSpy.calls.argsFor(0)).toEqual([unloadedConversation.id]);
+      });
+
+      it('should call UsersService getUser', () => {
+        component.loadConversation(convId);
+
+        expect(usrSvcGetUserSpy.calls.count()).toEqual(2);
+        expect(usrSvcGetUserSpy.calls.argsFor(0)).toEqual([users[0].id]);
+        expect(usrSvcGetUserSpy.calls.argsFor(1)).toEqual([users[1].id]);
+      });
+
+      it('should call MessagesService getMessagesFromConversation', () => {
+        component.loadConversation(convId);
+
+        expect(msgSvcGetMessagesFromConversationSpy.calls.count()).toEqual(1);
+        expect(msgSvcGetMessagesFromConversationSpy.calls.argsFor(0)).toEqual([
+          convId, 1, 0
+        ]);
+      });
+    });
+
+    describe('if the conversation has already been loaded', () => {
+      it('should set variables correctly', () => {
+        component.loadConversation(conversations[0].id);
+
+        expect(component.startNewConversation).toEqual(false);
+        //expect(component.conversation.conversationId).toEqual(conversations[0].id);
+      });
+
+      it('should not call ConversationsService getConversations', () => {
+        component.loadConversation(conversations[0].id);
+
+        expect(cnvSvcGetConversationsSpy.calls.count()).toEqual(0);
+      });
+    });
   });
 
   describe('showStartConversation', () => {

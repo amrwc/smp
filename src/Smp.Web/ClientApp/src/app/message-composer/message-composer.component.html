@@ -1,4 +1,4 @@
-<div *ngIf="friends" class="form">
+<div *ngIf="friends.length" class="form">
     <form (ngSubmit)="f.form.valid && sendMessage()" #f="ngForm" novalidate>
         <div class="form-group" style="grid-row: span 1">
             <mat-form-field>
