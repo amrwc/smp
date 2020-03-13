@@ -15,7 +15,7 @@ import { UsersService } from '../services/users.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
   @ViewChild(FeedComponent)
@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit {
     private relationshipsService: RelationshipsService,
     private globalHelper: GlobalHelper,
     private route: ActivatedRoute
-  ) {  }
+  ) {}
 
   ngOnInit() {
     const visitingUserId = this.globalHelper.localStorageItem<CurrentUser>('currentUser').id;
@@ -54,23 +54,21 @@ export class ProfileComponent implements OnInit {
                 this.showAddFriendButton = false;
                 this.friends = true;
               },
-              error: (error: any) => {
-              }
+              error: (error: any) => {},
             });
           }
-        }
+        },
       });
     }
 
-    this.usersService.getUser(this.userId)
-      .subscribe({
-        next: (result: any) => {
-          this.user = result;
-        },
-        error: (error: any) => {
-          console.error(error);
-        }
-      });
+    this.usersService.getUser(this.userId).subscribe({
+      next: (result: any) => {
+        this.user = result;
+      },
+      error: (error: any) => {
+        console.error(error);
+      },
+    });
   }
 
   public updatePosts(): void {
@@ -78,12 +76,16 @@ export class ProfileComponent implements OnInit {
   }
 
   public addFriend(): void {
-    let req = new CreateRequestRequest(this.globalHelper.localStorageItem<CurrentUser>('currentUser').id, this.userId, RequestType.Friend);
+    const req = new CreateRequestRequest(
+      this.globalHelper.localStorageItem<CurrentUser>('currentUser').id,
+      this.userId,
+      RequestType.Friend
+    );
     this.requestsService.sendRequest(req).subscribe({
       next: () => {
         this.showAddFriendButton = false;
         this.requestPending = true;
-      }
+      },
     });
   }
 }

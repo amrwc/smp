@@ -11,6 +11,7 @@ import { RequestsService } from '../services/requests.service';
 import { User } from '../models/user';
 import { UsersService } from '../services/users.service';
 import { RequestType } from '../models/request-type.enum';
+import { CreateRequestRequest } from '../models/requests/create-request-request';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -151,6 +152,22 @@ describe('ProfileComponent', () => {
           expect(component.user).toBeUndefined();
         });
       });
+    });
+  });
+
+  describe('addFriend', () => {
+    const req = new CreateRequestRequest('id', 'bob', RequestType.Friend);
+
+    it('should send a friend request', () => {
+      const requestsServiceSendRequestSpy: jasmine.Spy = spyOn(
+        TestBed.get(RequestsService),
+        'sendRequest'
+      ).and.returnValue(of({}));
+      component.addFriend();
+      expect(component.showAddFriendButton).toBeFalsy();
+      expect(component.requestPending).toBeTruthy();
+      expect(requestsServiceSendRequestSpy.calls.count()).toEqual(1);
+      expect(requestsServiceSendRequestSpy.calls.argsFor(0)).toEqual([req]);
     });
   });
 });
