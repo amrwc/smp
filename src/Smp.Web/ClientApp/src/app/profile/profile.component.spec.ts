@@ -8,6 +8,7 @@ import { GlobalHelper } from '../helpers/global';
 import { ProfileComponent } from './profile.component';
 import { RelationshipsService } from '../services/relationships.service';
 import { RequestsService } from '../services/requests.service';
+import { User } from '../models/user';
 import { UsersService } from '../services/users.service';
 import { RequestType } from '../models/request-type.enum';
 
@@ -114,6 +115,40 @@ describe('ProfileComponent', () => {
           expect(relationshipsServiceGetRelationshipSpy.calls.argsFor(0)).toEqual(
             getRelationshipsServiceGetRelationshipArgs()
           );
+        });
+      });
+
+      describe('UsersService.getUser()', () => {
+        const userMock: User = {
+          id: 'aknfdkanjdf-123213-asdfdfas',
+          fullName: 'bob',
+          email: 'my@email.com',
+          profilePictureUrl: 'example.com/pics/pic.png',
+        } as User;
+        let usersServiceGetUserSpy: jasmine.Spy;
+
+        beforeEach(() => {
+          usersServiceGetUserSpy = spyOn(TestBed.get(UsersService), 'getUser');
+          // Skip the logic around the 'Add Friend' button
+          localStorage.removeItem('currentUser');
+          localStorage.setItem('currentUser', '{ "id": "bob" }');
+        });
+
+        afterEach(() => {
+          expect(usersServiceGetUserSpy.calls.count()).toEqual(1);
+          expect(usersServiceGetUserSpy.calls.argsFor(0)).toEqual(['bob']);
+        });
+
+        it("should set the 'user' field correctly", () => {
+          usersServiceGetUserSpy.and.returnValue(of(userMock));
+          component.ngOnInit();
+          expect(component.user).toEqual(userMock);
+        });
+
+        it("should not set the 'user' field on error", () => {
+          usersServiceGetUserSpy.and.returnValue(throwError(new Error()));
+          component.ngOnInit();
+          expect(component.user).toBeUndefined();
         });
       });
     });
