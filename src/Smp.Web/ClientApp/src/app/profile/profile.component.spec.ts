@@ -13,9 +13,8 @@ import { RequestsService } from '../services/requests.service';
 import { User } from '../models/user';
 import { UsersService } from '../services/users.service';
 import { RequestType } from '../models/request-type.enum';
-import { BrowserModule } from '@angular/platform-browser';
 
-fdescribe('ProfileComponent', () => {
+describe('ProfileComponent', () => {
   const userMock: User = {
     id: 'aknfdkanjdf-123213-asdfdfas',
     fullName: 'bob',

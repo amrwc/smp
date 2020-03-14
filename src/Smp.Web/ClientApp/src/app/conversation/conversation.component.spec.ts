@@ -25,7 +25,7 @@ describe('ConversationComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ConversationComponent],
       imports: [HttpClientTestingModule],
-      providers: [ConversationsService, MessagesService, UsersService, GlobalHelper, FormBuilder, { provide: 'BASE_URL', useValue: "https://www.smp.org/" }]
+      providers: [ FormBuilder, { provide: 'BASE_URL', useValue: "https://www.smp.org/" }]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ConversationComponent);
