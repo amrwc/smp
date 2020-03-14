@@ -15,8 +15,6 @@ describe('ConversationComponent', () => {
   let fixture: ComponentFixture<ConversationComponent>;
   const userId = 'userid-1'
 
-  let msgSvcCreateMessageSpyOn: jasmine.Spy;
-
   const msgReq = new CreateMessageRequest();
   msgReq.content = 'Message Content';
   msgReq.conversationId = 'conversationid-1';
@@ -36,12 +34,12 @@ describe('ConversationComponent', () => {
 
     let cnvId = '';
 
-    const setterSpy = spyOnProperty(component, 'conversationId', 'set')
+    spyOnProperty(component, 'conversationId', 'set')
       .and.callFake((convId: string) => {
         cnvId = convId;
     });
 
-    const getterSpy = spyOnProperty(component, 'conversationId', 'get')
+    spyOnProperty(component, 'conversationId', 'get')
       .and.callFake(() => {
         return cnvId;
     });
@@ -53,7 +51,7 @@ describe('ConversationComponent', () => {
 
   describe('sendMessage', () => {
     beforeEach(() => {
-      msgSvcCreateMessageSpyOn = spyOn(TestBed.inject(MessagesService), "createMessage")
+      spyOn(TestBed.inject(MessagesService), "createMessage")
         .and.returnValue(of(' '));
 
       component.form.value.content = 'Message Content';
@@ -63,8 +61,8 @@ describe('ConversationComponent', () => {
     it('should call MessagesServices createMessages correctly', () => {
       component.sendMessage();
 
-      expect(msgSvcCreateMessageSpyOn.calls.count()).toEqual(1);
-      expect(msgSvcCreateMessageSpyOn.calls.argsFor(0)).toEqual([msgReq]);
+      expect(TestBed.inject(MessagesService).createMessage).toHaveBeenCalled();
+      expect(TestBed.inject(MessagesService).createMessage).toHaveBeenCalledWith(msgReq);
     });
 
     it('should reset the form', () => {
@@ -94,7 +92,7 @@ describe('ConversationComponent', () => {
     } as KeyboardEvent;
 
     beforeEach(() => {
-      msgSvcCreateMessageSpyOn = spyOn(TestBed.inject(MessagesService), "createMessage")
+      spyOn(TestBed.inject(MessagesService), "createMessage")
         .and.returnValue(of(' '));
 
       component.form.value.content = 'Message Content';
@@ -121,8 +119,8 @@ describe('ConversationComponent', () => {
       it('should call MessagesServices createMessages correctly', () => {
         component.keyDown(enterEvent);
   
-        expect(msgSvcCreateMessageSpyOn.calls.count()).toEqual(1);
-        expect(msgSvcCreateMessageSpyOn.calls.argsFor(0)).toEqual([msgReq]);
+        expect(TestBed.inject(MessagesService).createMessage).toHaveBeenCalled();
+        expect(TestBed.inject(MessagesService).createMessage).toHaveBeenCalledWith(msgReq);
       });
   
       it('should reset the form', () => {
