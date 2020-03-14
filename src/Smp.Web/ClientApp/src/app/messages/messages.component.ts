@@ -4,7 +4,7 @@ import { GlobalHelper } from '../helpers/global';
 import { ConversationsService } from '../services/conversations.service';
 import { MessagesService } from '../services/messages.service';
 import { CurrentUser } from '../models/current-user';
-import { Message, FriendlyMessage } from '../models/message';
+import { FriendlyMessage } from '../models/message';
 import { UsersService } from '../services/users.service';
 import { User } from '../models/user';
 import { ConversationComponent } from '../conversation/conversation.component';
