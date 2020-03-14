@@ -7,12 +7,23 @@ import { UsersService } from '../services/users.service';
 import { GlobalHelper } from '../helpers/global';
 import { FormBuilder } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
+import { CreateMessageRequest } from '../models/requests/create-message-request';
 
 describe('ConversationComponent', () => {
   let component: ConversationComponent;
   let fixture: ComponentFixture<ConversationComponent>;
+  const userId = 'userid-1'
+
+  let msgSvcCreateMessageSpyOn: jasmine.Spy;
+
+  const msgReq = new CreateMessageRequest();
+  msgReq.content = 'Message Content';
+  msgReq.conversationId = 'conversationid-1';
+  msgReq.senderId = 'userid-1';
 
   beforeEach(() => {
+    localStorage.setItem('currentUser', JSON.stringify({ id: userId }));
     TestBed.configureTestingModule({
       declarations: [ConversationComponent],
       imports: [HttpClientTestingModule],
@@ -24,7 +35,89 @@ describe('ConversationComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  afterEach(() => {
+    localStorage.removeItem('currentUser');
+  });
+
+  describe('sendMessage', () => {
+    beforeEach(() => {
+      msgSvcCreateMessageSpyOn = spyOn(TestBed.inject(MessagesService), "createMessage")
+        .and.returnValue(of(' '));
+
+      component.form.value.content = 'Message Content';
+      component.conversationId = 'conversationid-1';
+    });
+
+    it('should call MessagesServices createMessages correctly', () => {
+      component.sendMessage();
+
+      expect(msgSvcCreateMessageSpyOn.calls.count()).toEqual(1);
+      expect(msgSvcCreateMessageSpyOn.calls.argsFor(0)).toEqual([msgReq]);
+    });
+
+    it('should reset the form', () => {
+      component.sendMessage();
+
+      expect(component.form.value.content).toEqual(null);
+    });
+  });
+
+  describe('keyDown', () => {
+    let defaultPrevented: boolean;
+
+    const nonEnterEvent = {
+      keyCode: 12,
+      preventDefault: () => {
+        defaultPrevented = true;
+        return;
+      }
+    } as KeyboardEvent;
+
+    const enterEvent = {
+      keyCode: 13,
+      preventDefault: () => {
+        defaultPrevented = true;
+        return;
+      }
+    } as KeyboardEvent;
+
+    beforeEach(() => {
+      msgSvcCreateMessageSpyOn = spyOn(TestBed.inject(MessagesService), "createMessage")
+        .and.returnValue(of(' '));
+
+      component.form.value.content = 'Message Content';
+      component.conversationId = 'conversationid-1';
+
+      defaultPrevented = false;
+    });
+
+    describe('when enter has not been pressed', () => {
+      it('should not call event.preventDefault', () => {
+        component.keyDown(nonEnterEvent);
+
+        expect(defaultPrevented).toEqual(false);
+      });
+    });
+
+    describe('when enter has been pressed', () => {
+      it('should call event.preventDefault', () => {
+        component.keyDown(enterEvent);
+
+        expect(defaultPrevented).toEqual(true);
+      });
+
+      it('should call MessagesServices createMessages correctly', () => {
+        component.keyDown(enterEvent);
+  
+        expect(msgSvcCreateMessageSpyOn.calls.count()).toEqual(1);
+        expect(msgSvcCreateMessageSpyOn.calls.argsFor(0)).toEqual([msgReq]);
+      });
+  
+      it('should reset the form', () => {
+        component.keyDown(enterEvent);
+  
+        expect(component.form.value.content).toEqual(null);
+      });
+    });
   });
 });
