@@ -7,7 +7,6 @@ import { MessageComposerComponent } from './message-composer.component';
 import { RelationshipsService } from '../services/relationships.service';
 import { ConversationsService } from '../services/conversations.service';
 import { UsersService } from '../services/users.service';
-import { GlobalHelper } from '../helpers/global';
 import { AngularMaterialModule } from '../angular-material.module';
 import { of, throwError } from 'rxjs';
 import { Relationship } from '../models/relationship';
@@ -32,10 +31,6 @@ describe('MessageComposerComponent', () => {
       declarations: [ MessageComposerComponent ],
       imports: [HttpClientTestingModule, FormsModule, AngularMaterialModule, BrowserAnimationsModule],
       providers: [
-        GlobalHelper,
-        RelationshipsService,
-        ConversationsService,
-        UsersService,
         { provide: 'BASE_URL', useValue: "https://www.smp.org/" }
       ]
     })

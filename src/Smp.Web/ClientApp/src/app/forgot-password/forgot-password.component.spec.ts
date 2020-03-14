@@ -23,7 +23,7 @@ describe('ForgotPasswordComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ForgotPasswordComponent ],
       imports: [ HttpClientTestingModule, FormsModule ],
-      providers: [ AccountsService, { provide: 'BASE_URL', useValue: "https://www.smp.org/" }]
+      providers: [ { provide: 'BASE_URL', useValue: "https://www.smp.org/" }]
     })
     .compileComponents();
 

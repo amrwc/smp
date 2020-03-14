@@ -14,7 +14,7 @@ describe('FeedComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ FeedComponent ],
       imports: [ HttpClientTestingModule ],
-      providers: [ PostsService, { provide: 'BASE_URL', useValue: "https://www.smp.org/" }]
+      providers: [ { provide: 'BASE_URL', useValue: "https://www.smp.org/" }]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FeedComponent);
