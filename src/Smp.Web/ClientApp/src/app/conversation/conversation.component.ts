@@ -47,7 +47,7 @@ export class ConversationComponent implements OnInit {
       .withUrl('/hubs/messages', { accessTokenFactory: () => this.globalHelper.localStorageItem<CurrentUser>('currentUser').token })
       .build();
     this._hubConnection.start();
-    this._hubConnection.on(`newmessage/${this._conversationId}`, () => {
+    this._hubConnection.on(`newmessage/${this.conversationId}`, () => {
       this.getNewestMessages();
     });
   }
@@ -85,7 +85,7 @@ export class ConversationComponent implements OnInit {
   public sendMessage(): void {
     const createMessageRequest = new CreateMessageRequest();
     createMessageRequest.content = this.form.value.content;
-    createMessageRequest.conversationId = this._conversationId;
+    createMessageRequest.conversationId = this.conversationId;
     createMessageRequest.senderId = this.globalHelper.localStorageItem<CurrentUser>('currentUser').id;
 
     this.messagesService.createMessage(createMessageRequest).subscribe({

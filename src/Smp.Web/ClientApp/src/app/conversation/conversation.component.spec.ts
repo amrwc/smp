@@ -33,6 +33,18 @@ describe('ConversationComponent', () => {
     fixture = TestBed.createComponent(ConversationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    let cnvId = '';
+
+    const setterSpy = spyOnProperty(component, 'conversationId', 'set')
+      .and.callFake((convId: string) => {
+        cnvId = convId;
+    });
+
+    const getterSpy = spyOnProperty(component, 'conversationId', 'get')
+      .and.callFake(() => {
+        return cnvId;
+    });
   });
 
   afterEach(() => {
