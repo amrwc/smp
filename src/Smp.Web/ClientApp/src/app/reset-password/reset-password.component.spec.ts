@@ -18,7 +18,6 @@ describe('ResetPasswordComponent', () => {
       declarations: [ResetPasswordComponent],
       imports: [HttpClientTestingModule, RouterTestingModule, FormsModule],
       providers: [
-        AccountsService,
         { provide: 'BASE_URL', useValue: 'https://www.smp.org/' },
         {
           provide: ActivatedRoute,

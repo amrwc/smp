@@ -3,7 +3,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { of, throwError } from 'rxjs';
 import { FriendlyRequest, Request } from '../models/request';
-import { GlobalHelper } from '../helpers/global';
 import { RequestType } from '../models/request-type.enum';
 import { RequestsComponent } from './requests.component';
 import { RequestsService } from '../services/requests.service';
@@ -30,9 +29,6 @@ describe('RequestsComponent', () => {
       declarations: [RequestsComponent],
       imports: [HttpClientTestingModule],
       providers: [
-        GlobalHelper,
-        RequestsService,
-        UsersService,
         { provide: 'BASE_URL', useValue: 'https://www.smp.org/' },
       ],
     }).compileComponents();
