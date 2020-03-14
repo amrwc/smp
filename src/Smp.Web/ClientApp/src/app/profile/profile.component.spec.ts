@@ -4,29 +4,31 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { of, throwError } from 'rxjs';
-import { GlobalHelper } from '../helpers/global';
+import { CreateRequestRequest } from '../models/requests/create-request-request';
+import { FeedComponent } from '../feed/feed.component';
+import { PostsService } from '../services/posts.service';
 import { ProfileComponent } from './profile.component';
 import { RelationshipsService } from '../services/relationships.service';
 import { RequestsService } from '../services/requests.service';
 import { User } from '../models/user';
 import { UsersService } from '../services/users.service';
 import { RequestType } from '../models/request-type.enum';
-import { CreateRequestRequest } from '../models/requests/create-request-request';
 
 describe('ProfileComponent', () => {
+  const userMock: User = {
+    id: 'aknfdkanjdf-123213-asdfdfas',
+    fullName: 'bob',
+    email: 'my@email.com',
+    profilePictureUrl: 'example.com/pics/pic.png',
+  } as User;
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
 
   beforeEach(() => {
     localStorage.setItem('currentUser', '{ "id": "id" }');
     TestBed.configureTestingModule({
-      declarations: [ProfileComponent],
       imports: [HttpClientTestingModule, RouterTestingModule],
       providers: [
-        UsersService,
-        RequestsService,
-        RelationshipsService,
-        GlobalHelper,
         { provide: 'BASE_URL', useValue: 'https://www.smp.org/' },
         {
           provide: ActivatedRoute,
@@ -50,82 +52,82 @@ describe('ProfileComponent', () => {
   });
 
   describe('ngOnInit', () => {
+    let getRequestsServiceGetRequestArgs: Array<any>;
+    let getRelationshipsServiceGetRelationshipArgs: Array<any>;
     let requestsServiceGetRequestSpy: jasmine.Spy;
     let relationshipsServiceGetRelationshipSpy: jasmine.Spy;
 
     beforeEach(() => {
+      const currentUserId = JSON.parse(localStorage.getItem('currentUser')).id;
+      getRequestsServiceGetRequestArgs = [currentUserId, 'bob', RequestType.Friend];
+      getRelationshipsServiceGetRelationshipArgs = ['bob', currentUserId, RequestType.Friend];
       requestsServiceGetRequestSpy = spyOn(TestBed.get(RequestsService), 'getRequest');
       relationshipsServiceGetRelationshipSpy = spyOn(TestBed.get(RelationshipsService), 'getRelationship');
     });
 
-    describe("should show 'Add Friend' button", () => {
+    describe("should have shown 'Add Friend' button", () => {
       afterEach(() => {
         expect(component.showAddFriendButton).toBeTruthy();
         expect(component.friends).toBeFalsy();
         expect(component.requestPending).toBeFalsy();
-        expect(requestsServiceGetRequestSpy.calls.count()).toEqual(1);
-        expect(requestsServiceGetRequestSpy.calls.argsFor(0)).toEqual(getRequestsServiceGetRequestArgs());
+        expect(TestBed.get(RequestsService).getRequest).toHaveBeenCalledTimes(1);
+        expect(TestBed.get(RequestsService).getRequest).toHaveBeenCalledWith(...getRequestsServiceGetRequestArgs);
       });
 
-      it('when RequestsService.getRequest() returns error other than 404', () => {
-        requestsServiceGetRequestSpy.and.returnValue(throwError({ status: 400 }));
+      it('when RequestsService.getRequest() returned error other than 404', () => {
+        requestsServiceGetRequestSpy.and.returnValue(throwError({ status: 321 }));
         component.ngOnInit();
       });
 
-      it('when RequestsService.getRequest() returns 404 error', () => {
+      it('when RequestsService.getRequest() returned 404 error', () => {
         requestsServiceGetRequestSpy.and.returnValue(throwError({ status: 404 }));
         relationshipsServiceGetRelationshipSpy.and.returnValue(throwError(new Error()));
         component.ngOnInit();
-        expect(relationshipsServiceGetRelationshipSpy.calls.count()).toEqual(1);
-        expect(relationshipsServiceGetRelationshipSpy.calls.argsFor(0)).toEqual(
-          getRelationshipsServiceGetRelationshipArgs()
+        expect(TestBed.get(RelationshipsService).getRelationship).toHaveBeenCalledTimes(1);
+        expect(TestBed.get(RelationshipsService).getRelationship).toHaveBeenCalledWith(
+          ...getRelationshipsServiceGetRelationshipArgs
         );
       });
     });
 
-    describe("should not show 'Add Friend' button", () => {
+    describe("should not have shown 'Add Friend' button", () => {
       afterEach(() => {
         expect(component.showAddFriendButton).toBeFalsy();
       });
 
-      it('when the user visits their own profile', () => {
+      it('when the user visited their own profile', () => {
         localStorage.removeItem('currentUser');
         localStorage.setItem('currentUser', '{ "id": "bob" }');
         component.ngOnInit();
       });
 
       describe('when RequestsService.getRequest()', () => {
-        it('finds a pending friend request', () => {
+        afterEach(() => {
+          expect(TestBed.get(RequestsService).getRequest).toHaveBeenCalledTimes(1);
+          expect(TestBed.get(RequestsService).getRequest).toHaveBeenCalledWith(...getRequestsServiceGetRequestArgs);
+        });
+
+        it('found a pending friend request', () => {
           requestsServiceGetRequestSpy.and.returnValue(of({}));
           component.ngOnInit();
           expect(component.friends).toBeFalsy();
           expect(component.requestPending).toBeTruthy();
-          expect(requestsServiceGetRequestSpy.calls.count()).toEqual(1);
-          expect(requestsServiceGetRequestSpy.calls.argsFor(0)).toEqual(getRequestsServiceGetRequestArgs());
         });
 
-        it('returns 404 error and RelationshipsService.getRelationship() finds a relationship', () => {
+        it('returned 404 error and RelationshipsService.getRelationship() found a relationship', () => {
           requestsServiceGetRequestSpy.and.returnValue(throwError({ status: 404 }));
           relationshipsServiceGetRelationshipSpy.and.returnValue(of({}));
           component.ngOnInit();
           expect(component.friends).toBeTruthy();
           expect(component.requestPending).toBeFalsy();
-          expect(requestsServiceGetRequestSpy.calls.count()).toEqual(1);
-          expect(requestsServiceGetRequestSpy.calls.argsFor(0)).toEqual(getRequestsServiceGetRequestArgs());
-          expect(relationshipsServiceGetRelationshipSpy.calls.count()).toEqual(1);
-          expect(relationshipsServiceGetRelationshipSpy.calls.argsFor(0)).toEqual(
-            getRelationshipsServiceGetRelationshipArgs()
+          expect(TestBed.get(RelationshipsService).getRelationship).toHaveBeenCalledTimes(1);
+          expect(TestBed.get(RelationshipsService).getRelationship).toHaveBeenCalledWith(
+            ...getRelationshipsServiceGetRelationshipArgs
           );
         });
       });
 
       describe('UsersService.getUser()', () => {
-        const userMock: User = {
-          id: 'aknfdkanjdf-123213-asdfdfas',
-          fullName: 'bob',
-          email: 'my@email.com',
-          profilePictureUrl: 'example.com/pics/pic.png',
-        } as User;
         let usersServiceGetUserSpy: jasmine.Spy;
 
         beforeEach(() => {
@@ -136,18 +138,18 @@ describe('ProfileComponent', () => {
         });
 
         afterEach(() => {
-          expect(usersServiceGetUserSpy.calls.count()).toEqual(1);
-          expect(usersServiceGetUserSpy.calls.argsFor(0)).toEqual(['bob']);
+          expect(TestBed.get(UsersService).getUser).toHaveBeenCalledTimes(1);
+          expect(TestBed.get(UsersService).getUser).toHaveBeenCalledWith('bob');
         });
 
-        it("should set the 'user' field correctly", () => {
-          usersServiceGetUserSpy.and.returnValue(of(userMock));
+        it("should have set the 'user' field correctly", () => {
+          usersServiceGetUserSpy.and.callFake(userId => of(userMock));
           component.ngOnInit();
           expect(component.user).toEqual(userMock);
         });
 
-        it("should not set the 'user' field on error", () => {
-          usersServiceGetUserSpy.and.returnValue(throwError(new Error()));
+        it("should not have set the 'user' field on error", () => {
+          usersServiceGetUserSpy.and.callFake(userId => throwError(new Error()));
           component.ngOnInit();
           expect(component.user).toBeUndefined();
         });
@@ -155,27 +157,27 @@ describe('ProfileComponent', () => {
     });
   });
 
-  describe('addFriend', () => {
-    const req = new CreateRequestRequest('id', 'bob', RequestType.Friend);
+  describe('updatePosts()', () => {
+    it('should have called FeedComponent.getPosts()', () => {
+      component.user = userMock;
+      component.feedComponent = new FeedComponent(TestBed.get(PostsService));
+      spyOn(component.feedComponent, 'getPosts');
+      component.updatePosts();
+      expect(component.feedComponent.getPosts).toHaveBeenCalledTimes(1);
+      expect(component.feedComponent.getPosts).toHaveBeenCalledWith();
+    });
+  });
 
-    it('should send a friend request', () => {
-      const requestsServiceSendRequestSpy: jasmine.Spy = spyOn(
-        TestBed.get(RequestsService),
-        'sendRequest'
-      ).and.returnValue(of({}));
+  describe('addFriend()', () => {
+    it('should have sent a friend request', () => {
+      spyOn(TestBed.get(RequestsService), 'sendRequest').and.returnValue(of({}));
       component.addFriend();
       expect(component.showAddFriendButton).toBeFalsy();
       expect(component.requestPending).toBeTruthy();
-      expect(requestsServiceSendRequestSpy.calls.count()).toEqual(1);
-      expect(requestsServiceSendRequestSpy.calls.argsFor(0)).toEqual([req]);
+      expect(TestBed.get(RequestsService).sendRequest).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(RequestsService).sendRequest).toHaveBeenCalledWith(
+        new CreateRequestRequest('id', 'bob', RequestType.Friend)
+      );
     });
   });
 });
-
-function getRequestsServiceGetRequestArgs(): Array<any> {
-  return [JSON.parse(localStorage.getItem('currentUser')).id, 'bob', RequestType.Friend];
-}
-
-function getRelationshipsServiceGetRelationshipArgs(): Array<any> {
-  return ['bob', JSON.parse(localStorage.getItem('currentUser')).id, RequestType.Friend];
-}
