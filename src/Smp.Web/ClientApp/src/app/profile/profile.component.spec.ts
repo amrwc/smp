@@ -13,8 +13,9 @@ import { RequestsService } from '../services/requests.service';
 import { User } from '../models/user';
 import { UsersService } from '../services/users.service';
 import { RequestType } from '../models/request-type.enum';
+import { BrowserModule } from '@angular/platform-browser';
 
-describe('ProfileComponent', () => {
+fdescribe('ProfileComponent', () => {
   const userMock: User = {
     id: 'aknfdkanjdf-123213-asdfdfas',
     fullName: 'bob',
@@ -27,6 +28,7 @@ describe('ProfileComponent', () => {
   beforeEach(() => {
     localStorage.setItem('currentUser', '{ "id": "id" }');
     TestBed.configureTestingModule({
+      declarations: [ProfileComponent],
       imports: [HttpClientTestingModule, RouterTestingModule],
       providers: [
         { provide: 'BASE_URL', useValue: 'https://www.smp.org/' },

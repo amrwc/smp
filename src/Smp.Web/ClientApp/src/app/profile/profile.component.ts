@@ -66,7 +66,6 @@ export class ProfileComponent implements OnInit {
         this.user = result;
       },
       error: (error: any) => {
-        console.error(error);
       },
     });
   }
