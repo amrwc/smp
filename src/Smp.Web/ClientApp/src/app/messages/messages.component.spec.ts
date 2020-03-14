@@ -129,6 +129,18 @@ describe('MessagesComponent', () => {
     beforeEach(() => {
       cnvSvcGetConversationsSpy = spyOn(TestBed.inject(ConversationsService), 'getConversations');
       component.conversations = conversations;
+
+      let cnvId = '';
+
+      const setterSpy = spyOnProperty(component.conversation, 'conversationId', 'set')
+        .and.callFake((convId: string) => {
+          cnvId = convId;
+      });
+
+      const getterSpy = spyOnProperty(component.conversation, 'conversationId', 'get')
+        .and.callFake(() => {
+          return cnvId;
+      });
     });
 
     describe('if the conversation has not already been loaded', () => {
@@ -139,7 +151,6 @@ describe('MessagesComponent', () => {
       const convId = unloadedConversation.id;
 
       beforeEach(() => {
-        component.conversation.conversationId = unloadedConversation.id;
         cnvSvcGetConversationsSpy.and.returnValue(of([unloadedConversation]));
         cnvSvcGetConversationParticipantsSpy = spyOn(TestBed.inject(ConversationsService), 'getConversationParticipants')
           .and.returnValue(of([users[0].id, users[1].id]));
@@ -147,6 +158,8 @@ describe('MessagesComponent', () => {
           .and.returnValue(of(users[0]));
         msgSvcGetMessagesFromConversationSpy = spyOn(TestBed.inject(MessagesService), 'getMessagesFromConversation')
           .and.returnValue(of(lastMessages[0]));
+
+        component.conversation.conversationId = unloadedConversation.id;
       });
 
       it('should set variables correctly', () => {
@@ -194,7 +207,7 @@ describe('MessagesComponent', () => {
         component.loadConversation(conversations[0].id);
 
         expect(component.startNewConversation).toEqual(false);
-        //expect(component.conversation.conversationId).toEqual(conversations[0].id);
+        expect(component.conversation.conversationId).toEqual(conversations[0].id);
       });
 
       it('should not call ConversationsService getConversations', () => {
