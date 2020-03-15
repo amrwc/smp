@@ -38,7 +38,7 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  public signIn() {
+  public signIn(): void {
     this.loading = true;
     this.signUpSuccessful = false;
     this.signInRequest.email = this.signInRequest.email.toLowerCase();
