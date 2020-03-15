@@ -144,13 +144,13 @@ describe('ProfileComponent', () => {
         });
 
         it("should have set the 'user' field correctly", () => {
-          usersServiceGetUserSpy.and.callFake(userId => of(userMock));
+          usersServiceGetUserSpy.and.callFake(() => of(userMock));
           component.ngOnInit();
           expect(component.user).toEqual(userMock);
         });
 
         it("should not have set the 'user' field on error", () => {
-          usersServiceGetUserSpy.and.callFake(userId => throwError(new Error()));
+          usersServiceGetUserSpy.and.callFake(() => throwError(new Error()));
           component.ngOnInit();
           expect(component.user).toBeUndefined();
         });
