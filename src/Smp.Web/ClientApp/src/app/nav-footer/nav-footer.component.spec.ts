@@ -1,14 +1,13 @@
-import { TestBed, ComponentFixture } from "@angular/core/testing";
-import { NavFooterComponent } from "./nav-footer.component";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NavFooterComponent } from './nav-footer.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe("NavFooterComponent", () => {
+describe('NavFooterComponent', () => {
   let component: NavFooterComponent;
   let fixture: ComponentFixture<NavFooterComponent>;
 
   beforeEach(() => {
     localStorage.setItem('currentUser', '{ "id": "id" }');
-
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [NavFooterComponent],
@@ -20,9 +19,9 @@ describe("NavFooterComponent", () => {
 
   afterEach(() => {
     localStorage.removeItem('currentUser');
-  })
+  });
 
-  it("should create", () => {
+  it('should have been created', () => {
     expect(component).toBeTruthy();
   });
 });
