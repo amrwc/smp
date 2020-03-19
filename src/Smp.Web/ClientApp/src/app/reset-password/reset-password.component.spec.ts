@@ -36,43 +36,43 @@ describe('ResetPasswordComponent', () => {
     fixture.detectChanges();
   });
 
-  describe('ngOnInit', () => {
-    it('should get correct actionId', () => {
+  describe('ngOnInit()', () => {
+    it('should have gotten the correct actionId', () => {
       expect(component.resetPasswordRequest.actionId).toEqual('bob');
     });
   });
 
-  describe('resetPassword', () => {
+  describe('resetPassword()', () => {
     const req: ResetPasswordRequest = {
       actionId: '1', // ActionType.ResetPassword
       newPassword: 'qwerty',
       confirmNewPassword: 'qwerty',
     } as ResetPasswordRequest;
-    let accountsServiceCreateUserSpy: jasmine.Spy;
+    let accountsServiceResetPasswordSpy: jasmine.Spy;
 
     beforeEach(() => {
       component.resetPasswordRequest = req;
-      accountsServiceCreateUserSpy = spyOn(TestBed.get(AccountsService), 'resetPassword');
+      accountsServiceResetPasswordSpy = spyOn(TestBed.get(AccountsService), 'resetPassword');
     });
 
-    it('should have a validation error coming from the API', () => {
-      const error = new Error('Descriptive error message.');
-      accountsServiceCreateUserSpy.and.returnValue(throwError({ error }));
+    it('should have stored a validation error coming from the API', () => {
+      const error: Error = new Error('Descriptive error message.');
+      accountsServiceResetPasswordSpy.and.returnValue(throwError({ error }));
       component.resetPassword();
-      expect(accountsServiceCreateUserSpy.calls.count()).toEqual(1);
-      expect(accountsServiceCreateUserSpy.calls.argsFor(0)).toEqual([req]);
       expect(component.validationErrors.length).toEqual(1);
       expect(component.validationErrors[0]).toEqual(error);
       expect(component.resetPasswordSuccessful).toBeFalsy();
+      expect(TestBed.get(AccountsService).resetPassword).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(AccountsService).resetPassword).toHaveBeenCalledWith(req);
     });
 
-    it('should successfully reset a password', () => {
-      accountsServiceCreateUserSpy.and.returnValue(of({}));
+    it('should have successfully reset a password', () => {
+      accountsServiceResetPasswordSpy.and.returnValue(of({}));
       component.resetPassword();
-      expect(accountsServiceCreateUserSpy.calls.count()).toEqual(1);
-      expect(accountsServiceCreateUserSpy.calls.argsFor(0)).toEqual([req]);
       expect(component.validationErrors.length).toEqual(0);
       expect(component.resetPasswordSuccessful).toBeTruthy();
+      expect(TestBed.get(AccountsService).resetPassword).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(AccountsService).resetPassword).toHaveBeenCalledWith(req);
     });
   });
 });

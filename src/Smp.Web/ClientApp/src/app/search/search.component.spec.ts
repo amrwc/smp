@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { SearchComponent } from './search.component';
 
 describe('SearchComponent', () => {
@@ -14,7 +15,7 @@ describe('SearchComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should have been created', () => {
     expect(component).toBeTruthy();
   });
 });
