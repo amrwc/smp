@@ -2,13 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { Relationship } from '../models/relationship';
 import { RelationshipType } from '../models/relationship-type.enum';
 import { RelationshipsService } from './relationships.service';
 
 describe('RelationshipsService', () => {
-  const baseUrl = 'https://www.smp.org/';
+  const baseUrl: string = 'https://www.smp.org/';
   const relationship: Relationship = {
     userOneId: 'aksdfnknkj-123sdf-0asdfasd',
     userTwoId: 'adsifasfuh1231231-asxzcz9v8bc9-213123',
@@ -16,7 +16,6 @@ describe('RelationshipsService', () => {
     createdAt: new Date(),
   } as Relationship;
   let headers: Object;
-  let httpClientGetSpy: jasmine.Spy;
   let service: RelationshipsService;
 
   beforeAll(() => {
@@ -41,57 +40,53 @@ describe('RelationshipsService', () => {
     localStorage.removeItem('currentUser');
   });
 
-  describe('getRelationship', () => {
+  describe('getRelationship()', () => {
     beforeEach(() => {
-      httpClientGetSpy = spyOn(TestBed.get(HttpClient), 'get').and.returnValue(of(relationship));
+      spyOn(TestBed.get(HttpClient), 'get').and.returnValue(of(relationship));
     });
 
-    it('should have called HttpClient.get correctly', () => {
-      service.getRelationship(
-        relationship.userOneId,
-        relationship.userTwoId,
-        relationship.relationshipType
-      );
-      expect(httpClientGetSpy.calls.count()).toEqual(1);
-      expect(httpClientGetSpy.calls.argsFor(0)).toEqual([
+    it('should have called HttpClient.get() correctly', () => {
+      service.getRelationship(relationship.userOneId, relationship.userTwoId, relationship.relationshipType);
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledWith(
         `${baseUrl}api/Relationships/GetRelationship/${relationship.userOneId}/` +
           `${relationship.userTwoId}/${relationship.relationshipType}`,
-        headers,
-      ]);
+        headers
+      );
     });
 
     it('should have returned the expected value', () => {
-      const result = service.getRelationship(
+      const result: Observable<Relationship> = service.getRelationship(
         relationship.userOneId,
         relationship.userTwoId,
         relationship.relationshipType
       );
       result.subscribe({
-        next: (relationship: Relationship) => {
-          expect(relationship).toEqual(relationship);
+        next: (ship: Relationship) => {
+          expect(ship).toEqual(relationship);
         },
       });
     });
   });
 
-  describe('getRelationships', () => {
+  describe('getRelationships()', () => {
     const expected: Relationship[] = [relationship, relationship] as Relationship[];
 
     beforeEach(() => {
-      httpClientGetSpy = spyOn(TestBed.get(HttpClient), 'get').and.returnValue(of());
+      spyOn(TestBed.get(HttpClient), 'get').and.returnValue(of());
     });
 
-    it('should have called HttpClient.get correctly', () => {
+    it('should have called HttpClient.get() correctly', () => {
       service.getRelationships(relationship.userOneId, relationship.relationshipType);
-      expect(httpClientGetSpy.calls.count()).toEqual(1);
-      expect(httpClientGetSpy.calls.argsFor(0)).toEqual([
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledWith(
         `${baseUrl}api/Relationships/GetRelationships/${relationship.userOneId}/${relationship.relationshipType}`,
-        headers,
-      ]);
+        headers
+      );
     });
 
     it('should have returned the expected values', () => {
-      const result = service.getRelationships(
+      const result: Observable<Relationship[]> = service.getRelationships(
         relationship.userOneId,
         relationship.relationshipType
       );

@@ -2,17 +2,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { CreateRequestRequest } from '../models/requests/create-request-request';
 import { Request } from '../models/request';
 import { RequestType } from '../models/request-type.enum';
 import { RequestsService } from './requests.service';
 
 describe('RequestsService', () => {
-  const baseUrl = 'https://www.smp.org/';
+  const baseUrl: string = 'https://www.smp.org/';
   let headers: Object;
-  let httpClientGetSpy: jasmine.Spy;
-  let httpClientPostSpy: jasmine.Spy;
   let service: RequestsService;
 
   beforeAll(() => {
@@ -31,32 +29,28 @@ describe('RequestsService', () => {
       providers: [{ provide: 'BASE_URL', useValue: baseUrl }],
     });
     service = TestBed.get(RequestsService);
-    httpClientPostSpy = spyOn(TestBed.get(HttpClient), 'post');
+    spyOn(TestBed.get(HttpClient), 'post');
   });
 
   afterAll(() => {
     localStorage.removeItem('currentUser');
   });
 
-  describe('sendRequest', () => {
+  describe('sendRequest()', () => {
     const req: CreateRequestRequest = new CreateRequestRequest(
       'aksdfnknkj-123sdf-0asdfasd',
       'adsifasfuh1231231-asxzcz9v8bc9-213123',
       RequestType.Friend
     );
 
-    it('should have called HttpClient.post correctly', () => {
+    it('should have called HttpClient.post() correctly', () => {
       service.sendRequest(req);
-      expect(httpClientPostSpy.calls.count()).toEqual(1);
-      expect(httpClientPostSpy.calls.argsFor(0)).toEqual([
-        `${baseUrl}api/Requests/SendRequest/`,
-        req,
-        headers,
-      ]);
+      expect(TestBed.get(HttpClient).post).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(HttpClient).post).toHaveBeenCalledWith(`${baseUrl}api/Requests/SendRequest/`, req, headers);
     });
   });
 
-  describe('getRequest', () => {
+  describe('getRequest()', () => {
     const req = {
       senderId: 'aksdfnknkj-123sdf-0asdfasd',
       receiverId: 'adsifasfuh1231231-asxzcz9v8bc9-213123',
@@ -68,20 +62,20 @@ describe('RequestsService', () => {
     } as Request;
 
     beforeEach(() => {
-      httpClientGetSpy = spyOn(TestBed.get(HttpClient), 'get').and.returnValue(of(expected));
+      spyOn(TestBed.get(HttpClient), 'get').and.returnValue(of(expected));
     });
 
-    it('should have called HttpClient.get correctly', () => {
+    it('should have called HttpClient.get() correctly', () => {
       service.getRequest(req.senderId, req.receiverId, req.requestType);
-      expect(httpClientGetSpy.calls.count()).toEqual(1);
-      expect(httpClientGetSpy.calls.argsFor(0)).toEqual([
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledWith(
         `${baseUrl}api/Requests/GetRequest/${req.senderId}/${req.requestType}/${req.receiverId}`,
-        headers,
-      ]);
+        headers
+      );
     });
 
     it('should have returned the expected value', () => {
-      const result = service.getRequest(req.senderId, req.receiverId, req.requestType);
+      const result: Observable<Request> = service.getRequest(req.senderId, req.receiverId, req.requestType);
       result.subscribe({
         next: (request: Request) => {
           expect(request).toEqual(expected);
@@ -90,7 +84,7 @@ describe('RequestsService', () => {
     });
   });
 
-  describe('getIncomingRequests', () => {
+  describe('getIncomingRequests()', () => {
     const userId: string = 'aksdfnknkj-123sdf-0asdfasd';
     const expected: Request[] = [
       {
@@ -108,20 +102,20 @@ describe('RequestsService', () => {
     ] as Request[];
 
     beforeEach(() => {
-      httpClientGetSpy = spyOn(TestBed.get(HttpClient), 'get').and.returnValue(of(expected));
+      spyOn(TestBed.get(HttpClient), 'get').and.returnValue(of(expected));
     });
 
-    it('should have called HttpClient.get correctly', () => {
+    it('should have called HttpClient.get() correctly', () => {
       service.getIncomingRequests(userId);
-      expect(httpClientGetSpy.calls.count()).toEqual(1);
-      expect(httpClientGetSpy.calls.argsFor(0)).toEqual([
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledWith(
         `${baseUrl}api/Requests/GetIncomingRequests/${userId}`,
-        headers,
-      ]);
+        headers
+      );
     });
 
     it('should have returned the expected values', () => {
-      const result = service.getIncomingRequests(userId);
+      const result: Observable<Request[]> = service.getIncomingRequests(userId);
       result.subscribe({
         next: (request: Request[]) => {
           expect(request).toEqual(expected);
@@ -132,10 +126,10 @@ describe('RequestsService', () => {
 
   describe('acceptRequest', () => {
     beforeEach(() => {
-      httpClientGetSpy = spyOn(TestBed.get(HttpClient), 'get');
+      spyOn(TestBed.get(HttpClient), 'get');
     });
 
-    it('should have called HttpClient.get correctly', () => {
+    it('should have called HttpClient.get() correctly', () => {
       const req: Request = {
         receiverId: 'adsifasfuh1231231-asxzcz9v8bc9-213123',
         senderId: 'aksdfnknkj-123sdf-0asdfasd',
@@ -143,20 +137,20 @@ describe('RequestsService', () => {
         requestType: RequestType.Friend,
       } as Request;
       service.acceptRequest(req);
-      expect(httpClientGetSpy.calls.count()).toEqual(1);
-      expect(httpClientGetSpy.calls.argsFor(0)).toEqual([
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledWith(
         `${baseUrl}api/Requests/AcceptRequest/${req.receiverId}/${req.requestType}/${req.senderId}`,
-        headers,
-      ]);
+        headers
+      );
     });
   });
 
-  describe('declineRequest', () => {
+  describe('declineRequest()', () => {
     beforeEach(() => {
-      httpClientGetSpy = spyOn(TestBed.get(HttpClient), 'get');
+      spyOn(TestBed.get(HttpClient), 'get');
     });
 
-    it('should have called HttpClient.get correctly', () => {
+    it('should have called HttpClient.get() correctly', () => {
       const req: Request = {
         receiverId: 'adsifasfuh1231231-asxzcz9v8bc9-213123',
         senderId: 'aksdfnknkj-123sdf-0asdfasd',
@@ -164,11 +158,11 @@ describe('RequestsService', () => {
         requestType: RequestType.Friend,
       } as Request;
       service.declineRequest(req);
-      expect(httpClientGetSpy.calls.count()).toEqual(1);
-      expect(httpClientGetSpy.calls.argsFor(0)).toEqual([
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledWith(
         `${baseUrl}api/Requests/DeclineRequest/${req.receiverId}/${req.requestType}/${req.senderId}`,
-        headers,
-      ]);
+        headers
+      );
     });
   });
 });

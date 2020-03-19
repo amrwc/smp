@@ -6,10 +6,7 @@ import { CreateUserRequest } from '../models/requests/create-user-request';
 import { UsersService } from './users.service';
 
 describe('UsersService', () => {
-  const baseUrl = 'https://www.smp.org/';
-  let httpClient: HttpClient;
-  let httpClientGetSpy: jasmine.Spy;
-  let httpClientPostSpy: jasmine.Spy;
+  const baseUrl: string = 'https://www.smp.org/';
   let service: UsersService;
 
   beforeEach(() => {
@@ -17,50 +14,45 @@ describe('UsersService', () => {
       imports: [HttpClientTestingModule],
       providers: [{ provide: 'BASE_URL', useValue: baseUrl }],
     });
-    httpClient = TestBed.get(HttpClient);
     service = TestBed.get(UsersService);
-    httpClientGetSpy = spyOn(httpClient, 'get');
-    httpClientPostSpy = spyOn(httpClient, 'post');
+    spyOn(TestBed.get(HttpClient), 'get');
+    spyOn(TestBed.get(HttpClient), 'post');
   });
 
-  describe('createUser', () => {
-    const createUserReq = {
+  describe('createUser()', () => {
+    const createUserReq: CreateUserRequest = {
       fullName: 'John Doe',
       password: 'lk1jn43kl1nj34###XXCC',
       confirmPassword: 'lk1jn43kl1nj34###XXCC',
       email: 'my@email.com',
     } as CreateUserRequest;
 
-    it('should have called HttpClient.post correctly', () => {
+    it('should have called HttpClient.post() correctly', () => {
       service.createUser(createUserReq);
-      expect(httpClientPostSpy.calls.count()).toEqual(1);
-      expect(httpClientPostSpy.calls.argsFor(0)).toEqual([
-        `${baseUrl}api/Users/CreateUser/`,
-        createUserReq,
-      ]);
+      expect(TestBed.get(HttpClient).post).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(HttpClient).post).toHaveBeenCalledWith(`${baseUrl}api/Users/CreateUser/`, createUserReq);
     });
   });
 
-  describe('getUser', () => {
-    const userId = 'aksdjn-123kwqjen-cxnzkj';
+  describe('getUser()', () => {
+    const userId: string = 'aksdjn-123kwqjen-cxnzkj';
+
     beforeAll(() => {
       localStorage.setItem('currentUser', JSON.stringify({ token: 'n21k32n3j' }));
     });
+
     afterAll(() => {
       localStorage.removeItem('currentUser');
     });
 
-    it('should have called HttpClient.get correctly', () => {
-      const headers = new HttpHeaders().set(
+    it('should have called HttpClient.get() correctly', () => {
+      const headers: HttpHeaders = new HttpHeaders().set(
         'Authorization',
         `Bearer ${JSON.parse(localStorage.getItem('currentUser')).token}`
       );
       service.getUser(userId);
-      expect(httpClientGetSpy.calls.count()).toEqual(1);
-      expect(httpClientGetSpy.calls.argsFor(0)).toEqual([
-        `${baseUrl}api/Users/GetUser/${userId}`,
-        { headers },
-      ]);
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledWith(`${baseUrl}api/Users/GetUser/${userId}`, { headers });
     });
   });
 });

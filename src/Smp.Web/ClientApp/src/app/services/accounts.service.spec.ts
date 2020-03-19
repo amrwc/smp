@@ -1,55 +1,45 @@
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { AccountsService } from './accounts.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpClient } from '@angular/common/http';
 import { ResetPasswordRequest } from '../models/requests/reset-password-request';
 
 describe('AccountsService', () => {
-  const baseUrl = 'https://www.smp.org/';
-
-  let httpClient: HttpClient;
+  const baseUrl: string = 'https://www.smp.org/';
   let service: AccountsService;
-
-  let httpClientGetSpy: jasmine.Spy;
-  let httpClientPostSpy: jasmine.Spy;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [{ provide: 'BASE_URL', useValue: baseUrl }]
+      providers: [{ provide: 'BASE_URL', useValue: baseUrl }],
     });
-
-    httpClient = TestBed.get(HttpClient);
     service = TestBed.get(AccountsService);
-
-    httpClientGetSpy = spyOn(httpClient, 'get');
-    httpClientPostSpy = spyOn(httpClient, 'post');
   });
 
-  describe('forgottenPassword', () => {
-    const email = 'my@email.com';
+  describe('forgottenPassword()', () => {
+    const email: string = 'my@email.com';
 
-    it('should have called HttpClient.get correctly', () => {
+    it('should have called HttpClient.get() correctly', () => {
+      spyOn(TestBed.get(HttpClient), 'get');
       service.forgottenPassword(email);
-      expect(httpClientGetSpy.calls.count()).toEqual(1);
-      expect(httpClientGetSpy.calls.argsFor(0))
-        .toEqual([`${baseUrl}api/Accounts/ForgottenPassword/${email}`]);
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledWith(`${baseUrl}api/Accounts/ForgottenPassword/${email}`);
     });
   });
 
-  describe('resetPassword', () => {
-    const resetReq = { 
+  describe('resetPassword()', () => {
+    const resetReq: ResetPasswordRequest = {
       actionId: 'actionId',
       newPassword: 'newPassword',
-      confirmNewPassword: 'newPassword'
+      confirmNewPassword: 'newPassword',
     } as ResetPasswordRequest;
 
-    it('should have called HttpClient.post correctly', () => {
+    it('should have called HttpClient.post() correctly', () => {
+      spyOn(TestBed.get(HttpClient), 'post');
       service.resetPassword(resetReq);
-      expect(httpClientPostSpy.calls.count()).toEqual(1);
-      expect(httpClientPostSpy.calls.argsFor(0))
-        .toEqual([`${baseUrl}api/Accounts/ResetPassword`, resetReq]);
+      expect(TestBed.get(HttpClient).post).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(HttpClient).post).toHaveBeenCalledWith(`${baseUrl}api/Accounts/ResetPassword`, resetReq);
     });
   });
 });

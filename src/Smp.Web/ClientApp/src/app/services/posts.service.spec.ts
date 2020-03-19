@@ -1,73 +1,58 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { PostsService } from './posts.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { of, Observable } from 'rxjs';
 import { CreatePostRequest } from '../models/requests/create-post-request';
-import { of } from 'rxjs';
 import { Post } from '../models/post';
+import { PostsService } from './posts.service';
 
 describe('PostsService', () => {
-  const baseUrl = 'https://www.smp.org/';
-
+  const authHeaders: HttpHeaders = new HttpHeaders().set('Authorization', 'Bearer token');
+  const baseUrl: string = 'https://www.smp.org/';
   let service: PostsService;
-
-  let httpClientGetSpy: jasmine.Spy;
-  let httpClientPostSpy: jasmine.Spy;
-
-  const authHeaders = new HttpHeaders().set('Authorization', 'Bearer token');
 
   beforeAll(() => {
     localStorage.setItem('currentUser', '{ "id": "id", "token": "token" }');
+  });
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [{ provide: 'BASE_URL', useValue: baseUrl }]
+    });
+    service = TestBed.get(PostsService);
+    spyOn(TestBed.get(HttpClient), 'post');
   });
 
   afterAll(() => {
     localStorage.removeItem('currentUser');
   });
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [{ provide: 'BASE_URL', useValue: "https://www.smp.org/" }]
-    });
+  describe('createPost()', () => {
+    const postReq: CreatePostRequest = { senderId: 'senderId' } as CreatePostRequest;
 
-    httpClientPostSpy = spyOn(TestBed.get(HttpClient), 'post');
-
-    service = TestBed.get(PostsService);
-  });
-
-  describe('createPost', () => {
-    const postReq = {
-      senderId: 'senderId'
-    } as CreatePostRequest;
-
-    it('should have called HttpClient post correctly', () => {
+    it('should have called HttpClient.post() correctly', () => {
       service.createPost(postReq);
-
-      expect(httpClientPostSpy.calls.count()).toEqual(1);
-      expect(httpClientPostSpy.calls.argsFor(0)).toEqual([
+      expect(TestBed.get(HttpClient).post).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(HttpClient).post).toHaveBeenCalledWith(
         `${baseUrl}api/Posts/CreatePost`,
         postReq,
         { headers: authHeaders }
-      ]);
+      );
     });
   });
 
-  describe('getPosts', () => {
+  describe('getPosts()', () => {
+    const receiverId: string = 'receiverId';
+    const expectedPosts: Post[] = [{ content: 'content-1' }, { content: 'content-2' }] as Post[];
+
     beforeEach(() => {
-      httpClientGetSpy = spyOn(TestBed.get(HttpClient), 'get')
-        .and.returnValue(of(expectedPosts));
+      spyOn(TestBed.get(HttpClient), 'get').and.returnValue(of(expectedPosts));
     });
 
-    const receiverId = 'receiverId';
-    const expectedPosts: Post[] = [
-      { content: 'content-1' } as Post,
-      { content: 'content-2' } as Post
-    ]
-
     it('should have returned the expected value', () => {
-      const postsObserv = service.getPosts(receiverId);
-
+      const postsObserv: Observable<Post[]> = service.getPosts(receiverId);
       postsObserv.subscribe({
         next: ((posts: Post[]) => {
           expect(posts).toEqual(expectedPosts);
@@ -75,14 +60,13 @@ describe('PostsService', () => {
       });
     });
 
-    it('should have called HttpClient get correctly', () => {
+    it('should have called HttpClient.get() correctly', () => {
       service.getPosts(receiverId);
-
-      expect(httpClientGetSpy.calls.count()).toEqual(1);
-      expect(httpClientGetSpy.calls.argsFor(0)).toEqual([
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(HttpClient).get).toHaveBeenCalledWith(
         `${baseUrl}api/Posts/GetPosts/${receiverId}`,
         { headers: authHeaders }
-      ]);
+      );
     });
   });
 });
