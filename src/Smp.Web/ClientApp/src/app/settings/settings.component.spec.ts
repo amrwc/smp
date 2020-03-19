@@ -18,14 +18,14 @@ describe('SettingsComponent', () => {
     fixture.detectChanges();
   });
 
-  describe('signOut', () => {
-    it('should navigate to /sign-in', () => {
-      const routerNavigateSpy: jasmine.Spy = spyOn(TestBed.get(Router), 'navigate');
+  describe('signOut()', () => {
+    it('should have navigated to /sign-in', () => {
       localStorage.setItem('currentUser', JSON.stringify({ currentUser: 'bob' }));
+      spyOn(TestBed.get(Router), 'navigate');
       component.signOut();
       expect(localStorage.getItem('currentUser')).toBeNull();
-      expect(routerNavigateSpy.calls.count()).toEqual(1);
-      expect(routerNavigateSpy.calls.argsFor(0)).toEqual([['/sign-in']]);
+      expect(TestBed.get(Router).navigate).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(Router).navigate).toHaveBeenCalledWith(['/sign-in']);
     });
   });
 });
