@@ -52,18 +52,14 @@ describe('ProfileComponent', () => {
     localStorage.removeItem('currentUser');
   });
 
-  describe('ngOnInit', () => {
+  describe('ngOnInit()', () => {
     let getRequestsServiceGetRequestArgs: Array<any>;
     let getRelationshipsServiceGetRelationshipArgs: Array<any>;
-    let requestsServiceGetRequestSpy: jasmine.Spy;
-    let relationshipsServiceGetRelationshipSpy: jasmine.Spy;
 
     beforeEach(() => {
       const currentUserId = JSON.parse(localStorage.getItem('currentUser')).id;
       getRequestsServiceGetRequestArgs = [currentUserId, 'bob', RequestType.Friend];
       getRelationshipsServiceGetRelationshipArgs = ['bob', currentUserId, RequestType.Friend];
-      requestsServiceGetRequestSpy = spyOn(TestBed.get(RequestsService), 'getRequest');
-      relationshipsServiceGetRelationshipSpy = spyOn(TestBed.get(RelationshipsService), 'getRelationship');
     });
 
     describe("should have shown 'Add Friend' button", () => {
@@ -76,13 +72,13 @@ describe('ProfileComponent', () => {
       });
 
       it('when RequestsService.getRequest() returned error other than 404', () => {
-        requestsServiceGetRequestSpy.and.returnValue(throwError({ status: 321 }));
+        spyOn(TestBed.get(RequestsService), 'getRequest').and.returnValue(throwError({ status: 321 }));
         component.ngOnInit();
       });
 
       it('when RequestsService.getRequest() returned 404 error', () => {
-        requestsServiceGetRequestSpy.and.returnValue(throwError({ status: 404 }));
-        relationshipsServiceGetRelationshipSpy.and.returnValue(throwError(new Error()));
+        spyOn(TestBed.get(RequestsService), 'getRequest').and.returnValue(throwError({ status: 404 }));
+        spyOn(TestBed.get(RelationshipsService), 'getRelationship').and.returnValue(throwError(new Error()));
         component.ngOnInit();
         expect(TestBed.get(RelationshipsService).getRelationship).toHaveBeenCalledTimes(1);
         expect(TestBed.get(RelationshipsService).getRelationship).toHaveBeenCalledWith(
@@ -109,15 +105,15 @@ describe('ProfileComponent', () => {
         });
 
         it('found a pending friend request', () => {
-          requestsServiceGetRequestSpy.and.returnValue(of({}));
+          spyOn(TestBed.get(RequestsService), 'getRequest').and.returnValue(of({}));
           component.ngOnInit();
           expect(component.friends).toBeFalsy();
           expect(component.requestPending).toBeTruthy();
         });
 
         it('returned 404 error and RelationshipsService.getRelationship() found a relationship', () => {
-          requestsServiceGetRequestSpy.and.returnValue(throwError({ status: 404 }));
-          relationshipsServiceGetRelationshipSpy.and.returnValue(of({}));
+          spyOn(TestBed.get(RequestsService), 'getRequest').and.returnValue(throwError({ status: 404 }));
+          spyOn(TestBed.get(RelationshipsService), 'getRelationship').and.returnValue(of({}));
           component.ngOnInit();
           expect(component.friends).toBeTruthy();
           expect(component.requestPending).toBeFalsy();
@@ -129,10 +125,7 @@ describe('ProfileComponent', () => {
       });
 
       describe('UsersService.getUser()', () => {
-        let usersServiceGetUserSpy: jasmine.Spy;
-
         beforeEach(() => {
-          usersServiceGetUserSpy = spyOn(TestBed.get(UsersService), 'getUser');
           // Skip the logic around the 'Add Friend' button
           localStorage.removeItem('currentUser');
           localStorage.setItem('currentUser', '{ "id": "bob" }');
@@ -144,13 +137,13 @@ describe('ProfileComponent', () => {
         });
 
         it("should have set the 'user' field correctly", () => {
-          usersServiceGetUserSpy.and.callFake(() => of(userMock));
+          spyOn(TestBed.get(UsersService), 'getUser').and.callFake(() => of(userMock));
           component.ngOnInit();
           expect(component.user).toEqual(userMock);
         });
 
         it("should not have set the 'user' field on error", () => {
-          usersServiceGetUserSpy.and.callFake(() => throwError(new Error()));
+          spyOn(TestBed.get(UsersService), 'getUser').and.callFake(() => throwError(new Error()));
           component.ngOnInit();
           expect(component.user).toBeUndefined();
         });
