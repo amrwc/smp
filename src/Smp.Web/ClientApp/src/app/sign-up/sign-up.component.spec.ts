@@ -31,6 +31,12 @@ describe('SignUpComponent', () => {
     fixture.detectChanges();
   });
 
+  afterAll(() => {
+    if (fixture.nativeElement && 'remove' in fixture.nativeElement) {
+      (fixture.nativeElement as HTMLElement).remove();
+    }
+  });
+
   describe('signUp()', () => {
     it('should have set a validation error due to passwords not matching', () => {
       component.createUserRequest.password = createUserRequest.password;
