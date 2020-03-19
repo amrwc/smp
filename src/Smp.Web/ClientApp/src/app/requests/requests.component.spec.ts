@@ -21,93 +21,94 @@ describe('RequestsComponent', () => {
   } as FriendlyRequest;
   let component: RequestsComponent;
   let fixture: ComponentFixture<RequestsComponent>;
-  let requestsServiceGetIncomingRequestsSpy: jasmine.Spy;
 
   beforeEach(() => {
     localStorage.setItem('currentUser', '{ "id": "id" }');
     TestBed.configureTestingModule({
       declarations: [RequestsComponent],
       imports: [HttpClientTestingModule],
-      providers: [
-        { provide: 'BASE_URL', useValue: 'https://www.smp.org/' },
-      ],
+      providers: [{ provide: 'BASE_URL', useValue: 'https://www.smp.org/' }],
     }).compileComponents();
     fixture = TestBed.createComponent(RequestsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    requestsServiceGetIncomingRequestsSpy = spyOn(TestBed.get(RequestsService), 'getIncomingRequests');
   });
 
   afterEach(() => {
     localStorage.removeItem('currentUser');
   });
 
-  describe('ngOnInit', () => {
-    it('should call getRequests', () => {
-      requestsServiceGetIncomingRequestsSpy.and.returnValue(of([]));
+  describe('ngOnInit()', () => {
+    it('should have called getRequests()', () => {
+      spyOn(TestBed.get(RequestsService), 'getIncomingRequests').and.returnValue(of([]));
       component.ngOnInit();
-      expect(requestsServiceGetIncomingRequestsSpy.calls.count()).toEqual(1);
+      expect(TestBed.get(RequestsService).getIncomingRequests).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(RequestsService).getIncomingRequests).toHaveBeenCalledWith(
+        JSON.parse(localStorage.getItem('currentUser')).id
+      );
     });
   });
 
-  describe('answerRequest', () => {
-    let requestsServiceAcceptRequestSpy: jasmine.Spy;
-    let requestsServiceDeclineRequestSpy: jasmine.Spy;
-
+  describe('answerRequest()', () => {
     beforeEach(() => {
-      requestsServiceAcceptRequestSpy = spyOn(TestBed.get(RequestsService), 'acceptRequest');
-      requestsServiceDeclineRequestSpy = spyOn(TestBed.get(RequestsService), 'declineRequest');
+      spyOn(TestBed.get(RequestsService), 'getIncomingRequests').and.returnValue(of([]));
     });
 
-    it('should not have called getRequest when answer is true and on API error', () => {
-      requestsServiceAcceptRequestSpy.and.returnValue(throwError(new Error()));
+    it('should not have called getRequest() when answer is true and on API error', () => {
+      spyOn(TestBed.get(RequestsService), 'acceptRequest').and.returnValue(throwError(new Error()));
       component.answerRequest(friendlyRequest, true);
-      expect(requestsServiceAcceptRequestSpy.calls.count()).toEqual(1);
-      expect(requestsServiceAcceptRequestSpy.calls.argsFor(0)).toEqual([friendlyRequest]);
-      expect(requestsServiceGetIncomingRequestsSpy.calls.count()).toEqual(0);
+      expect(TestBed.get(RequestsService).acceptRequest).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(RequestsService).acceptRequest).toHaveBeenCalledWith(friendlyRequest);
+      expect(TestBed.get(RequestsService).getIncomingRequests).toHaveBeenCalledTimes(0);
     });
 
-    it('should not have called getRequest when answer is false and on API error', () => {
-      requestsServiceDeclineRequestSpy.and.returnValue(throwError(new Error()));
+    it('should not have called getRequest() when answer is false and on API error', () => {
+      spyOn(TestBed.get(RequestsService), 'declineRequest').and.returnValue(throwError(new Error()));
       component.answerRequest(friendlyRequest, false);
-      expect(requestsServiceDeclineRequestSpy.calls.count()).toEqual(1);
-      expect(requestsServiceDeclineRequestSpy.calls.argsFor(0)).toEqual([friendlyRequest]);
-      expect(requestsServiceGetIncomingRequestsSpy.calls.count()).toEqual(0);
+      expect(TestBed.get(RequestsService).declineRequest).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(RequestsService).declineRequest).toHaveBeenCalledWith(friendlyRequest);
+      expect(TestBed.get(RequestsService).getIncomingRequests).toHaveBeenCalledTimes(0);
     });
 
-    it('should have called getRequest when answer is true', () => {
-      requestsServiceAcceptRequestSpy.and.returnValue(of({}));
-      requestsServiceGetIncomingRequestsSpy.and.returnValue(of([]));
-      component.answerRequest(friendlyRequest, true);
-      expect(requestsServiceAcceptRequestSpy.calls.count()).toEqual(1);
-      expect(requestsServiceAcceptRequestSpy.calls.argsFor(0)).toEqual([friendlyRequest]);
-      expect(requestsServiceGetIncomingRequestsSpy.calls.count()).toEqual(1);
-    });
-
-    it('should have called getRequest when answer is false', () => {
-      requestsServiceDeclineRequestSpy.and.returnValue(of({}));
-      requestsServiceGetIncomingRequestsSpy.and.returnValue(of([]));
-      component.answerRequest(friendlyRequest, false);
-      expect(requestsServiceDeclineRequestSpy.calls.count()).toEqual(1);
-      expect(requestsServiceDeclineRequestSpy.calls.argsFor(0)).toEqual([friendlyRequest]);
-      expect(requestsServiceGetIncomingRequestsSpy.calls.count()).toEqual(1);
-    });
-  });
-
-  describe('getRequests', () => {
-    const friendlyReq = new Request(req).toFriendlyRequest();
-
-    it('should have called RequestsService.getIncomingRequests and set this.requests', () => {
+    it('should have called getRequest() when answer is true', () => {
       spyOn(TestBed.get(RequestsService), 'acceptRequest').and.returnValue(of({}));
-      requestsServiceGetIncomingRequestsSpy.and.returnValue(of([req, req]));
-      component.answerRequest(friendlyReq, true);
-      expect(requestsServiceGetIncomingRequestsSpy.calls.count()).toEqual(1);
-      expect(requestsServiceGetIncomingRequestsSpy.calls.argsFor(0)).toEqual(['id']);
-      expect(component.requests).toEqual([friendlyReq, friendlyReq]);
+      component.answerRequest(friendlyRequest, true);
+      expect(TestBed.get(RequestsService).acceptRequest).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(RequestsService).acceptRequest).toHaveBeenCalledWith(friendlyRequest);
+      expect(TestBed.get(RequestsService).getIncomingRequests).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(RequestsService).getIncomingRequests).toHaveBeenCalledWith(
+        JSON.parse(localStorage.getItem('currentUser')).id
+      );
+    });
+
+    it('should have called getRequest() when answer is false', () => {
+      spyOn(TestBed.get(RequestsService), 'declineRequest').and.returnValue(of({}));
+      component.answerRequest(friendlyRequest, false);
+      expect(TestBed.get(RequestsService).declineRequest).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(RequestsService).declineRequest).toHaveBeenCalledWith(friendlyRequest);
+      expect(TestBed.get(RequestsService).getIncomingRequests).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(RequestsService).getIncomingRequests).toHaveBeenCalledWith(
+        JSON.parse(localStorage.getItem('currentUser')).id
+      );
     });
   });
 
-  describe('fetchUsers', () => {
+  describe('getRequests()', () => {
+    const friendlyReq: FriendlyRequest = new Request(req).toFriendlyRequest();
+
+    it('should have called RequestsService.getIncomingRequests() and set this.requests', () => {
+      spyOn(TestBed.get(RequestsService), 'acceptRequest').and.returnValue(of({}));
+      spyOn(TestBed.get(RequestsService), 'getIncomingRequests').and.returnValue(of([req, req]));
+      component.answerRequest(friendlyReq, true);
+      expect(component.requests).toEqual([friendlyReq, friendlyReq]);
+      expect(TestBed.get(RequestsService).getIncomingRequests).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(RequestsService).getIncomingRequests).toHaveBeenCalledWith(
+        JSON.parse(localStorage.getItem('currentUser')).id
+      );
+    });
+  });
+
+  describe('fetchUsers()', () => {
     const friendlyReq = new Request(req).toFriendlyRequest();
     const user: User = {
       id: 'adjfs-0123',
@@ -116,17 +117,17 @@ describe('RequestsComponent', () => {
       profilePictureUrl: 'http://example.com',
     } as User;
 
-    it('should have called RequestsService.getUser and set receiver and sender', () => {
+    it('should have called RequestsService.getUser() and set receiver and sender', () => {
       spyOn(TestBed.get(RequestsService), 'acceptRequest').and.returnValue(of({}));
-      requestsServiceGetIncomingRequestsSpy.and.returnValue(of([friendlyReq]));
-      const usersServiceGetUserSpy = spyOn(TestBed.get(UsersService), 'getUser').and.returnValue(of(user));
+      spyOn(TestBed.get(RequestsService), 'getIncomingRequests').and.returnValue(of([friendlyReq]));
+      spyOn(TestBed.get(UsersService), 'getUser').and.returnValue(of(user));
       component.answerRequest(friendlyReq, true);
-      expect(usersServiceGetUserSpy.calls.count()).toEqual(2);
       expect(component.requests.length).toEqual(1);
-      expect(usersServiceGetUserSpy.calls.argsFor(0)).toEqual([friendlyReq.receiverId]);
       expect(component.requests[0].receiver).toEqual(user);
-      expect(usersServiceGetUserSpy.calls.argsFor(1)).toEqual([friendlyReq.senderId]);
       expect(component.requests[0].sender).toEqual(user);
+      expect(TestBed.get(UsersService).getUser).toHaveBeenCalledTimes(2);
+      expect(TestBed.get(UsersService).getUser).toHaveBeenCalledWith(friendlyReq.receiverId);
+      expect(TestBed.get(UsersService).getUser).toHaveBeenCalledWith(friendlyReq.senderId);
     });
   });
 });
