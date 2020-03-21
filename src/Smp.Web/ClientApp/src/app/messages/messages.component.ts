@@ -33,7 +33,6 @@ export class MessagesComponent implements OnInit {
     private usersService: UsersService) { }
 
   ngOnInit() {
-    debugger;
     this.fetchConversationsData();
   }
 
