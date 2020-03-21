@@ -3,9 +3,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { of } from 'rxjs';
+import { getTestScheduler } from 'jasmine-marbles';
 import { ConversationComponent } from '../conversation/conversation.component';
 import { ConversationsService } from '../services/conversations.service';
-import { ExtendedConversation } from '../models/conversation';
+import { ExtendedConversation, Conversation } from '../models/conversation';
 import { FriendlyMessage } from '../models/message';
 import { MessagesComponent } from './messages.component';
 import { MessagesService } from '../services/messages.service';
@@ -44,12 +45,10 @@ describe('MessagesComponent', () => {
   let component: MessagesComponent;
   let fixture: ComponentFixture<MessagesComponent>;
 
-  beforeAll(() => {
-    participantsOne.set(users[0].id, users[0]);
-    participantsOne.set(users[1].id, users[1]);
-    participantsOne.set(users[0].id, users[0]);
-    participantsTwo.set(users[2].id, users[2]);
-  });
+  participantsOne.set(users[0].id, users[0]);
+  participantsOne.set(users[1].id, users[1]);
+  participantsOne.set(users[0].id, users[0]);
+  participantsTwo.set(users[2].id, users[2]);
 
   beforeEach(() => {
     localStorage.setItem('currentUser', JSON.stringify({ id: users[0].id }));
@@ -67,19 +66,24 @@ describe('MessagesComponent', () => {
     localStorage.removeItem('currentUser');
   });
 
-  describe('ngOnInit()', () => {});
-
   describe('getConversationName()', () => {
-    it('should have returned the expected value', () => {
+    beforeEach(() => {
       component.conversations = conversations;
+    });
+
+    it('should have returned the expected value', () => {
       const conversationName = component.getConversationName('conversationid-1');
+
       expect(conversationName).toEqual('Tom Cruise');
     });
   });
 
   describe('getConversationPicture()', () => {
-    it('should have returned the expected value', () => {
+    beforeEach(() => {
       component.conversations = conversations;
+    });
+
+    it('should have returned the expected value', () => {
       const conversationName = component.getConversationPicture('conversationid-1');
       expect(conversationName).toEqual('website.co.uk');
     });
@@ -107,7 +111,7 @@ describe('MessagesComponent', () => {
       });
     });
 
-    describe('if the conversation has not already been loaded', () => {
+    describe('when the conversation has not already been loaded', () => {
       const convId = unloadedConversation.id;
 
       beforeEach(() => {
@@ -121,44 +125,44 @@ describe('MessagesComponent', () => {
         component.loadConversation(convId);
       });
 
-      it('should set variables correctly', () => {
+      it('should have set variables correctly', () => {
         expect(component.startNewConversation).toEqual(false);
         expect(component.conversation.conversationId).toEqual(convId);
         expect(component.conversations).toEqual([unloadedConversation]);
       });
 
-      it('should call ConversationsService.getConversations()', () => {
+      it('should have called ConversationsService.getConversations()', () => {
         expect(TestBed.get(ConversationsService).getConversations).toHaveBeenCalledTimes(1);
         expect(TestBed.get(ConversationsService).getConversations).toHaveBeenCalledWith(users[0].id);
       });
 
-      it('should call ConversationsService.getConversationParticipants()', () => {
+      it('should have called ConversationsService.getConversationParticipants()', () => {
         expect(TestBed.get(ConversationsService).getConversationParticipants).toHaveBeenCalledTimes(1);
         expect(TestBed.get(ConversationsService).getConversationParticipants).toHaveBeenCalledWith(
           unloadedConversation.id
         );
       });
 
-      it('should call UsersService.getUser()', () => {
+      it('should have called UsersService.getUser()', () => {
         expect(TestBed.get(UsersService).getUser).toHaveBeenCalledTimes(2);
         expect(TestBed.get(UsersService).getUser).toHaveBeenCalledWith(users[0].id);
         expect(TestBed.get(UsersService).getUser).toHaveBeenCalledWith(users[1].id);
       });
 
-      it('should call MessagesService.getMessagesFromConversation()', () => {
+      it('should have called MessagesService.getMessagesFromConversation()', () => {
         expect(TestBed.get(MessagesService).getMessagesFromConversation).toHaveBeenCalledTimes(1);
         expect(TestBed.get(MessagesService).getMessagesFromConversation).toHaveBeenCalledWith(convId, 1, 0);
       });
     });
 
-    describe('if the conversation has already been loaded', () => {
-      it('should set variables correctly', () => {
+    describe('when the conversation has already been loaded', () => {
+      it('should have set variables correctly', () => {
         component.loadConversation(conversations[0].id);
         expect(component.startNewConversation).toEqual(false);
         expect(component.conversation.conversationId).toEqual(conversations[0].id);
       });
 
-      it('should not call ConversationsService.getConversations()', () => {
+      it('should not have called ConversationsService.getConversations()', () => {
         spyOn(TestBed.inject(ConversationsService), 'getConversations');
         component.loadConversation(conversations[0].id);
         expect(TestBed.get(ConversationsService).getConversations).toHaveBeenCalledTimes(0);
@@ -167,10 +171,45 @@ describe('MessagesComponent', () => {
   });
 
   describe('showStartConversation()', () => {
-    it('should set variables correctly', () => {
+    it('should have set variables correctly', () => {
       component.startNewConversation = false;
       component.showStartConversation();
       expect(component.startNewConversation).toEqual(true);
+    });
+  });
+
+  describe('ngOnInit()', () => {
+    beforeEach(() => {
+      spyOn(TestBed.inject(ConversationsService), 'getConversations')
+        .and.returnValue(of(conversations as Conversation[]));
+      spyOn(TestBed.inject(ConversationsService), 'getConversationParticipants')
+        .and.returnValue(of([users[0].id, users[1].id]));
+      spyOn(TestBed.inject(UsersService), 'getUser')
+        .and.returnValue(of(users[0]));
+      spyOn(TestBed.inject(MessagesService), 'getMessagesFromConversation')
+        .and.returnValue(of(conversations[0].lastMessage));
+
+        component.ngOnInit();
+    });
+
+    it('should have set variables correctly', () => {
+      expect(component.conversations).toEqual(conversations);
+    });
+
+    it('should have called ConversationsService.getConversations()', () => {
+      expect(TestBed.inject(ConversationsService).getConversations).toHaveBeenCalledTimes(1);
+    });
+
+    it('should have called ConversationsService.getConversationParticipants()', () => {
+      expect(TestBed.inject(ConversationsService).getConversationParticipants).toHaveBeenCalledTimes(2);
+    });
+
+    it('should have called UsersService.getUser()', () => {
+      expect(TestBed.inject(UsersService).getUser).toHaveBeenCalledTimes(4);
+    });
+
+    it('should have called MessagesService.getMessagesFromConversation()', () => {
+      expect(TestBed.inject(MessagesService).getMessagesFromConversation).toHaveBeenCalledTimes(2);
     });
   });
 });
