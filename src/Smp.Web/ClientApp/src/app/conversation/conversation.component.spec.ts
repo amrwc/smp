@@ -49,7 +49,7 @@ describe('ConversationComponent', () => {
     localStorage.removeItem('currentUser');
   });
 
-  describe('sendMessage', () => {
+  describe('sendMessage()', () => {
     beforeEach(() => {
       spyOn(TestBed.inject(MessagesService), "createMessage")
         .and.returnValue(of(' '));
@@ -58,21 +58,21 @@ describe('ConversationComponent', () => {
       component.conversationId = 'conversationid-1';
     });
 
-    it('should call MessagesServices createMessages correctly', () => {
+    it('should have called MessagesServices.createMessages() correctly', () => {
       component.sendMessage();
 
       expect(TestBed.inject(MessagesService).createMessage).toHaveBeenCalled();
       expect(TestBed.inject(MessagesService).createMessage).toHaveBeenCalledWith(msgReq);
     });
 
-    it('should reset the form', () => {
+    it('should have reset the form', () => {
       component.sendMessage();
 
       expect(component.form.value.content).toEqual(null);
     });
   });
 
-  describe('keyDown', () => {
+  describe('keyDown()', () => {
     let defaultPrevented: boolean;
 
     const nonEnterEvent = {
@@ -102,7 +102,7 @@ describe('ConversationComponent', () => {
     });
 
     describe('when enter has not been pressed', () => {
-      it('should not call event.preventDefault', () => {
+      it('should not have called event.preventDefault()', () => {
         component.keyDown(nonEnterEvent);
 
         expect(defaultPrevented).toEqual(false);
@@ -110,20 +110,20 @@ describe('ConversationComponent', () => {
     });
 
     describe('when enter has been pressed', () => {
-      it('should call event.preventDefault', () => {
+      it('should have called event.preventDefault()', () => {
         component.keyDown(enterEvent);
 
         expect(defaultPrevented).toEqual(true);
       });
 
-      it('should call MessagesServices createMessages correctly', () => {
+      it('should have called MessagesServices.createMessages() correctly', () => {
         component.keyDown(enterEvent);
   
         expect(TestBed.inject(MessagesService).createMessage).toHaveBeenCalled();
         expect(TestBed.inject(MessagesService).createMessage).toHaveBeenCalledWith(msgReq);
       });
   
-      it('should reset the form', () => {
+      it('should have reset the form', () => {
         component.keyDown(enterEvent);
   
         expect(component.form.value.content).toEqual(null);

@@ -73,7 +73,7 @@ describe('MessageComposerComponent', () => {
       component.friends = friends;
     });
 
-    describe('if the receiver is not a friend', () => {
+    describe('when the receiver is not a friend', () => {
       beforeEach(() => {
         component.createConversationRequest.receiverId = 'userid-3';
       });
@@ -84,7 +84,7 @@ describe('MessageComposerComponent', () => {
       });
     });
 
-    describe('if ConversationsService.createConversation() returns a conflict error', () => {
+    describe('when ConversationsService.createConversation() returns a conflict error', () => {
       const convReq: CreateConversationRequest = new CreateConversationRequest();
       convReq.receiverId = friends[1].id;
       convReq.senderId = userId;
@@ -114,7 +114,7 @@ describe('MessageComposerComponent', () => {
       });
     });
 
-    describe('if it completes successfully', () => {
+    describe('when it completes successfully', () => {
       let convReq: CreateConversationRequest = new CreateConversationRequest();
 
       beforeEach(() => {

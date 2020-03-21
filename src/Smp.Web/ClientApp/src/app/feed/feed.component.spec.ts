@@ -22,33 +22,29 @@ describe('FeedComponent', () => {
     fixture.detectChanges();
   });
 
-  describe('getPosts', () => {
-    let postsServiceGetPostsSpy: jasmine.Spy;
+  describe('getPosts()', () => {
+    const posts = [ { id: 'postid' } as Post ];
 
     beforeEach(() => {
-      postsServiceGetPostsSpy = spyOn(TestBed.inject(PostsService), 'getPosts');
+      spyOn(TestBed.inject(PostsService), 'getPosts').and.returnValue(of(posts));
     });
 
     describe('when there is no receiver id', () => {
-      it('PostsService getPosts should not get called', () => {
-        expect(postsServiceGetPostsSpy.calls.count()).toEqual(0);
+      it('should not have called PostsService.getPosts()', () => {
+        expect(TestBed.inject(PostsService).getPosts).toHaveBeenCalledTimes(0);
       });
     });
 
     describe('when there is a receiver id', () => {
-      const posts = [ { id: 'postid' } as Post ];
-
       beforeEach(() => {
         component.receiverId = 'receiverId';
-
-        postsServiceGetPostsSpy.and.returnValue(of(posts));
       });
 
-      it('PostsService getPosts should get called', () => {
+      it('should not have called PostsService.getPosts()', () => {
         component.getPosts();
 
-        expect(postsServiceGetPostsSpy.calls.count()).toEqual(1);
-        expect(postsServiceGetPostsSpy.calls.argsFor(0)).toEqual(['receiverId']);
+        expect(TestBed.inject(PostsService).getPosts).toHaveBeenCalledTimes(1);
+        expect(TestBed.inject(PostsService).getPosts).toHaveBeenCalledWith('receiverId');
       });
 
       it('posts should be as expected', () => {
@@ -56,6 +52,6 @@ describe('FeedComponent', () => {
 
         expect(component.posts).toEqual(posts);
       });
-    })
+    });
   });
 });
