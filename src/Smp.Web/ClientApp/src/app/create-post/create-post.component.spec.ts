@@ -32,16 +32,13 @@ describe('CreatePostComponent', () => {
     fixture.detectChanges();
   });
 
-  describe('createPost', () => {
+  describe('createPost()', () => {
     beforeEach(() => {
       component.postToId = postToId;
       component.createPostRequest.content = 'content';
     });
 
-    let eventEmitterEmitSpy: jasmine.Spy;
-    let postsServiceCreatePostSpy: jasmine.Spy;
     const postToId = 'postToId';
-
     const postReq = new CreatePostRequest();
     postReq.content = 'content';
     postReq.senderId = 'id';
@@ -49,9 +46,9 @@ describe('CreatePostComponent', () => {
 
     describe('when it completes successfully', () => {
       beforeEach(() => {
-        postsServiceCreatePostSpy = spyOn(TestBed.get(PostsService), 'createPost')
+        spyOn(TestBed.get(PostsService), 'createPost')
           .and.returnValue(of('x'));
-        eventEmitterEmitSpy = spyOn(component.postCreated, 'emit');
+        spyOn(component.postCreated, 'emit');
       });
 
       it('should have emitted an event', () => {
@@ -60,35 +57,31 @@ describe('CreatePostComponent', () => {
         expect(component.postCreated.emit).toHaveBeenCalledTimes(1);
       });
 
-      it('should have called PostsService createPost correctly', () => {
+      it('should have called PostsService.createPost() correctly', () => {
         component.createPost();
 
-        expect(postsServiceCreatePostSpy.calls.count()).toEqual(1);
-        expect(postsServiceCreatePostSpy.calls.argsFor(0)).toEqual([
-          postReq
-        ]);
+        expect(TestBed.get(PostsService).createPost).toHaveBeenCalledTimes(1);
+        expect(TestBed.get(PostsService).createPost).toHaveBeenCalledWith(postReq);
       });
     });
 
     describe('when an error gets returned', () => {
       beforeEach(() => {
-        postsServiceCreatePostSpy = spyOn(TestBed.get(PostsService), 'createPost').and.returnValue(
+        spyOn(TestBed.get(PostsService), 'createPost').and.returnValue(
           throwError({
             error: 'error-message'
           })
         );
       });
 
-      it('should have called PostsService createPost correctly', () => {
+      it('should have called PostsService.createPost() correctly', () => {
         component.createPost();
 
-        expect(postsServiceCreatePostSpy.calls.count()).toEqual(1);
-        expect(postsServiceCreatePostSpy.calls.argsFor(0)).toEqual([
-          postReq
-        ]);
+        expect(TestBed.get(PostsService).createPost).toHaveBeenCalledTimes(1);
+        expect(TestBed.get(PostsService).createPost).toHaveBeenCalledWith(postReq);
       });
       
-      it('should set the error message correctly', () => {
+      it('should have set the error message correctly', () => {
         component.createPost();
 
         expect(component.errorMessage).toEqual('error-message');

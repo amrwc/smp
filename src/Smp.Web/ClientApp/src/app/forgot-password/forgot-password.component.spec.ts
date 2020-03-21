@@ -42,14 +42,14 @@ describe('ForgotPasswordComponent', () => {
     localStorage.removeItem('currentUser');
   });
 
-  describe('startPasswordReset', () => {
+  describe('startPasswordReset()', () => {
     let accountsServiceForgottenPasswordSpy: jasmine.Spy;
 
     beforeEach(() => {
       accountsServiceForgottenPasswordSpy = spyOn(TestBed.inject(AccountsService), 'forgottenPassword');
     });
 
-    describe('when AccountsService forgottenPassword is successful', () => {
+    describe('when AccountsService.forgottenPassword() is successful', () => {
       const message = 'An email has been sent to you. Click it to reset your password!';
 
       beforeEach(() => {
@@ -57,11 +57,11 @@ describe('ForgotPasswordComponent', () => {
           .and.returnValue(of(' '));
       });
 
-      it('should call AccountsService forgottenPassword correctly', () => {
+      it('should have called AccountsService.forgottenPassword() correctly', () => {
         component.startPasswordReset();
 
-        expect(accountsServiceForgottenPasswordSpy.calls.count()).toEqual(1);
-        expect(accountsServiceForgottenPasswordSpy.calls.argsFor(0)).toEqual(['mixedcase@email.com']);
+        expect(TestBed.inject(AccountsService).forgottenPassword).toHaveBeenCalledTimes(1);
+        expect(TestBed.inject(AccountsService).forgottenPassword).toHaveBeenCalledWith('mixedcase@email.com');
       });
 
       it('should have set the correct variable values', () => {
@@ -75,7 +75,7 @@ describe('ForgotPasswordComponent', () => {
       });
     });
 
-    describe('when AccountsService forgottenPassword returns an error', () => {
+    describe('when AccountsService.forgottenPassword() returns an error', () => {
       const error = {
         key: 'error',
         value: 'error-message' 
@@ -86,11 +86,11 @@ describe('ForgotPasswordComponent', () => {
           .and.returnValue(throwError({error: error}));
       });
 
-      it('should call AccountsService forgottenPassword correctly', () => {
+      it('should have called AccountsService.forgottenPassword() correctly', () => {
         component.startPasswordReset();
 
-        expect(accountsServiceForgottenPasswordSpy.calls.count()).toEqual(1);
-        expect(accountsServiceForgottenPasswordSpy.calls.argsFor(0)).toEqual(['mixedcase@email.com']);
+        expect(TestBed.inject(AccountsService).forgottenPassword).toHaveBeenCalledTimes(1);
+        expect(TestBed.inject(AccountsService).forgottenPassword).toHaveBeenCalledWith('mixedcase@email.com');
       });
 
       it('should have set the correct variable values', () => {
