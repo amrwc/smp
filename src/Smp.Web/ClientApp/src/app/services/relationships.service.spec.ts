@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-
 import { of, Observable } from 'rxjs';
+
 import { Relationship } from '../models/relationship';
 import { RelationshipType } from '../models/relationship-type.enum';
 import { RelationshipsService } from './relationships.service';

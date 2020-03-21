@@ -2,8 +2,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-
 import { of, throwError } from 'rxjs';
+
 import { AngularMaterialModule } from '../angular-material.module';
 import { ConversationsService } from '../services/conversations.service';
 import { CreateConversationRequest } from '../models/requests/create-conversation-request';
@@ -115,13 +115,13 @@ describe('MessageComposerComponent', () => {
     });
 
     describe('when it completes successfully', () => {
-      let convReq: CreateConversationRequest = new CreateConversationRequest();
+      const convReq: CreateConversationRequest = new CreateConversationRequest();
+      convReq.receiverId = friends[1].id;
+      convReq.senderId = userId;
 
       beforeEach(() => {
         component.createConversationRequest.receiverId = friends[1].id;
         TestBed.get(ConversationsService).createConversation.and.returnValue(of('conversationid-1'));
-        convReq.receiverId = friends[1].id;
-        convReq.senderId = userId;
       });
 
       it('should have called ConversationsService.createConversation() correctly', () => {

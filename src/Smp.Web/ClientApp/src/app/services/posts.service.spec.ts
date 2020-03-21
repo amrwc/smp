@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-
 import { of, Observable } from 'rxjs';
+
 import { CreatePostRequest } from '../models/requests/create-post-request';
 import { Post } from '../models/post';
 import { PostsService } from './posts.service';

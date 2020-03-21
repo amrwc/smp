@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-
 import { of, Observable } from 'rxjs';
+
 import { CreateMessageRequest } from '../models/requests/create-message-request';
 import { FriendlyMessage, Message } from '../models/message';
 import { MessagesService } from './messages.service';
@@ -30,23 +30,23 @@ describe('MessagesService', () => {
   });
 
   describe('getMessagesFromConversation()', () => {
-    const conversationId = 'conversationId';
+    const conversationId: string = 'conversationId';
     const expectedMessages: Message[] = [
-      new Message({
+      {
         id: 1,
         senderId: 'senderId-1',
         createdAt: new Date(),
         content: 'content-1',
         conversationId,
-      } as Message),
-      new Message({
+      },
+      {
         id: 2,
         senderId: 'senderId-2',
         createdAt: new Date(),
         content: 'content-2',
         conversationId,
-      } as Message),
-    ];
+      },
+    ] as Message[];
 
     beforeEach(() => {
       spyOn(TestBed.get(HttpClient), 'get').and.returnValue(of(expectedMessages));
@@ -67,7 +67,7 @@ describe('MessagesService', () => {
       expect(TestBed.get(HttpClient).get).toHaveBeenCalledTimes(1);
       expect(TestBed.get(HttpClient).get).toHaveBeenCalledWith(
         `${baseUrl}api/Messages/GetMessagesFromConversation/${conversationId}?count=10&page=0`,
-        { headers: authHeaders },
+        { headers: authHeaders }
       );
     });
   });

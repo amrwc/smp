@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NavFooterComponent } from './nav-footer.component';
 import { RouterTestingModule } from '@angular/router/testing';
+
+import { NavFooterComponent } from './nav-footer.component';
 
 describe('NavFooterComponent', () => {
   let component: NavFooterComponent;
