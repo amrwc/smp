@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-
 import { of, throwError } from 'rxjs';
+
 import { SignInComponent } from './sign-in.component';
 import { SignInRequest } from '../models/requests/sign-in-request';
 
@@ -55,7 +55,6 @@ describe('SignInComponent', () => {
       email: 'MY@EMAIL.com',
       password: '280913',
     } as SignInRequest;
-    let httpClientPostSpy: jasmine.Spy;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -67,7 +66,7 @@ describe('SignInComponent', () => {
       component = fixture.componentInstance;
       fixture.detectChanges();
       component.signInRequest = signInRequest;
-      httpClientPostSpy = spyOn(TestBed.get(HttpClient), 'post');
+      spyOn(TestBed.get(HttpClient), 'post');
     });
 
     afterEach(() => {
@@ -78,14 +77,14 @@ describe('SignInComponent', () => {
     });
 
     it('should have received a 401 error from the API', () => {
-      httpClientPostSpy.and.callFake(() => throwError({ status: 401 }));
+      TestBed.get(HttpClient).post.and.callFake(() => throwError({ status: 401 }));
       component.signIn();
       expect(component.signInUnsuccessful).toBeTruthy();
       expect(component.errorMessage).toEqual('Invalid sign in details. Please try again.');
     });
 
     it('should have received an error other than 401 from the API', () => {
-      httpClientPostSpy.and.callFake(() => throwError({ status: 500 }));
+      TestBed.get(HttpClient).post.and.callFake(() => throwError({ status: 500 }));
       component.signIn();
       expect(component.signInUnsuccessful).toBeTruthy();
       expect(component.errorMessage).toEqual(
@@ -94,7 +93,7 @@ describe('SignInComponent', () => {
     });
 
     it("should have navigated to '/'", () => {
-      httpClientPostSpy.and.callFake(() => of({ currentUser: 'bob' }));
+      TestBed.get(HttpClient).post.and.callFake(() => of({ currentUser: 'bob' }));
       spyOn(TestBed.get(Router), 'navigate');
       component.signIn();
       expect(localStorage.getItem('currentUser')).toEqual(JSON.stringify({ currentUser: 'bob' }));

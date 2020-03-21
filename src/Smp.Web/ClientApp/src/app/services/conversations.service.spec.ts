@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-
 import { of, Observable } from 'rxjs';
+
 import { Conversation } from '../models/conversation';
 import { ConversationsService } from './conversations.service';
 import { CreateConversationRequest } from '../models/requests/create-conversation-request';

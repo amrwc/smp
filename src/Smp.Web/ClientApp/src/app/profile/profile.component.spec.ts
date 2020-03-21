@@ -2,8 +2,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-
 import { of, throwError } from 'rxjs';
+
 import { CreateRequestRequest } from '../models/requests/create-request-request';
 import { FeedComponent } from '../feed/feed.component';
 import { PostsService } from '../services/posts.service';
@@ -104,14 +104,14 @@ describe('ProfileComponent', () => {
           expect(TestBed.get(RequestsService).getRequest).toHaveBeenCalledWith(...getRequestsServiceGetRequestArgs);
         });
 
-        it('found a pending friend request', () => {
+        it('should have found a pending friend request', () => {
           spyOn(TestBed.get(RequestsService), 'getRequest').and.returnValue(of({}));
           component.ngOnInit();
           expect(component.friends).toBeFalsy();
           expect(component.requestPending).toBeTruthy();
         });
 
-        it('returned 404 error and RelationshipsService.getRelationship() found a relationship', () => {
+        it('should have returned 404 error and RelationshipsService.getRelationship() found a relationship', () => {
           spyOn(TestBed.get(RequestsService), 'getRequest').and.returnValue(throwError({ status: 404 }));
           spyOn(TestBed.get(RelationshipsService), 'getRelationship').and.returnValue(of({}));
           component.ngOnInit();

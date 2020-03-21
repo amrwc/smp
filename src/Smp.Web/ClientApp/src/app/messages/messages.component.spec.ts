@@ -1,9 +1,8 @@
 import { FormBuilder } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-
 import { of } from 'rxjs';
-import { getTestScheduler } from 'jasmine-marbles';
+
 import { ConversationComponent } from '../conversation/conversation.component';
 import { ConversationsService } from '../services/conversations.service';
 import { ExtendedConversation, Conversation } from '../models/conversation';
@@ -14,8 +13,8 @@ import { User } from '../models/user';
 import { UsersService } from '../services/users.service';
 
 describe('MessagesComponent', () => {
-  const participantsOne = new Map<string, User>();
-  const participantsTwo = new Map<string, User>();
+  const participantsOne: Map<string, User> = new Map<string, User>();
+  const participantsTwo: Map<string, User> = new Map<string, User>();
   const users: User[] = [
     { id: 'userid-1', fullName: 'Jack Ryan', profilePictureUrl: 'website.com' },
     { id: 'userid-2', fullName: 'Tom Cruise', profilePictureUrl: 'website.co.uk' },
@@ -73,7 +72,6 @@ describe('MessagesComponent', () => {
 
     it('should have returned the expected value', () => {
       const conversationName = component.getConversationName('conversationid-1');
-
       expect(conversationName).toEqual('Tom Cruise');
     });
   });
@@ -92,7 +90,7 @@ describe('MessagesComponent', () => {
   describe('getLastMessageSender()', () => {
     it('should have returned the expected value', () => {
       component.conversations = conversations;
-      let lastMessageSender = component.getLastMessageSender('conversationid-1');
+      let lastMessageSender: string = component.getLastMessageSender('conversationid-1');
       expect(lastMessageSender).toEqual('You');
       lastMessageSender = component.getLastMessageSender('conversationid-2');
       expect(lastMessageSender).toEqual('Leonardo DiCaprio');
@@ -102,7 +100,7 @@ describe('MessagesComponent', () => {
   describe('loadConversation()', () => {
     beforeEach(() => {
       component.conversations = conversations;
-      let cnvId = '';
+      let cnvId: string = '';
       spyOnProperty(component.conversation, 'conversationId', 'set').and.callFake((convId: string) => {
         cnvId = convId;
       });

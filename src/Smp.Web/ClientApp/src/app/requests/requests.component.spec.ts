@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-
 import { of, throwError } from 'rxjs';
+
 import { FriendlyRequest, Request } from '../models/request';
 import { RequestType } from '../models/request-type.enum';
 import { RequestsComponent } from './requests.component';

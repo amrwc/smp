@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-
 import { of, throwError } from 'rxjs';
+
 import { AccountsService } from '../services/accounts.service';
 import { ResetPasswordComponent } from './reset-password.component';
 import { ResetPasswordRequest } from '../models/requests/reset-password-request';
@@ -48,31 +48,31 @@ describe('ResetPasswordComponent', () => {
       newPassword: 'qwerty',
       confirmNewPassword: 'qwerty',
     } as ResetPasswordRequest;
-    let accountsServiceResetPasswordSpy: jasmine.Spy;
 
     beforeEach(() => {
       component.resetPasswordRequest = req;
-      accountsServiceResetPasswordSpy = spyOn(TestBed.get(AccountsService), 'resetPassword');
+      spyOn(TestBed.get(AccountsService), 'resetPassword');
     });
+
+    afterEach(() => {
+      expect(TestBed.get(AccountsService).resetPassword).toHaveBeenCalledTimes(1);
+      expect(TestBed.get(AccountsService).resetPassword).toHaveBeenCalledWith(req);
+    })
 
     it('should have stored a validation error coming from the API', () => {
       const error: Error = new Error('Descriptive error message.');
-      accountsServiceResetPasswordSpy.and.returnValue(throwError({ error }));
+      TestBed.get(AccountsService).resetPassword.and.returnValue(throwError({ error }));
       component.resetPassword();
       expect(component.validationErrors.length).toEqual(1);
       expect(component.validationErrors[0]).toEqual(error);
       expect(component.resetPasswordSuccessful).toBeFalsy();
-      expect(TestBed.get(AccountsService).resetPassword).toHaveBeenCalledTimes(1);
-      expect(TestBed.get(AccountsService).resetPassword).toHaveBeenCalledWith(req);
     });
 
     it('should have successfully reset a password', () => {
-      accountsServiceResetPasswordSpy.and.returnValue(of({}));
+      TestBed.get(AccountsService).resetPassword.and.returnValue(of({}));
       component.resetPassword();
       expect(component.validationErrors.length).toEqual(0);
       expect(component.resetPasswordSuccessful).toBeTruthy();
-      expect(TestBed.get(AccountsService).resetPassword).toHaveBeenCalledTimes(1);
-      expect(TestBed.get(AccountsService).resetPassword).toHaveBeenCalledWith(req);
     });
   });
 });

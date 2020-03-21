@@ -3,8 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of, throwError} from 'rxjs';
 
-import { throwError, of } from 'rxjs';
 import { CreateUserRequest } from '../models/requests/create-user-request';
 import { Error } from '../models/error';
 import { SignUpComponent } from './sign-up.component';
