@@ -1,22 +1,23 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
 import { SignInRequest } from '../models/requests/sign-in-request';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss']
+  styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent implements OnInit {
-  private readonly baseUrl: string;
-  private readonly httpClient: HttpClient;
-  public signInRequest: SignInRequest = new SignInRequest();
+  public errorMessage: string;
   public loading: boolean = false;
   public returnUrl: string;
-  public signUpSuccessful: boolean = false;
+  public signInRequest: SignInRequest = new SignInRequest();
   public signInUnsuccessful: boolean = false;
-  public errorMessage: string;
+  public signUpSuccessful: boolean = false;
+  private readonly baseUrl: string;
+  private readonly httpClient: HttpClient;
 
   constructor(
     http: HttpClient,
@@ -37,10 +38,10 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  public signIn() {
+  public signIn(): void {
     this.loading = true;
-    this.signUpSuccessful = false;
     this.signInRequest.email = this.signInRequest.email.toLowerCase();
+    this.signUpSuccessful = false;
 
     this.httpClient.post(this.baseUrl + 'api/Auth/SignIn', this.signInRequest).subscribe({
       next: (result: any) => {
@@ -50,11 +51,11 @@ export class SignInComponent implements OnInit {
       },
       error: (error: any) => {
         this.signInUnsuccessful = true;
-        this.errorMessage = error.status === 401
-          ? "Invalid sign in details. Please try again."
-          : "We are experiencing technical difficulties right now. Please try again later.";
-          this.loading = false;
-      }
+        this.errorMessage =error.status === 401
+          ? 'Invalid sign in details. Please try again.'
+          : 'We are experiencing technical difficulties right now. Please try again later.';
+        this.loading = false;
+      },
     });
   }
 }

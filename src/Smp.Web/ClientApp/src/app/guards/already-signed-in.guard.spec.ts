@@ -1,15 +1,24 @@
-import { TestBed, async, inject } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
 import { AlreadySignedInGuard } from './already-signed-in.guard';
 
-describe('AlreadySignedInGuard', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [AlreadySignedInGuard]
+class MockRouter {
+  navigate(path) {}
+}
+
+describe('AlreadySignedInGuard.canActivate()', () => {
+  const router: Router = new MockRouter() as Router;
+  const alreadySignedInGuard: AlreadySignedInGuard = new AlreadySignedInGuard(router);
+
+  describe('canActivate()', () => {
+    it('should have returned true for a non-logged in user', () => {
+      expect(alreadySignedInGuard.canActivate()).toEqual(true);
+    });
+
+    it('should have returned false for a logged in user', () => {
+      localStorage.setItem('currentUser', 'currentUser');
+      expect(alreadySignedInGuard.canActivate()).toEqual(false);
+      localStorage.removeItem('currentUser');
     });
   });
-
-  it('should ...', inject([AlreadySignedInGuard], (guard: AlreadySignedInGuard) => {
-    expect(guard).toBeTruthy();
-  }));
 });

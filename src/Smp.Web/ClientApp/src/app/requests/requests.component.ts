@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { RequestsService } from '../services/requests.service';
-import { Request, FriendlyRequest } from '../models/request';
-import { GlobalHelper } from '../helpers/global';
+
 import { CurrentUser } from '../models/current-user';
+import { FriendlyRequest, Request } from '../models/request';
+import { GlobalHelper } from '../helpers/global';
+import { RequestsService } from '../services/requests.service';
 import { UsersService } from '../services/users.service';
 
 @Component({

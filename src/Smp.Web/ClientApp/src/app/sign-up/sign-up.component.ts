@@ -1,7 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CreateUserRequest } from '../models/requests/create-user-request';
 import { Error } from '../models/error';
-import { Router } from '@angular/router';
 import { UsersService } from '../services/users.service';
 
 @Component({
@@ -36,7 +36,7 @@ export class SignUpComponent {
         this.router.navigate(['/sign-in'], { queryParams: { signUpSuccessful: 'true' } });
       },
       error: (error: any) => {
-        this.validationErrors = error.error;
+        this.validationErrors.push(error.error);
         this.loading = false;
       }
     });

@@ -74,8 +74,11 @@ export class MessageComposerComponent implements OnInit {
     });
   }
 
-  public displayFriend(userId: string) {
-    return this.friends.find(friend => friend.id === userId).fullName;
+  public displayFriend(userId: string): string {
+    if (!userId) return;
+    
+    const friend = this.friends.find(friend => friend.id === userId);
+    return friend ? friend.fullName : "Unknown";
   }
 
   public filterFriends(name: string): void {

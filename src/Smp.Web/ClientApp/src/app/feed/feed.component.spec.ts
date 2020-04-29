@@ -1,25 +1,54 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 
 import { FeedComponent } from './feed.component';
+import { Post } from '../models/post';
+import { PostsService } from '../services/posts.service';
 
 describe('FeedComponent', () => {
   let component: FeedComponent;
   let fixture: ComponentFixture<FeedComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ FeedComponent ]
-    })
-    .compileComponents();
-  }));
-
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [FeedComponent],
+      imports: [HttpClientTestingModule],
+      providers: [{ provide: 'BASE_URL', useValue: 'https://www.smp.org/' }],
+    }).compileComponents();
     fixture = TestBed.createComponent(FeedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('getPosts()', () => {
+    const posts: Post[] = [{ id: 'postid' } as Post];
+
+    beforeEach(() => {
+      spyOn(TestBed.inject(PostsService), 'getPosts').and.returnValue(of(posts));
+    });
+
+    describe('when there is no receiver id', () => {
+      it('should not have called PostsService.getPosts()', () => {
+        expect(TestBed.inject(PostsService).getPosts).toHaveBeenCalledTimes(0);
+      });
+    });
+
+    describe('when there is a receiver id', () => {
+      beforeEach(() => {
+        component.receiverId = 'receiverId';
+      });
+
+      it('should not have called PostsService.getPosts()', () => {
+        component.getPosts();
+        expect(TestBed.inject(PostsService).getPosts).toHaveBeenCalledTimes(1);
+        expect(TestBed.inject(PostsService).getPosts).toHaveBeenCalledWith('receiverId');
+      });
+
+      it('posts should be as expected', () => {
+        component.getPosts();
+        expect(component.posts).toEqual(posts);
+      });
+    });
   });
 });

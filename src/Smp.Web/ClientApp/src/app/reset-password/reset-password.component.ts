@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { AccountsService } from '../services/accounts.service';
 import { ResetPasswordRequest } from '../models/requests/reset-password-request';
 
@@ -33,7 +33,7 @@ export class ResetPasswordComponent implements OnInit {
       },
       error: (error: any) => {
         this.loading = false;
-        this.validationErrors = error.error;
+        this.validationErrors.push(error.error);
       }
     });
   }

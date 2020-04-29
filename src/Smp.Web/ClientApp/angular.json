@@ -93,6 +93,12 @@
               "src/assets",
               "src/favicon.ico"
             ]
+          },
+          "configurations": {
+            "headless": {
+              "watch": false,
+              "browsers": "Headless"
+            }
           }
         },
         "lint": {
