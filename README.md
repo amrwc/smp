@@ -1,13 +1,13 @@
 # Social Media Portal
 
-SMP is a recreation of fundamental social networking features, done with .NET Core + Angular.
+SMP is a recreation of fundamental social networking features, done with .NET + Angular.
 
 ## Local setup
 
 ### Dependencies
 
 SMP uses and depends on several technologies which are needed to run the application locally. SMP's dependencies are:
-- .NET Core 3.1.100 - building and running the migrations, API, and tests
+- .NET 5.0.100 - building and running the migrations, API, and tests
 - Node.js - npm
 - SQL Server - data storage
 
