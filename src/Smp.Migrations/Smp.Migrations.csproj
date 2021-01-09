@@ -67,8 +67,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Simple.Migrations" Version="0.9.20" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.0" />
+    <PackageReference Include="Simple.Migrations" Version="0.9.21" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
 </Project>

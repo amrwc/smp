@@ -53,7 +53,7 @@
             "label": "run-migrations",
             "type": "shell",
             "options": {
-                "cwd": "src/Smp.Migrations/bin/Debug/netcoreapp3.1"
+                "cwd": "src/Smp.Migrations/bin/Debug/net5.0"
             },
             "command": "dotnet ./Smp.Migrations.dll",
             "dependsOn": "build-migrations",

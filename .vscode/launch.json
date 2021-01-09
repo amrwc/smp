@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-api",
-            "program": "${workspaceFolder}\\src\\Smp.Web\\bin\\Debug\\netcoreapp3.1\\Smp.Web.dll",
+            "program": "${workspaceFolder}\\src\\Smp.Web\\bin\\Debug\\net5.0\\Smp.Web.dll",
             "args": [],
             "cwd": "${workspaceFolder}\\src\\Smp.Web",
             "stopAtEntry": false,
